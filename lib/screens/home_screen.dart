@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import '../theme/app_colors.dart';
 import 'about_screen.dart';
+import 'project_screen.dart';
+import 'organization_screen.dart';
+import 'contact_screen.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -77,33 +80,69 @@ class HomeScreen extends StatelessWidget {
                     color: AppColors.yellow,
                     rotation: 0.02,
                     onTap: () {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(
-                          content: Text('Projects coming soon!'),
-                        ),
-                      );
-                    },
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const ProjectScreen(),
+                      ),
+                    );
+                  },
                   ),
 
                   const SizedBox(height: 18),
 
                   // ORGANIZATION
-                  ComicMenuCard(
-                    title: 'ORGANIZATION',
-                    subtitle: 'TEAM & ADVENTURES',
-                    icon: Icons.groups,
-                    color: AppColors.blue,
-                    rotation: -0.015,
-                    onTap: () {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(
-                          content: Text('Organization coming soon!'),
-                        ),
-                      );
-                    },
-                  ),
+                 ComicMenuCard(
+  title: 'ORGANIZATION',
+  subtitle: 'TEAM & ADVENTURES',
+  icon: Icons.groups,
+  color: AppColors.panelBlue,
+  rotation: -0.015,
+  onTap: () {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) =>
+            const OrganizationScreen(),
+      ),
+    );
+  },
+),
 
                   const SizedBox(height: 30),
+
+                  const SizedBox(height: 18),
+
+// CONTACT
+ComicMenuCard(
+  title: 'CONTACT',
+  subtitle: 'CALL THE HERO!',
+  icon: Icons.contact_mail,
+  color: AppColors.panelBlue,
+  rotation: 0.02,
+  onTap: () {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => const ContactScreen(),
+      ),
+    );
+  },
+),
+
+const SizedBox(height: 30),
+
+Center(
+  child: Text(
+    'IKA.EXE • ISSUE #03 • 2026',
+    style: TextStyle(
+      fontSize: 10,
+      fontWeight: FontWeight.bold,
+      letterSpacing: 1,
+      color: AppColors.ink,
+    ),
+  ),
+),
 
                   Center(
                     child: Text(
@@ -207,44 +246,57 @@ class ComicMenuCard extends StatelessWidget {
 
                   // Text
                   Expanded(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          title,
-                          style: const TextStyle(
-                            fontSize: 26,
-                            fontWeight: FontWeight.w900,
-                            color: AppColors.ink,
-                          ),
-                        ),
+  child: Column(
+    mainAxisAlignment: MainAxisAlignment.center,
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: [
 
-                        const SizedBox(height: 6),
+      // TITLE
+      SizedBox(
+        height: 32,
+        child: FittedBox(
+          fit: BoxFit.scaleDown,
+          alignment: Alignment.centerLeft,
+          child: Text(
+            title,
+            maxLines: 1,
+            style: const TextStyle(
+              fontSize: 26,
+              fontWeight: FontWeight.w900,
+              color: AppColors.ink,
+            ),
+          ),
+        ),
+      ),
 
-                        Text(
-                          subtitle,
-                          style: const TextStyle(
-                            fontSize: 11,
-                            fontWeight: FontWeight.bold,
-                            letterSpacing: 1,
-                            color: AppColors.ink,
-                          ),
-                        ),
+      const SizedBox(height: 6),
 
-                        const SizedBox(height: 10),
+      // SUBTITLE
+      Text(
+        subtitle,
+        maxLines: 1,
+        overflow: TextOverflow.ellipsis,
+        style: const TextStyle(
+          fontSize: 10,
+          fontWeight: FontWeight.bold,
+          letterSpacing: 0.8,
+          color: AppColors.ink,
+        ),
+      ),
 
-                        const Text(
-                          'OPEN CHAPTER →',
-                          style: TextStyle(
-                            fontSize: 11,
-                            fontWeight: FontWeight.w900,
-                            color: AppColors.ink,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
+      const SizedBox(height: 10),
+
+      const Text(
+        'OPEN CHAPTER →',
+        style: TextStyle(
+          fontSize: 10,
+          fontWeight: FontWeight.w900,
+          color: AppColors.ink,
+        ),
+      ),
+    ],
+  ),
+),
                 ],
               ),
             ),

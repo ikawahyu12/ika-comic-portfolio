@@ -1,25 +1,21 @@
 import 'package:flutter/material.dart';
-import 'screens/splash_screen.dart';
-import 'theme/app_colors.dart';
+
+import 'screens/portfolio_screen.dart';
 
 void main() {
-  runApp(const IkaPortfolioApp());
+  runApp(const MyApp());
 }
 
-class IkaPortfolioApp extends StatelessWidget {
-  const IkaPortfolioApp({super.key});
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'IKA.EXE',
-      theme: ThemeData(
-        scaffoldBackgroundColor: AppColors.cream,
-        colorScheme: ColorScheme.fromSeed(seedColor: AppColors.red),
-        useMaterial3: true,
-      ),
-      home: const SplashScreen(),
+      title: 'IKA.EXE Portfolio',
+
+      home: const PortfolioScreen(),
     );
   }
 }

@@ -258,7 +258,7 @@ class _HeroPanel extends StatelessWidget {
             children: [
               Positioned.fill(
                 child: Image.asset(
-                  'assets/images/ika_hero.png',
+                  'assets/images/ika_hero.jpeg',
                   fit: BoxFit.contain,
                   alignment: Alignment.center,
                 ),
