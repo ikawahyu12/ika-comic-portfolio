@@ -297,23 +297,49 @@ class _ProfileCard extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     // AVATAR
-                    Container(
-                      width: 105,
-                      height: 125,
-                      decoration: BoxDecoration(
-                        color: AppColors.panelBlue,
-                        border: Border.all(
-                          color: AppColors.ink,
-                          width: 3,
+                    Stack(
+                      children: [
+                        Container(
+                          width: 105,
+                          height: 125,
+                          decoration: BoxDecoration(
+                            color: AppColors.panelBlue,
+                            border: Border.all(
+                              color: AppColors.ink,
+                              width: 3,
+                            ),
+                          ),
                         ),
-                      ),
-                      child: const Center(
-                        child: Icon(
-                          Icons.person,
-                          size: 65,
-                          color: AppColors.ink,
+
+                        SizedBox(
+                          width: 105,
+                          height: 125,
+                          child: Image.asset(
+                            'assets/images/ika_hero.jpeg',
+                            fit: BoxFit.cover,
+                          ),
                         ),
-                      ),
+
+                        Positioned(
+                          bottom: 0,
+                          left: 0,
+                          child: Container(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 7,
+                              vertical: 4,
+                            ),
+                            color: AppColors.red,
+                            child: const Text(
+                              'IKA.EXE',
+                              style: TextStyle(
+                                fontSize: 8,
+                                fontWeight: FontWeight.w900,
+                                color: AppColors.paper,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
 
                     const SizedBox(width: 16),

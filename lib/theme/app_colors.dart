@@ -1,27 +1,17 @@
 import 'package:flutter/material.dart';
 
 class AppColors {
-  // Background utama
-  static const Color cream = Color(0xFFF4E4C1);
-
-  // Warna hitam comic
-  static const Color ink = Color(0xFF161616);
-
-  // Merah comic
   static const Color red = Color(0xFFD92832);
 
-  // Kuning comic
-  static const Color yellow = Color(0xFFF4C542);
+  static const Color yellow = Color(0xFFFFC857);
 
-  // Biru
-  static const Color blue = Color(0xFF1F4E8C);
+  static const Color blue = Color(0xFF4A90C2);
 
-  // Putih kertas comic
-  static const Color paper = Color(0xFFFFF8E8);
+  static const Color panelBlue = Color(0xFFB7C9D6);
 
-  // Biru muda untuk panel hero
-  static const Color panelBlue = Color(0xFFD9EAF2);
+  static const Color cream = Color(0xFFF6E8C8);
 
-  // Alias putih/off-white jika diperlukan
-  static const Color offWhite = Color(0xFFFFF8E8);
+  static const Color paper = Color(0xFFFFF8E7);
+
+  static const Color ink = Color(0xFF1E1E1E);
 }
