@@ -3,6 +3,10 @@ import 'package:google_fonts/google_fonts.dart';
 
 import '../theme/app_colors.dart';
 
+// ==========================================================
+// PORTFOLIO SCREEN
+// ==========================================================
+
 class PortfolioScreen extends StatefulWidget {
   const PortfolioScreen({super.key});
 
@@ -19,108 +23,104 @@ class _PortfolioScreenState extends State<PortfolioScreen> {
   final GlobalKey organizationKey = GlobalKey();
   final GlobalKey contactKey = GlobalKey();
 
-  
-
   void scrollToSection(GlobalKey key) {
-    final context = key.currentContext;
+    final sectionContext = key.currentContext;
 
-    if (context != null) {
+    if (sectionContext != null) {
       Scrollable.ensureVisible(
-        context,
+        sectionContext,
         duration: const Duration(milliseconds: 700),
         curve: Curves.easeInOut,
       );
     }
   }
 
-void showNavigationMenu() {
-  showModalBottomSheet(
-    context: context,
-    backgroundColor: Colors.transparent,
-    builder: (context) {
-      return Container(
-        padding: const EdgeInsets.all(20),
+  void showNavigationMenu() {
+    showModalBottomSheet(
+      context: context,
+      backgroundColor: Colors.transparent,
+      builder: (context) {
+        return Container(
+          padding: const EdgeInsets.all(20),
 
-        decoration: const BoxDecoration(
-          color: AppColors.cream,
-
-          borderRadius: BorderRadius.vertical(
-            top: Radius.circular(20),
+          decoration: const BoxDecoration(
+            color: AppColors.cream,
+            borderRadius: BorderRadius.vertical(
+              top: Radius.circular(20),
+            ),
           ),
-        ),
 
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
 
-          children: [
-            const Text(
-              'MISSION MENU',
-              style: TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.w900,
-                color: AppColors.ink,
+            children: [
+              const Text(
+                'MISSION MENU',
+                style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.w900,
+                  color: AppColors.ink,
+                ),
               ),
-            ),
 
-            const SizedBox(height: 20),
+              const SizedBox(height: 20),
 
-            _MobileMenuItem(
-              title: 'HOME',
-              icon: Icons.home,
-              onTap: () {
-                Navigator.pop(context);
-                scrollToSection(heroKey);
-              },
-            ),
+              _MobileMenuItem(
+                title: 'HOME',
+                icon: Icons.home,
+                onTap: () {
+                  Navigator.pop(context);
+                  scrollToSection(heroKey);
+                },
+              ),
 
-            _MobileMenuItem(
-              title: 'ABOUT ME',
-              icon: Icons.person,
-              onTap: () {
-                Navigator.pop(context);
-                scrollToSection(aboutKey);
-              },
-            ),
+              _MobileMenuItem(
+                title: 'ABOUT ME',
+                icon: Icons.person,
+                onTap: () {
+                  Navigator.pop(context);
+                  scrollToSection(aboutKey);
+                },
+              ),
 
-            _MobileMenuItem(
-              title: 'PROJECTS',
-              icon: Icons.code,
-              onTap: () {
-                Navigator.pop(context);
-                scrollToSection(projectKey);
-              },
-            ),
+              _MobileMenuItem(
+                title: 'PROJECTS',
+                icon: Icons.code,
+                onTap: () {
+                  Navigator.pop(context);
+                  scrollToSection(projectKey);
+                },
+              ),
 
-            _MobileMenuItem(
-              title: 'ORGANIZATION',
-              icon: Icons.groups,
-              onTap: () {
-                Navigator.pop(context);
-                scrollToSection(organizationKey);
-              },
-            ),
+              _MobileMenuItem(
+                title: 'ORGANIZATION',
+                icon: Icons.groups,
+                onTap: () {
+                  Navigator.pop(context);
+                  scrollToSection(organizationKey);
+                },
+              ),
 
-            _MobileMenuItem(
-              title: 'CONTACT',
-              icon: Icons.mail,
-              onTap: () {
-                Navigator.pop(context);
-                scrollToSection(contactKey);
-              },
-            ),
-          ],
-        ),
-      );
-    },
-  );
-}
+              _MobileMenuItem(
+                title: 'CONTACT',
+                icon: Icons.mail,
+                onTap: () {
+                  Navigator.pop(context);
+                  scrollToSection(contactKey);
+                },
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
 
   @override
   void dispose() {
     _scrollController.dispose();
     super.dispose();
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -145,12 +145,14 @@ void showNavigationMenu() {
           gradient: LinearGradient(
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
+
             colors: [
               Color(0xFFD6E7F5),
               Color(0xFFEAF1F3),
               Color(0xFFFFF1C9),
               Color(0xFFFFE3A3),
             ],
+
             stops: [
               0.0,
               0.30,
@@ -165,9 +167,9 @@ void showNavigationMenu() {
 
           slivers: [
 
-            // ============================
-            // STICKY NAVBAR
-            // ============================
+            // ==========================================================
+            // NAVBAR
+            // ==========================================================
 
             SliverAppBar(
               pinned: true,
@@ -177,7 +179,6 @@ void showNavigationMenu() {
               backgroundColor: const Color(0xFFEAF3F8),
 
               elevation: 5,
-
               toolbarHeight: 65,
 
               title: Row(
@@ -230,9 +231,7 @@ void showNavigationMenu() {
                   const Expanded(
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
-
-                      crossAxisAlignment:
-                          CrossAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
 
                       children: [
                         Text(
@@ -288,14 +287,13 @@ void showNavigationMenu() {
               ],
             ),
 
-            // ============================
+            // ==========================================================
             // HERO
-            // ============================
+            // ==========================================================
 
             SliverToBoxAdapter(
               child: Container(
                 key: heroKey,
-
                 child: const _HeroSection(),
               ),
             ),
@@ -304,9 +302,9 @@ void showNavigationMenu() {
               child: SizedBox(height: 40),
             ),
 
-            // ============================
+            // ==========================================================
             // ABOUT
-            // ============================
+            // ==========================================================
 
             SliverToBoxAdapter(
               child: _AboutSection(
@@ -318,25 +316,13 @@ void showNavigationMenu() {
               child: SizedBox(height: 50),
             ),
 
-            // ============================
+            // ==========================================================
             // PROJECTS
-            // ============================
+            // ==========================================================
 
             SliverToBoxAdapter(
-              child: Container(
+              child: _ProjectsSection(
                 key: projectKey,
-
-                padding: const EdgeInsets.all(24),
-
-                child: const _SectionCard(
-                  number: '02',
-                  title: 'PROJECTS',
-                  subtitle: 'MISSION ARCHIVES',
-                  description:
-                      'EXPLORE THE PROJECTS I HAVE BUILT '
-                      'AND THE TECHNOLOGIES I USED.',
-                  color: AppColors.yellow,
-                ),
               ),
             ),
 
@@ -344,35 +330,23 @@ void showNavigationMenu() {
               child: SizedBox(height: 40),
             ),
 
-            // ============================
+            // ==========================================================
             // ORGANIZATION
-            // ============================
+            // ==========================================================
 
             SliverToBoxAdapter(
-              child: Container(
-                key: organizationKey,
-
-                padding: const EdgeInsets.all(24),
-
-                child: const _SectionCard(
-                  number: '03',
-                  title: 'ORGANIZATION',
-                  subtitle: 'HERO ALLIANCES',
-                  description:
-                      'MY EXPERIENCES, ROLES AND '
-                      'CONTRIBUTIONS IN ORGANIZATIONS.',
-                  color: AppColors.panelBlue,
+                child: _OrganizationSection(
+                  key: organizationKey,
                 ),
               ),
-            ),
 
             const SliverToBoxAdapter(
               child: SizedBox(height: 40),
             ),
 
-            // ============================
+            // ==========================================================
             // CONTACT
-            // ============================
+            // ==========================================================
 
             SliverToBoxAdapter(
               child: Container(
@@ -396,9 +370,9 @@ void showNavigationMenu() {
               child: SizedBox(height: 40),
             ),
 
-            // ============================
+            // ==========================================================
             // FOOTER
-            // ============================
+            // ==========================================================
 
             const SliverToBoxAdapter(
               child: _Footer(),
@@ -410,58 +384,9 @@ void showNavigationMenu() {
   }
 }
 
-
-// ==========================================
-// NAV ITEM
-// ==========================================
-
-class _NavItem extends StatelessWidget {
-  final String title;
-  final VoidCallback onTap;
-
-  const _NavItem({
-    required this.title,
-    required this.onTap,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(
-        right: 22,
-      ),
-
-      child: InkWell(
-        onTap: onTap,
-
-        borderRadius: BorderRadius.circular(4),
-
-        child: Padding(
-          padding: const EdgeInsets.symmetric(
-            horizontal: 4,
-            vertical: 12,
-          ),
-
-          child: Text(
-            title,
-
-            style: const TextStyle(
-              fontSize: 10,
-              fontWeight: FontWeight.w900,
-              letterSpacing: 0.8,
-              color: AppColors.ink,
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-
-// ==========================================
+// ==========================================================
 // HERO SECTION
-// ==========================================
+// ==========================================================
 
 class _HeroSection extends StatelessWidget {
   const _HeroSection();
@@ -500,6 +425,7 @@ class _HeroSection extends StatelessWidget {
 
           Text(
             'THE DAILY CODE',
+
             style: GoogleFonts.bangers(
               fontSize: 22,
               color: AppColors.ink,
@@ -510,6 +436,7 @@ class _HeroSection extends StatelessWidget {
 
           Text(
             'THE AMAZING',
+
             style: GoogleFonts.bangers(
               fontSize: 38,
               color: AppColors.ink,
@@ -518,6 +445,7 @@ class _HeroSection extends StatelessWidget {
 
           Text(
             'IKA.EXE',
+
             style: GoogleFonts.bangers(
               fontSize: 56,
               color: AppColors.red,
@@ -605,10 +533,9 @@ class _HeroSection extends StatelessWidget {
   }
 }
 
-
-// ==========================================
+// ==========================================================
 // SECTION CARD
-// ==========================================
+// ==========================================================
 
 class _SectionCard extends StatelessWidget {
   final String number;
@@ -649,8 +576,7 @@ class _SectionCard extends StatelessWidget {
       ),
 
       child: Column(
-        crossAxisAlignment:
-            CrossAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
 
         children: [
           Text(
@@ -670,7 +596,6 @@ class _SectionCard extends StatelessWidget {
 
             child: Text(
               title,
-
               maxLines: 1,
 
               style: GoogleFonts.bangers(
@@ -720,38 +645,409 @@ class _SectionCard extends StatelessWidget {
   }
 }
 
+// ==========================================================
+// PROJECTS SECTION
+// ==========================================================
 
-// ==========================================
-// FOOTER
-// ==========================================
-
-class _Footer extends StatelessWidget {
-  const _Footer();
+class _ProjectsSection extends StatelessWidget {
+  const _ProjectsSection({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(30),
+      padding: const EdgeInsets.symmetric(
+        horizontal: 20,
+        vertical: 35,
+      ),
 
-      color: AppColors.ink,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
 
-      child: const Center(
-        child: Text(
-          'IKA.EXE • PORTFOLIO ISSUE #03 • 2026',
+        children: [
+          Transform.rotate(
+            angle: 0.02,
 
-          textAlign: TextAlign.center,
+            child: Container(
+              padding: const EdgeInsets.symmetric(
+                horizontal: 14,
+                vertical: 7,
+              ),
 
-          style: TextStyle(
-            color: AppColors.paper,
-            fontSize: 10,
-            fontWeight: FontWeight.bold,
-            letterSpacing: 1,
+              decoration: BoxDecoration(
+                color: AppColors.yellow,
+
+                border: Border.all(
+                  color: AppColors.ink,
+                  width: 3,
+                ),
+              ),
+
+              child: const Text(
+                'CHAPTER 02',
+
+                style: TextStyle(
+                  fontSize: 11,
+                  fontWeight: FontWeight.w900,
+                  letterSpacing: 1,
+                  color: AppColors.ink,
+                ),
+              ),
+            ),
           ),
-        ),
+
+          const SizedBox(height: 16),
+
+          const Text(
+            'MY\nPROJECTS!',
+
+            style: TextStyle(
+              fontSize: 48,
+              height: 0.85,
+              fontWeight: FontWeight.w900,
+              color: AppColors.ink,
+            ),
+          ),
+
+          const SizedBox(height: 10),
+
+          const Text(
+            'MISSION ARCHIVES & DIGITAL CREATIONS',
+
+            style: TextStyle(
+              fontSize: 11,
+              fontWeight: FontWeight.w900,
+              letterSpacing: 1.1,
+              color: AppColors.red,
+            ),
+          ),
+
+          const SizedBox(height: 30),
+
+          const _ProjectCard(
+            number: '01',
+            title: 'PORTFOLIO APP',
+            category: 'FLUTTER MOBILE APPLICATION',
+
+            description:
+                'A personal portfolio application built '
+                'using Flutter with a unique comic-inspired '
+                'user interface.',
+
+            technologies: [
+              'Flutter',
+              'Dart',
+              'UI Design',
+            ],
+
+            color: AppColors.blue,
+            icon: Icons.phone_android,
+          ),
+
+          const SizedBox(height: 22),
+
+          const _ProjectCard(
+            number: '02',
+            title: 'COMING SOON',
+            category: 'NEXT DIGITAL MISSION',
+
+            description:
+                'New projects and experiments are currently '
+                'being developed. Stay tuned for the next '
+                'chapter of my coding journey.',
+
+            technologies: [
+              'Flutter',
+              'Development',
+              'Creative Ideas',
+            ],
+
+            color: AppColors.yellow,
+            icon: Icons.rocket_launch,
+          ),
+
+          const SizedBox(height: 35),
+
+          Container(
+            width: double.infinity,
+
+            padding: const EdgeInsets.all(16),
+
+            decoration: BoxDecoration(
+              color: AppColors.ink,
+
+              border: Border.all(
+                color: AppColors.ink,
+                width: 3,
+              ),
+            ),
+
+            child: const Row(
+              children: [
+                Icon(
+                  Icons.auto_awesome,
+                  color: Colors.white,
+                ),
+
+                SizedBox(width: 12),
+
+                Expanded(
+                  child: Text(
+                    'MORE MISSIONS ARE COMING...',
+
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 10,
+                      fontWeight: FontWeight.w900,
+                      letterSpacing: 1,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
       ),
     );
   }
 }
+
+// ==========================================================
+// PROJECT CARD
+// ==========================================================
+
+class _ProjectCard extends StatelessWidget {
+  final String number;
+  final String title;
+  final String category;
+  final String description;
+  final List<String> technologies;
+  final Color color;
+  final IconData icon;
+
+  const _ProjectCard({
+    required this.number,
+    required this.title,
+    required this.category,
+    required this.description,
+    required this.technologies,
+    required this.color,
+    required this.icon,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Transform.rotate(
+      angle: number == '01' ? -0.01 : 0.01,
+
+      child: Stack(
+        children: [
+          Positioned(
+            left: 7,
+            top: 7,
+            right: 0,
+            bottom: 0,
+
+            child: Container(
+              color: AppColors.ink,
+            ),
+          ),
+
+          Container(
+            width: double.infinity,
+
+            padding: const EdgeInsets.all(18),
+
+            decoration: BoxDecoration(
+              color: color,
+
+              border: Border.all(
+                color: AppColors.ink,
+                width: 4,
+              ),
+            ),
+
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+
+                  children: [
+                    Container(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 10,
+                        vertical: 6,
+                      ),
+
+                      decoration: BoxDecoration(
+                        color: AppColors.red,
+
+                        border: Border.all(
+                          color: AppColors.ink,
+                          width: 2,
+                        ),
+                      ),
+
+                      child: Text(
+                        'MISSION #$number',
+
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontSize: 9,
+                          fontWeight: FontWeight.w900,
+                        ),
+                      ),
+                    ),
+
+                    Icon(
+                      icon,
+                      size: 32,
+                      color: AppColors.ink,
+                    ),
+                  ],
+                ),
+
+                const SizedBox(height: 20),
+
+                Text(
+                  title,
+
+                  style: const TextStyle(
+                    fontSize: 25,
+                    fontWeight: FontWeight.w900,
+                    color: AppColors.ink,
+                  ),
+                ),
+
+                const SizedBox(height: 5),
+
+                Text(
+                  category,
+
+                  style: const TextStyle(
+                    fontSize: 9,
+                    fontWeight: FontWeight.w900,
+                    letterSpacing: 1,
+                    color: AppColors.red,
+                  ),
+                ),
+
+                const SizedBox(height: 18),
+
+                Text(
+                  description,
+
+                  style: const TextStyle(
+                    fontSize: 12,
+                    height: 1.5,
+                    fontWeight: FontWeight.w600,
+                    color: AppColors.ink,
+                  ),
+                ),
+
+                const SizedBox(height: 20),
+
+                const Text(
+                  'TECH STACK',
+
+                  style: TextStyle(
+                    fontSize: 9,
+                    fontWeight: FontWeight.w900,
+                    letterSpacing: 1,
+                    color: AppColors.ink,
+                  ),
+                ),
+
+                const SizedBox(height: 10),
+
+                Wrap(
+                  spacing: 8,
+                  runSpacing: 8,
+
+                  children: technologies.map((technology) {
+                    return Container(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 10,
+                        vertical: 6,
+                      ),
+
+                      decoration: BoxDecoration(
+                        color: AppColors.cream,
+
+                        border: Border.all(
+                          color: AppColors.ink,
+                          width: 2,
+                        ),
+                      ),
+
+                      child: Text(
+                        technology,
+
+                        style: const TextStyle(
+                          fontSize: 9,
+                          fontWeight: FontWeight.w900,
+                          color: AppColors.ink,
+                        ),
+                      ),
+                    );
+                  }).toList(),
+                ),
+
+                const SizedBox(height: 22),
+
+                Container(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 14,
+                    vertical: 10,
+                  ),
+
+                  decoration: BoxDecoration(
+                    color: AppColors.ink,
+
+                    border: Border.all(
+                      color: AppColors.ink,
+                      width: 2,
+                    ),
+                  ),
+
+                  child: const Row(
+                    mainAxisSize: MainAxisSize.min,
+
+                    children: [
+                      Text(
+                        'VIEW MISSION',
+
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 9,
+                          fontWeight: FontWeight.w900,
+                          letterSpacing: 0.8,
+                        ),
+                      ),
+
+                      SizedBox(width: 8),
+
+                      Icon(
+                        Icons.arrow_forward,
+                        color: Colors.white,
+                        size: 16,
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+// ==========================================================
+// ABOUT SECTION
+// ==========================================================
 
 class _AboutSection extends StatelessWidget {
   const _AboutSection({super.key});
@@ -766,27 +1062,29 @@ class _AboutSection extends StatelessWidget {
 
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          // ============================================
-          // SECTION LABEL
-          // ============================================
 
+        children: [
           Transform.rotate(
             angle: -0.03,
+
             child: Container(
               padding: const EdgeInsets.symmetric(
                 horizontal: 14,
                 vertical: 7,
               ),
+
               decoration: BoxDecoration(
                 color: AppColors.yellow,
+
                 border: Border.all(
                   color: AppColors.ink,
                   width: 3,
                 ),
               ),
+
               child: const Text(
                 'CHAPTER 01',
+
                 style: TextStyle(
                   fontSize: 11,
                   fontWeight: FontWeight.w900,
@@ -799,12 +1097,9 @@ class _AboutSection extends StatelessWidget {
 
           const SizedBox(height: 16),
 
-          // ============================================
-          // TITLE
-          // ============================================
-
           const Text(
             'ABOUT\nME!',
+
             style: TextStyle(
               fontSize: 48,
               height: 0.85,
@@ -817,6 +1112,7 @@ class _AboutSection extends StatelessWidget {
 
           const Text(
             'THE ORIGIN STORY OF IKA.EXE',
+
             style: TextStyle(
               fontSize: 11,
               fontWeight: FontWeight.w900,
@@ -827,34 +1123,30 @@ class _AboutSection extends StatelessWidget {
 
           const SizedBox(height: 25),
 
-          // ============================================
-          // MAIN PROFILE COMIC PANEL
-          // ============================================
-
           Transform.rotate(
             angle: 0.01,
+
             child: Stack(
               children: [
-                // SHADOW
-
                 Positioned(
                   left: 7,
                   top: 7,
                   right: 0,
                   bottom: 0,
+
                   child: Container(
                     color: AppColors.ink,
                   ),
                 ),
 
-                // MAIN PANEL
-
                 Container(
                   width: double.infinity,
+
                   padding: const EdgeInsets.all(18),
 
                   decoration: BoxDecoration(
                     color: AppColors.blue,
+
                     border: Border.all(
                       color: AppColors.ink,
                       width: 4,
@@ -862,12 +1154,9 @@ class _AboutSection extends StatelessWidget {
                   ),
 
                   child: Column(
-                    crossAxisAlignment:
-                        CrossAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
 
                     children: [
-                      // PROFILE TAG
-
                       Container(
                         padding: const EdgeInsets.symmetric(
                           horizontal: 10,
@@ -876,6 +1165,7 @@ class _AboutSection extends StatelessWidget {
 
                         decoration: BoxDecoration(
                           color: AppColors.red,
+
                           border: Border.all(
                             color: AppColors.ink,
                             width: 2,
@@ -884,6 +1174,7 @@ class _AboutSection extends StatelessWidget {
 
                         child: const Text(
                           'CHARACTER PROFILE',
+
                           style: TextStyle(
                             color: Colors.white,
                             fontSize: 9,
@@ -895,10 +1186,9 @@ class _AboutSection extends StatelessWidget {
 
                       const SizedBox(height: 18),
 
-                      // NAME
-
                       const Text(
                         'IKA\nWAHYUNINGTYAS',
+
                         style: TextStyle(
                           fontSize: 30,
                           height: 0.9,
@@ -909,12 +1199,11 @@ class _AboutSection extends StatelessWidget {
 
                       const SizedBox(height: 14),
 
-                      // DESCRIPTION
-
                       const Text(
                         'An Informatics Engineering student '
                         'who loves technology, creativity, '
                         'and turning ideas into digital experiences.',
+
                         style: TextStyle(
                           fontSize: 13,
                           height: 1.5,
@@ -925,23 +1214,21 @@ class _AboutSection extends StatelessWidget {
 
                       const SizedBox(height: 18),
 
-                      // STATS
-
-                      Row(
+                      const Row(
                         children: [
                           _StatBox(
                             number: '03',
                             label: 'SEMESTER',
                           ),
 
-                          const SizedBox(width: 10),
+                          SizedBox(width: 10),
 
                           _StatBox(
                             number: 'TI',
                             label: 'MAJOR',
                           ),
 
-                          const SizedBox(width: 10),
+                          SizedBox(width: 10),
 
                           _StatBox(
                             number: '∞',
@@ -958,10 +1245,6 @@ class _AboutSection extends StatelessWidget {
 
           const SizedBox(height: 35),
 
-          // ============================================
-          // ORIGIN STORY
-          // ============================================
-
           const _ComicSectionTitle(
             title: 'ORIGIN STORY',
             subtitle: 'HOW THE JOURNEY BEGAN',
@@ -969,49 +1252,51 @@ class _AboutSection extends StatelessWidget {
 
           const SizedBox(height: 15),
 
-          _StoryPanel(
+          const _StoryPanel(
             number: '01',
             title: 'THE BEGINNING',
+
             description:
                 'My journey in technology began with curiosity. '
                 'I enjoy learning how applications, systems, '
                 'and digital technology can solve real problems.',
+
             color: AppColors.cream,
             rotation: -0.01,
           ),
 
           const SizedBox(height: 16),
 
-          _StoryPanel(
+          const _StoryPanel(
             number: '02',
             title: 'THE MISSION',
+
             description:
                 'Currently, I am developing my skills in '
                 'programming, mobile development, problem solving, '
                 'and creating meaningful digital solutions.',
+
             color: AppColors.yellow,
             rotation: 0.01,
           ),
 
           const SizedBox(height: 16),
 
-          _StoryPanel(
+          const _StoryPanel(
             number: '03',
             title: 'THE FUTURE',
+
             description:
                 'I want to continue growing as a technology '
                 'professional and create projects that bring '
                 'positive impact to people.',
+
             color: AppColors.red,
             rotation: -0.015,
             lightText: true,
           ),
 
           const SizedBox(height: 40),
-
-          // ============================================
-          // EDUCATION
-          // ============================================
 
           const _ComicSectionTitle(
             title: 'EDUCATION',
@@ -1020,7 +1305,7 @@ class _AboutSection extends StatelessWidget {
 
           const SizedBox(height: 18),
 
-          _EducationCard(
+          const _EducationCard(
             year: '2025 — NOW',
             title: 'INFORMATICS ENGINEERING',
             subtitle: 'UNIVERSITY STUDENT',
@@ -1030,7 +1315,7 @@ class _AboutSection extends StatelessWidget {
 
           const SizedBox(height: 16),
 
-          _EducationCard(
+          const _EducationCard(
             year: 'PREVIOUS CHAPTER',
             title: 'HIGH SCHOOL',
             subtitle: 'ACADEMIC FOUNDATION',
@@ -1040,10 +1325,6 @@ class _AboutSection extends StatelessWidget {
 
           const SizedBox(height: 40),
 
-          // ============================================
-          // CORE COMPETENCIES
-          // ============================================
-
           const _ComicSectionTitle(
             title: 'CORE POWERS',
             subtitle: 'MY CORE COMPETENCIES',
@@ -1051,10 +1332,11 @@ class _AboutSection extends StatelessWidget {
 
           const SizedBox(height: 20),
 
-          Wrap(
+          const Wrap(
             spacing: 12,
             runSpacing: 12,
-            children: const [
+
+            children: [
               _SkillBadge(
                 icon: Icons.code,
                 label: 'PROGRAMMING',
@@ -1083,10 +1365,6 @@ class _AboutSection extends StatelessWidget {
 
           const SizedBox(height: 40),
 
-          // ============================================
-          // SOFTWARE
-          // ============================================
-
           const _ComicSectionTitle(
             title: 'TECH ARSENAL',
             subtitle: 'SOFTWARE & TOOLS',
@@ -1096,7 +1374,9 @@ class _AboutSection extends StatelessWidget {
 
           const _ToolCard(
             title: 'SOFTWARE',
+
             icon: Icons.computer,
+
             items: [
               'Flutter',
               'Dart',
@@ -1105,6 +1385,7 @@ class _AboutSection extends StatelessWidget {
               'GitHub',
               'GitLab',
             ],
+
             color: AppColors.blue,
           ),
 
@@ -1112,38 +1393,42 @@ class _AboutSection extends StatelessWidget {
 
           const _ToolCard(
             title: 'HARDWARE',
+
             icon: Icons.memory,
+
             items: [
               'Laptop',
               'Computer',
               'Mobile Device',
             ],
+
             color: AppColors.yellow,
           ),
 
           const SizedBox(height: 45),
 
-          // ============================================
-          // END TAG
-          // ============================================
-
           Center(
             child: Transform.rotate(
               angle: -0.03,
+
               child: Container(
                 padding: const EdgeInsets.symmetric(
                   horizontal: 18,
                   vertical: 10,
                 ),
+
                 decoration: BoxDecoration(
                   color: AppColors.ink,
+
                   border: Border.all(
                     color: AppColors.ink,
                     width: 3,
                   ),
                 ),
+
                 child: const Text(
                   'TO BE CONTINUED...',
+
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 11,
@@ -1160,6 +1445,236 @@ class _AboutSection extends StatelessWidget {
   }
 }
 
+class _OrganizationSection extends StatelessWidget {
+  const _OrganizationSection({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.fromLTRB(24, 70, 24, 70),
+      decoration: const BoxDecoration(
+        color: AppColors.cream,
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const _ComicSectionTitle(
+            title: 'MY\nORGANIZATION!',
+            subtitle: 'HERO ALLIANCES & TEAM MISSIONS',
+          ),
+
+          const SizedBox(height: 35),
+
+          _OrganizationCard(
+            number: '01',
+            organization: 'YOUR ORGANIZATION',
+            role: 'MEMBER / STAFF',
+            period: '2024 — 2025',
+            description:
+                'Berkontribusi dalam kegiatan organisasi, '
+                'bekerja sama dengan anggota tim, serta '
+                'ikut menjalankan berbagai program kerja.',
+            color: AppColors.blue,
+          ),
+
+          const SizedBox(height: 22),
+
+          _OrganizationCard(
+            number: '02',
+            organization: 'YOUR NEXT TEAM',
+            role: 'DIVISION MEMBER',
+            period: '2024 — PRESENT',
+            description:
+                'Berperan dalam pelaksanaan kegiatan dan '
+                'mendukung tim melalui komunikasi, kerja sama, '
+                'serta penyelesaian tugas bersama.',
+            color: AppColors.red,
+          ),
+
+          const SizedBox(height: 22),
+
+          _OrganizationCard(
+            number: '03',
+            organization: 'ANOTHER ALLIANCE',
+            role: 'VOLUNTEER / MEMBER',
+            period: '2023 — 2024',
+            description:
+                'Mengembangkan pengalaman teamwork, '
+                'kepemimpinan, dan tanggung jawab melalui '
+                'berbagai aktivitas organisasi.',
+            color: AppColors.yellow,
+          ),
+
+          const SizedBox(height: 35),
+
+          Container(
+            width: double.infinity,
+            padding: const EdgeInsets.all(22),
+            decoration: BoxDecoration(
+              color: AppColors.ink,
+              border: Border.all(
+                color: AppColors.ink,
+                width: 4,
+              ),
+              boxShadow: const [
+                BoxShadow(
+                  color: AppColors.red,
+                  offset: Offset(7, 7),
+                ),
+              ],
+            ),
+            child: const Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'TEAMWORK = SUPERPOWER!',
+                  style: TextStyle(
+                    color: AppColors.yellow,
+                    fontSize: 24,
+                    fontWeight: FontWeight.w900,
+                  ),
+                ),
+                SizedBox(height: 8),
+                Text(
+                  'EVERY MISSION IS BETTER '
+                  'WITH THE RIGHT ALLIES.',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 14,
+                    fontWeight: FontWeight.w700,
+                    height: 1.4,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _OrganizationCard extends StatelessWidget {
+  final String number;
+  final String organization;
+  final String role;
+  final String period;
+  final String description;
+  final Color color;
+
+  const _OrganizationCard({
+    required this.number,
+    required this.organization,
+    required this.role,
+    required this.period,
+    required this.description,
+    required this.color,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: double.infinity,
+      padding: const EdgeInsets.all(20),
+      decoration: BoxDecoration(
+        color: AppColors.paper,
+        border: Border.all(
+          color: AppColors.ink,
+          width: 4,
+        ),
+        boxShadow: const [
+          BoxShadow(
+            color: AppColors.ink,
+            offset: Offset(7, 7),
+          ),
+        ],
+      ),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Container(
+            width: 52,
+            height: 52,
+            alignment: Alignment.center,
+            decoration: BoxDecoration(
+              color: color,
+              border: Border.all(
+                color: AppColors.ink,
+                width: 3,
+              ),
+              shape: BoxShape.circle,
+            ),
+            child: Text(
+              number,
+              style: const TextStyle(
+                color: AppColors.ink,
+                fontSize: 20,
+                fontWeight: FontWeight.w900,
+              ),
+            ),
+          ),
+
+          const SizedBox(width: 16),
+
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  organization,
+                  style: const TextStyle(
+                    color: AppColors.ink,
+                    fontSize: 20,
+                    fontWeight: FontWeight.w900,
+                  ),
+                ),
+
+                const SizedBox(height: 5),
+
+                Text(
+                  role,
+                  style: TextStyle(
+                    color: color,
+                    fontSize: 13,
+                    fontWeight: FontWeight.w900,
+                    letterSpacing: 1,
+                  ),
+                ),
+
+                const SizedBox(height: 4),
+
+                Text(
+                  period,
+                  style: const TextStyle(
+                    color: Colors.black54,
+                    fontSize: 12,
+                    fontWeight: FontWeight.w700,
+                  ),
+                ),
+
+                const SizedBox(height: 12),
+
+                Text(
+                  description,
+                  style: const TextStyle(
+                    color: AppColors.ink,
+                    fontSize: 13,
+                    height: 1.5,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+// ==========================================================
+// COMIC SECTION TITLE
+// ==========================================================
+
 class _ComicSectionTitle extends StatelessWidget {
   final String title;
   final String subtitle;
@@ -1172,11 +1687,12 @@ class _ComicSectionTitle extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
-      crossAxisAlignment:
-          CrossAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.start,
+
       children: [
         Text(
           title,
+
           style: const TextStyle(
             fontSize: 28,
             fontWeight: FontWeight.w900,
@@ -1196,6 +1712,7 @@ class _ComicSectionTitle extends StatelessWidget {
 
         Text(
           subtitle,
+
           style: const TextStyle(
             fontSize: 9,
             fontWeight: FontWeight.bold,
@@ -1207,6 +1724,10 @@ class _ComicSectionTitle extends StatelessWidget {
     );
   }
 }
+
+// ==========================================================
+// STORY PANEL
+// ==========================================================
 
 class _StoryPanel extends StatelessWidget {
   final String number;
@@ -1227,11 +1748,11 @@ class _StoryPanel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final textColor =
-        lightText ? Colors.white : AppColors.ink;
+    final textColor = lightText ? Colors.white : AppColors.ink;
 
     return Transform.rotate(
       angle: rotation,
+
       child: Container(
         width: double.infinity,
 
@@ -1254,8 +1775,7 @@ class _StoryPanel extends StatelessWidget {
         ),
 
         child: Row(
-          crossAxisAlignment:
-              CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
 
           children: [
             Container(
@@ -1264,7 +1784,7 @@ class _StoryPanel extends StatelessWidget {
 
               alignment: Alignment.center,
 
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 color: AppColors.ink,
                 shape: BoxShape.circle,
               ),
@@ -1284,8 +1804,7 @@ class _StoryPanel extends StatelessWidget {
 
             Expanded(
               child: Column(
-                crossAxisAlignment:
-                    CrossAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
 
                 children: [
                   Text(
@@ -1320,6 +1839,10 @@ class _StoryPanel extends StatelessWidget {
   }
 }
 
+// ==========================================================
+// EDUCATION CARD
+// ==========================================================
+
 class _EducationCard extends StatelessWidget {
   final String year;
   final String title;
@@ -1339,8 +1862,10 @@ class _EducationCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Transform.rotate(
       angle: -0.01,
+
       child: Container(
         width: double.infinity,
+
         padding: const EdgeInsets.all(16),
 
         decoration: BoxDecoration(
@@ -1385,8 +1910,7 @@ class _EducationCard extends StatelessWidget {
 
             Expanded(
               child: Column(
-                crossAxisAlignment:
-                    CrossAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
 
                 children: [
                   Text(
@@ -1432,6 +1956,10 @@ class _EducationCard extends StatelessWidget {
     );
   }
 }
+
+// ==========================================================
+// STAT BOX
+// ==========================================================
 
 class _StatBox extends StatelessWidget {
   final String number;
@@ -1489,6 +2017,10 @@ class _StatBox extends StatelessWidget {
     );
   }
 }
+
+// ==========================================================
+// SKILL BADGE
+// ==========================================================
 
 class _SkillBadge extends StatelessWidget {
   final IconData icon;
@@ -1552,6 +2084,10 @@ class _SkillBadge extends StatelessWidget {
   }
 }
 
+// ==========================================================
+// TOOL CARD
+// ==========================================================
+
 class _ToolCard extends StatelessWidget {
   final String title;
   final IconData icon;
@@ -1589,8 +2125,7 @@ class _ToolCard extends StatelessWidget {
       ),
 
       child: Column(
-        crossAxisAlignment:
-            CrossAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
 
         children: [
           Row(
@@ -1655,6 +2190,10 @@ class _ToolCard extends StatelessWidget {
   }
 }
 
+// ==========================================================
+// MOBILE MENU ITEM
+// ==========================================================
+
 class _MobileMenuItem extends StatelessWidget {
   final String title;
   final IconData icon;
@@ -1713,6 +2252,38 @@ class _MobileMenuItem extends StatelessWidget {
                 color: AppColors.ink,
               ),
             ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+// ==========================================================
+// FOOTER
+// ==========================================================
+
+class _Footer extends StatelessWidget {
+  const _Footer();
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.all(30),
+
+      color: AppColors.ink,
+
+      child: const Center(
+        child: Text(
+          'IKA.EXE • PORTFOLIO ISSUE #03 • 2026',
+
+          textAlign: TextAlign.center,
+
+          style: TextStyle(
+            color: AppColors.paper,
+            fontSize: 10,
+            fontWeight: FontWeight.bold,
+            letterSpacing: 1,
           ),
         ),
       ),
