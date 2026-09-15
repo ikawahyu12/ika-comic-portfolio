@@ -291,12 +291,14 @@ class _PortfolioScreenState extends State<PortfolioScreen> {
             // HERO
             // ==========================================================
 
-            SliverToBoxAdapter(
-              child: Container(
-                key: heroKey,
-                child: const _HeroSection(),
+          SliverToBoxAdapter(
+            child: Container(
+              key: heroKey,
+              child: _HeroSection(
+                onStart: () => scrollToSection(aboutKey),
               ),
             ),
+          ),
 
             const SliverToBoxAdapter(
               child: SizedBox(height: 40),
@@ -389,7 +391,11 @@ class _PortfolioScreenState extends State<PortfolioScreen> {
 // ==========================================================
 
 class _HeroSection extends StatelessWidget {
-  const _HeroSection();
+  final VoidCallback onStart;
+
+  const _HeroSection({
+    required this.onStart,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -500,28 +506,33 @@ class _HeroSection extends StatelessWidget {
 
           const SizedBox(height: 30),
 
-          Container(
-            padding: const EdgeInsets.symmetric(
-              horizontal: 22,
-              vertical: 12,
-            ),
-
-            decoration: BoxDecoration(
-              color: AppColors.red,
-
-              border: Border.all(
-                color: AppColors.ink,
-                width: 3,
+            InkWell(
+            onTap: onStart,
+            child: Container(
+              padding: const EdgeInsets.symmetric(
+                horizontal: 22,
+                vertical: 12,
               ),
-            ),
-
-            child: const Text(
-              'START THE ADVENTURE ↓',
-
-              style: TextStyle(
-                color: Colors.white,
-                fontWeight: FontWeight.w900,
-                fontSize: 12,
+              decoration: BoxDecoration(
+                color: AppColors.red,
+                border: Border.all(
+                  color: AppColors.ink,
+                  width: 3,
+                ),
+                boxShadow: const [
+                  BoxShadow(
+                    color: AppColors.ink,
+                    offset: Offset(4, 4),
+                  ),
+                ],
+              ),
+              child: const Text(
+                'START THE ADVENTURE ↓',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.w900,
+                  fontSize: 12,
+                ),
               ),
             ),
           ),
@@ -1676,10 +1687,12 @@ class _OrganizationCard extends StatelessWidget {
 // ==========================================================
 
 class _ComicSectionTitle extends StatelessWidget {
+  final String? chapter;
   final String title;
   final String subtitle;
 
   const _ComicSectionTitle({
+    this.chapter,
     required this.title,
     required this.subtitle,
   });
@@ -1690,6 +1703,15 @@ class _ComicSectionTitle extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
 
       children: [
+        if (chapter != null)
+          Text(
+            chapter!,
+            style: const TextStyle(
+              fontSize: 16,
+              fontWeight: FontWeight.w900,
+              color: AppColors.ink,
+            ),
+          ),
         Text(
           title,
 
