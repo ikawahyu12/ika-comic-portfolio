@@ -358,7 +358,7 @@ class ProjectDetailScreen extends StatelessWidget {
               ),
 
               if (projectNumber == 'MISSION #03') ...[
-                const SizedBox(height: 3),
+                const SizedBox(height: 3), 
 
                 const Text(
                   'YEAR: 2026',
@@ -1148,7 +1148,7 @@ class _DetailBackground extends StatelessWidget {
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
                 color:
-                    AppColors.yellow.withOpacity(0.12),
+                    AppColors.yellow.withValues(alpha: 0.12),
               ),
             ),
           ),
@@ -1162,7 +1162,7 @@ class _DetailBackground extends StatelessWidget {
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
                 color:
-                    AppColors.red.withOpacity(0.08),
+                    AppColors.red.withValues(alpha: 0.08),
               ),
             ),
           ),

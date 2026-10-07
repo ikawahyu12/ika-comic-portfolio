@@ -491,7 +491,7 @@ class _ComicBackground extends StatelessWidget {
               height: 150,
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
-                color: AppColors.yellow.withOpacity(0.18),
+                color: AppColors.yellow.withValues(alpha: 0.18),
               ),
             ),
           ),
@@ -504,7 +504,7 @@ class _ComicBackground extends StatelessWidget {
               height: 130,
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
-                color: AppColors.red.withOpacity(0.12),
+                color: AppColors.red.withValues(alpha: 0.12),
               ),
             ),
           ),

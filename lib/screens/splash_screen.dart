@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../theme/app_colors.dart';
-import 'home_screen.dart';
+import 'main_shell.dart';
 
 class SplashScreen extends StatelessWidget {
   const SplashScreen({super.key});
@@ -129,7 +129,7 @@ _ComicButton(
     Navigator.pushReplacement(
       context,
       MaterialPageRoute(
-        builder: (context) => const HomeScreen(),
+        builder: (context) => const MainShell(),
       ),
     );
   },

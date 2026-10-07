@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
+
 import 'project_detail_screen.dart';
 
 import '../theme/app_colors.dart';
+import '../models/project_model.dart';
+import '../services/project_service.dart';
 
 // ==========================================================
 // PORTFOLIO SCREEN
@@ -420,135 +422,132 @@ class _AboutSection extends StatelessWidget {
                       width: 4,
                     ),
                   ),
-                child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Container(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 10,
-                      vertical: 5,
-                    ),
-                    decoration: BoxDecoration(
-                      color: AppColors.red,
-                      border: Border.all(
-                        color: AppColors.ink,
-                        width: 2,
-                      ),
-                    ),
-                    child: const Text(
-                      'CHARACTER PROFILE',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 9,
-                        fontWeight: FontWeight.w900,
-                        letterSpacing: 0.8,
-                      ),
-                    ),
-                  ),
-
-                  const SizedBox(height: 18),
-
-                  Row(
+                  child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                          const Text(
-  'IKA\nWAHYUNINGTYAS',
-  style: TextStyle(
-    fontSize: 21,
-    height: 0.95,
-    fontWeight: FontWeight.w900,
-    color: AppColors.ink,
-  ),
-),
-
-const SizedBox(height: 8),
-
-const Text(
-  'NIM: E41251028',
-  style: TextStyle(
-    fontSize: 11,
-    fontWeight: FontWeight.w900,
-    letterSpacing: 0.5,
-    color: AppColors.red,
-  ),
-),
-
-const SizedBox(height: 10),
-
-const Text(
-  'An Informatics Engineering student '
-  'who loves technology, creativity, '
-  'and turning ideas into digital experiences.',
-  style: TextStyle(
-    fontSize: 11,
-    height: 1.4,
-    fontWeight: FontWeight.w600,
-    color: AppColors.ink,
-  ),
-),
-                          ],
-                        ),
-                      ),
-
-                      const SizedBox(width: 10),
-
                       Container(
-                        width: 82,
-                        height: 105,
-                        padding: const EdgeInsets.all(3),
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 10,
+                          vertical: 5,
+                        ),
                         decoration: BoxDecoration(
-                          color: AppColors.paper,
+                          color: AppColors.red,
                           border: Border.all(
                             color: AppColors.ink,
-                            width: 3,
+                            width: 2,
                           ),
-                          boxShadow: const [
-                            BoxShadow(
-                              color: AppColors.ink,
-                              offset: Offset(3, 3),
+                        ),
+                        child: const Text(
+                          'CHARACTER PROFILE',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 9,
+                            fontWeight: FontWeight.w900,
+                            letterSpacing: 0.8,
+                          ),
+                        ),
+                      ),
+
+                      const SizedBox(height: 18),
+
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment:
+                                  CrossAxisAlignment.start,
+                              children: [
+                                const Text(
+                                  'IKA\nWAHYUNINGTYAS',
+                                  style: TextStyle(
+                                    fontSize: 21,
+                                    height: 0.95,
+                                    fontWeight: FontWeight.w900,
+                                    color: AppColors.ink,
+                                  ),
+                                ),
+
+                                const SizedBox(height: 8),
+
+                                const Text(
+                                  'NIM: E41251028',
+                                  style: TextStyle(
+                                    fontSize: 11,
+                                    fontWeight: FontWeight.w900,
+                                    letterSpacing: 0.5,
+                                    color: AppColors.red,
+                                  ),
+                                ),
+
+                                const SizedBox(height: 10),
+
+                                const Text(
+                                  'An Informatics Engineering student '
+                                  'who loves technology, creativity, '
+                                  'and turning ideas into digital experiences.',
+                                  style: TextStyle(
+                                    fontSize: 11,
+                                    height: 1.4,
+                                    fontWeight: FontWeight.w600,
+                                    color: AppColors.ink,
+                                  ),
+                                ),
+                              ],
                             ),
-                          ],
-                        ),
-                        child: ClipRect(
-                          child: Image.asset(
-                            'assets/images/ika1.jpeg',
-                            fit: BoxFit.cover,
                           ),
-                        ),
+
+                          const SizedBox(width: 10),
+
+                          Container(
+                            width: 82,
+                            height: 105,
+                            padding: const EdgeInsets.all(3),
+                            decoration: BoxDecoration(
+                              color: AppColors.paper,
+                              border: Border.all(
+                                color: AppColors.ink,
+                                width: 3,
+                              ),
+                              boxShadow: const [
+                                BoxShadow(
+                                  color: AppColors.ink,
+                                  offset: Offset(3, 3),
+                                ),
+                              ],
+                            ),
+                            child: ClipRect(
+                              child: Image.asset(
+                                'assets/images/ika1.jpeg',
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+
+                      const SizedBox(height: 18),
+
+                      const Row(
+                        children: [
+                          _StatBox(
+                            number: '03',
+                            label: 'SEMESTER',
+                          ),
+                          SizedBox(width: 10),
+                          _StatBox(
+                            number: 'TI',
+                            label: 'MAJOR',
+                          ),
+                          SizedBox(width: 10),
+                          _StatBox(
+                            number: '∞',
+                            label: 'IDEAS',
+                          ),
+                        ],
                       ),
                     ],
                   ),
-
-                  const SizedBox(height: 18),
-
-                  const Row(
-                    children: [
-                      _StatBox(
-                        number: '03',
-                        label: 'SEMESTER',
-                      ),
-
-                      SizedBox(width: 10),
-
-                      _StatBox(
-                        number: 'TI',
-                        label: 'MAJOR',
-                      ),
-
-                      SizedBox(width: 10),
-
-                      _StatBox(
-                        number: '∞',
-                        label: 'IDEAS',
-                      ),
-                    ],
-                  ),
-                ],
-              ),
                 ),
               ],
             ),
@@ -674,37 +673,37 @@ const Text(
           const SizedBox(height: 20),
 
           const _ToolCard(
-          title: 'SOFTWARE',
-          icon: Icons.computer,
-          items: [
-            'Flutter',
-            'Dart',
-            'Visual Studio Code',
-            'Figma',
-            'GitHub',
-            'GitLab',
-            'Three.js',
-            'Node-RED',
-          ],
-          color: AppColors.blue,
-        ),
+            title: 'SOFTWARE',
+            icon: Icons.computer,
+            items: [
+              'Flutter',
+              'Dart',
+              'Visual Studio Code',
+              'Figma',
+              'GitHub',
+              'GitLab',
+              'Three.js',
+              'Node-RED',
+            ],
+            color: AppColors.blue,
+          ),
 
           const SizedBox(height: 18),
 
           const _ToolCard(
-          title: 'HARDWARE',
-          icon: Icons.memory,
-          items: [
-            'ESP32',
-            'Sensor',
-            'Relay',
-            'Arduino',
-            'Laptop',
-            'Computer',
-            'Mobile Device',
-          ],
-          color: AppColors.yellow,
-        ),
+            title: 'HARDWARE',
+            icon: Icons.memory,
+            items: [
+              'ESP32',
+              'Sensor',
+              'Relay',
+              'Arduino',
+              'Laptop',
+              'Computer',
+              'Mobile Device',
+            ],
+            color: AppColors.yellow,
+          ),
 
           const SizedBox(height: 45),
 
@@ -744,7 +743,7 @@ const Text(
 }
 
 // ==========================================================
-// PROJECTS SECTION
+// PROJECTS SECTION - MYSQL
 // ==========================================================
 
 class _ProjectsSection extends StatefulWidget {
@@ -755,7 +754,7 @@ class _ProjectsSection extends StatefulWidget {
 }
 
 class _ProjectsSectionState extends State<_ProjectsSection> {
-  String _selectedTechnology = 'ALL TECHNOLOGIES';
+  final ProjectService _projectService = ProjectService();
 
   final PageController _pageController = PageController();
 
@@ -773,13 +772,112 @@ class _ProjectsSectionState extends State<_ProjectsSection> {
     'Web Development',
     'Mobile Development',
   ];
+
+  List<Project> _projects = [];
+
+  String _selectedTechnology = 'ALL TECHNOLOGIES';
+
+  bool _isLoading = true;
+
+  String? _errorMessage;
+
+  int _currentProjectPage = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadProjects();
+  }
+
+  Future<void> _loadProjects() async {
+    try {
+      final projects = await _projectService.getProjects();
+
+      if (!mounted) return;
+
+      setState(() {
+        _projects = projects;
+        _isLoading = false;
+        _errorMessage = null;
+      });
+    } catch (e) {
+      if (!mounted) return;
+
+      setState(() {
+        _isLoading = false;
+        _errorMessage = e.toString();
+      });
+    }
+  }
+
   bool _matchesTechnology(List<String> technologies) {
-    return _selectedTechnology == 'ALL TECHNOLOGIES' ||
-        technologies.contains(_selectedTechnology);
+    if (_selectedTechnology == 'ALL TECHNOLOGIES') {
+      return true;
+    }
+
+    return technologies.contains(_selectedTechnology);
+  }
+
+  List<Project> get _filteredProjects {
+    return _projects
+        .where(
+          (project) => _matchesTechnology(
+            project.technologies,
+          ),
+        )
+        .toList();
+  }
+
+  void _changeTechnology(String? value) {
+    if (value == null) return;
+
+    setState(() {
+      _selectedTechnology = value;
+      _currentProjectPage = 0;
+    });
+
+    if (_pageController.hasClients) {
+      _pageController.jumpToPage(0);
+    }
+  }
+
+  Color _getProjectColor(int index) {
+    const colors = [
+      AppColors.blue,
+      AppColors.red,
+      AppColors.yellow,
+      AppColors.panelBlue,
+    ];
+
+    return colors[index % colors.length];
+  }
+
+  IconData _getProjectIcon(String category) {
+    final categoryLower = category.toLowerCase();
+
+    if (categoryLower.contains('mobile')) {
+      return Icons.phone_android_rounded;
+    }
+
+    if (categoryLower.contains('web')) {
+      return Icons.language_rounded;
+    }
+
+    if (categoryLower.contains('iot')) {
+      return Icons.sensors_rounded;
+    }
+
+    if (categoryLower.contains('ui')) {
+      return Icons.design_services_rounded;
+    }
+
+    return Icons.code_rounded;
   }
 
   @override
   Widget build(BuildContext context) {
+    final filteredProjects = _filteredProjects;
+
     return Container(
       padding: const EdgeInsets.symmetric(
         horizontal: 20,
@@ -840,7 +938,10 @@ class _ProjectsSectionState extends State<_ProjectsSection> {
 
           const SizedBox(height: 22),
 
+          // ====================================================
           // FILTER
+          // ====================================================
+
           Container(
             width: double.infinity,
             padding: const EdgeInsets.all(14),
@@ -892,26 +993,22 @@ class _ProjectsSectionState extends State<_ProjectsSection> {
                         fontSize: 11,
                         fontWeight: FontWeight.w900,
                       ),
-                      items: _technologies.map((technology) {
-                        return DropdownMenuItem<String>(
-                          value: technology,
-                          child: Text(
-                            technology,
-                            style: const TextStyle(
-                              color: AppColors.ink,
-                              fontSize: 11,
-                              fontWeight: FontWeight.w900,
+                      items: _technologies.map(
+                        (technology) {
+                          return DropdownMenuItem<String>(
+                            value: technology,
+                            child: Text(
+                              technology,
+                              style: const TextStyle(
+                                color: AppColors.ink,
+                                fontSize: 11,
+                                fontWeight: FontWeight.w900,
+                              ),
                             ),
-                          ),
-                        );
-                      }).toList(),
-                      onChanged: (value) {
-                        if (value == null) return;
-
-                        setState(() {
-                          _selectedTechnology = value;
-                        });
-                      },
+                          );
+                        },
+                      ).toList(),
+                      onChanged: _changeTechnology,
                     ),
                   ),
                 ),
@@ -921,124 +1018,185 @@ class _ProjectsSectionState extends State<_ProjectsSection> {
 
           const SizedBox(height: 30),
 
-// =====================================================
-// PROJECTS
-// =====================================================
+          // ====================================================
+          // LOADING
+          // ====================================================
 
-SizedBox(
-  height: 430,
-  child: PageView(
-    controller: _pageController,
-    children: [
-  if (_matchesTechnology([
-    'JavaScript',
-    'PHP',
-    'MySQL',
-    'Web Development',
-  ]))
-    const _ProjectCard(
-      number: '01',
-      title: 'BENGKEL BUBUT',
-      category: 'WEB QUEUE MANAGEMENT SYSTEM',
-      description:
-          'A web-based queue management system for a '
-          'lathe workshop, developed to help manage '
-          'customer queues and workshop services.',
-      technologies: [
-        'JavaScript',
-        'PHP',
-        'MySQL',
-        'Web Development',
-      ],
-      color: AppColors.blue,
-      icon: Icons.dns_rounded,
-    ),
+          if (_isLoading)
+            const SizedBox(
+              height: 430,
+              child: Center(
+                child: CircularProgressIndicator(),
+              ),
+            )
 
-  if (_matchesTechnology([
-    'Flutter',
-    'Dart',
-    'PHP',
-    'MySQL',
-    'Mobile Development',
-  ]))
-    const _ProjectCard(
-      number: '02',
-      title: 'CLOTHING RENTAL APP',
-      category: 'MOBILE RENTAL APPLICATION',
-      description:
-          'A mobile application for a clothing rental '
-          'business, developed to support the rental '
-          'process and provide a simple user experience.',
-      technologies: [
-        'Flutter',
-        'Dart',
-        'PHP',
-        'MySQL',
-        'Mobile Development',
-      ],
-      color: AppColors.red,
-      icon: Icons.checkroom_rounded,
-    ),
+          // ====================================================
+          // ERROR
+          // ====================================================
 
-  if (_matchesTechnology([
-    'IoT',
-    'ESP32',
-    'Three.js',
-    'Node-RED',
-  ]))
-    const _ProjectCard(
-      number: '03',
-      title: 'SMART CITY PROJECT',
-      category: 'IOT & SMART CITY PROJECT',
-      description:
-          'A Smart City project developed during WFK '
-          'with Korean students, exploring IoT-based '
-          'technology and smart environmental solutions.',
-      technologies: [
-        'IoT',
-        'ESP32',
-        'Three.js',
-        'Node-RED',
-      ],
-      color: AppColors.yellow,
-      icon: Icons.location_city_rounded,
-      imageAsset: 'assets/images/ika_hero.jpeg',
-    ),
+          else if (_errorMessage != null)
+            SizedBox(
+              height: 430,
+              child: Center(
+                child: Padding(
+                  padding: const EdgeInsets.all(20),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const Icon(
+                        Icons.error_outline,
+                        size: 50,
+                        color: AppColors.red,
+                      ),
 
-  if (_matchesTechnology([
-    'Flutter',
-    'Web Development',
-    'Mobile Development',
-  ]))
-    const _ProjectCard(
-      number: '04',
-      title: 'COMING SOON',
-      category: 'SMK PKL ATTENDANCE SYSTEM',
-      description:
-          'A mobile application and web system for '
-          'managing student attendance during SMK '
-          'internships (PKL). Currently in the planning '
-          'and development stage.',
-      technologies: [
-        'Flutter',
-        'Web Development',
-        'Mobile Development',
-      ],
-      color: AppColors.panelBlue,
-      icon: Icons.rocket_launch_rounded,
-    ),
-],
-  ),
-),
+                      const SizedBox(height: 12),
+
+                      const Text(
+                        'FAILED TO LOAD PROJECTS',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontSize: 14,
+                          fontWeight: FontWeight.w900,
+                          color: AppColors.ink,
+                        ),
+                      ),
+
+                      const SizedBox(height: 8),
+
+                      Text(
+                        _errorMessage!,
+                        textAlign: TextAlign.center,
+                        style: const TextStyle(
+                          fontSize: 10,
+                          color: AppColors.ink,
+                        ),
+                      ),
+
+                      const SizedBox(height: 16),
+
+                      ElevatedButton(
+                        onPressed: () {
+                          setState(() {
+                            _isLoading = true;
+                            _errorMessage = null;
+                          });
+
+                          _loadProjects();
+                        },
+                        child: const Text('RETRY'),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            )
+
+          // ====================================================
+          // EMPTY
+          // ====================================================
+
+          else if (filteredProjects.isEmpty)
+            const SizedBox(
+              height: 430,
+              child: Center(
+                child: Text(
+                  'NO PROJECTS FOUND',
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w900,
+                    color: AppColors.ink,
+                  ),
+                ),
+              ),
+            )
+
+          // ====================================================
+          // PROJECT PAGE VIEW
+          // ====================================================
+
+          else
+            SizedBox(
+              height: 430,
+              child: PageView.builder(
+                controller: _pageController,
+                itemCount: filteredProjects.length,
+                onPageChanged: (index) {
+                  setState(() {
+                    _currentProjectPage = index;
+                  });
+                },
+                itemBuilder: (context, index) {
+                  final project = filteredProjects[index];
+
+                  return _ProjectCard(
+                    number: '${index + 1}'.padLeft(2, '0'),
+                    title: project.title.toUpperCase(),
+                    category: project.category.toUpperCase(),
+                    description: project.description,
+                    technologies: project.technologies,
+                    color: _getProjectColor(index),
+                    icon: _getProjectIcon(
+                      project.category,
+                    ),
+                    githubUrl: project.githubUrl,
+                    imageAsset: project.image,
+                  );
+                },
+              ),
+            ),
+
+          // ====================================================
+          // PROJECT INDICATOR
+          // ====================================================
+
+          if (!_isLoading &&
+              _errorMessage == null &&
+              filteredProjects.isNotEmpty)
+            Padding(
+              padding: const EdgeInsets.only(top: 16),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: List.generate(
+                  filteredProjects.length,
+                  (index) {
+                    final isActive =
+                        index == _currentProjectPage;
+
+                    return AnimatedContainer(
+                      duration: const Duration(
+                        milliseconds: 200,
+                      ),
+                      margin: const EdgeInsets.symmetric(
+                        horizontal: 4,
+                      ),
+                      width: isActive ? 28 : 10,
+                      height: 10,
+                      decoration: BoxDecoration(
+                        color: isActive
+                            ? AppColors.red
+                            : AppColors.ink,
+                        border: Border.all(
+                          color: AppColors.ink,
+                          width: 2,
+                        ),
+                      ),
+                    );
+                  },
+                ),
+              ),
+            ),
+
+          const SizedBox(height: 20),
         ],
       ),
     );
   }
+
   @override
-void dispose() {
-  _pageController.dispose();
-  super.dispose();
-}
+  void dispose() {
+    _pageController.dispose();
+    super.dispose();
+  }
 }
 
 // ==========================================================
@@ -1099,7 +1257,8 @@ class _ProjectCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  mainAxisAlignment:
+                      MainAxisAlignment.spaceBetween,
                   children: [
                     Container(
                       padding: const EdgeInsets.symmetric(
@@ -1122,6 +1281,7 @@ class _ProjectCard extends StatelessWidget {
                         ),
                       ),
                     ),
+
                     Icon(
                       icon,
                       size: 32,
@@ -1134,6 +1294,8 @@ class _ProjectCard extends StatelessWidget {
 
                 Text(
                   title,
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
                   style: const TextStyle(
                     fontSize: 25,
                     fontWeight: FontWeight.w900,
@@ -1145,6 +1307,8 @@ class _ProjectCard extends StatelessWidget {
 
                 Text(
                   category,
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
                   style: const TextStyle(
                     fontSize: 9,
                     fontWeight: FontWeight.w900,
@@ -1157,6 +1321,8 @@ class _ProjectCard extends StatelessWidget {
 
                 Text(
                   description,
+                  maxLines: 4,
+                  overflow: TextOverflow.ellipsis,
                   style: const TextStyle(
                     fontSize: 12,
                     height: 1.5,
@@ -1182,52 +1348,56 @@ class _ProjectCard extends StatelessWidget {
                 Wrap(
                   spacing: 8,
                   runSpacing: 8,
-                  children: technologies.map((technology) {
-                    return Container(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 10,
-                        vertical: 6,
-                      ),
-                      decoration: BoxDecoration(
-                        color: AppColors.cream,
-                        border: Border.all(
-                          color: AppColors.ink,
-                          width: 2,
+                  children: technologies.map(
+                    (technology) {
+                      return Container(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 10,
+                          vertical: 6,
                         ),
-                      ),
-                      child: Text(
-                        technology,
-                        style: const TextStyle(
-                          fontSize: 9,
-                          fontWeight: FontWeight.w900,
-                          color: AppColors.ink,
+                        decoration: BoxDecoration(
+                          color: AppColors.cream,
+                          border: Border.all(
+                            color: AppColors.ink,
+                            width: 2,
+                          ),
                         ),
-                      ),
-                    );
-                  }).toList(),
+                        child: Text(
+                          technology,
+                          style: const TextStyle(
+                            fontSize: 9,
+                            fontWeight: FontWeight.w900,
+                            color: AppColors.ink,
+                          ),
+                        ),
+                      );
+                    },
+                  ).toList(),
                 ),
 
                 const SizedBox(height: 22),
 
                 GestureDetector(
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => ProjectDetailScreen(
-                      projectNumber: 'MISSION #$number',
-                      title: title,
-                      category: category,
-                      description: description,
-                      techStack: technologies,
-                      githubUrl: githubUrl,
-                      imageAsset: imageAsset,
-                    ),
-                    ),
-                  );
-                },
-                child: Container(
-                                  padding: const EdgeInsets.symmetric(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) =>
+                            ProjectDetailScreen(
+                          projectNumber:
+                              'MISSION #$number',
+                          title: title,
+                          category: category,
+                          description: description,
+                          techStack: technologies,
+                          githubUrl: githubUrl,
+                          imageAsset: imageAsset,
+                        ),
+                      ),
+                    );
+                  },
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(
                       horizontal: 14,
                       vertical: 10,
                     ),
@@ -1250,7 +1420,9 @@ class _ProjectCard extends StatelessWidget {
                             letterSpacing: 0.8,
                           ),
                         ),
+
                         SizedBox(width: 8),
+
                         Icon(
                           Icons.arrow_forward,
                           color: Colors.white,
@@ -1367,7 +1539,9 @@ class _OrganizationSection extends StatelessWidget {
                     fontWeight: FontWeight.w900,
                   ),
                 ),
+
                 SizedBox(height: 8),
+
                 Text(
                   'EVERY MISSION IS BETTER '
                   'WITH THE RIGHT ALLIES.',
@@ -1640,7 +1814,8 @@ class _StoryPanel extends StatelessWidget {
 
             Expanded(
               child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+                crossAxisAlignment:
+                    CrossAxisAlignment.start,
                 children: [
                   Text(
                     title,
@@ -1734,7 +1909,8 @@ class _EducationCard extends StatelessWidget {
 
             Expanded(
               child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+                crossAxisAlignment:
+                    CrossAxisAlignment.start,
                 children: [
                   Text(
                     year,
@@ -1957,29 +2133,31 @@ class _ToolCard extends StatelessWidget {
           Wrap(
             spacing: 8,
             runSpacing: 8,
-            children: items.map((item) {
-              return Container(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 10,
-                  vertical: 7,
-                ),
-                decoration: BoxDecoration(
-                  color: AppColors.cream,
-                  border: Border.all(
-                    color: AppColors.ink,
-                    width: 2,
+            children: items.map(
+              (item) {
+                return Container(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 10,
+                    vertical: 7,
                   ),
-                ),
-                child: Text(
-                  item,
-                  style: const TextStyle(
-                    fontSize: 9,
-                    fontWeight: FontWeight.w900,
-                    color: AppColors.ink,
+                  decoration: BoxDecoration(
+                    color: AppColors.cream,
+                    border: Border.all(
+                      color: AppColors.ink,
+                      width: 2,
+                    ),
                   ),
-                ),
-              );
-            }).toList(),
+                  child: Text(
+                    item,
+                    style: const TextStyle(
+                      fontSize: 9,
+                      fontWeight: FontWeight.w900,
+                      color: AppColors.ink,
+                    ),
+                  ),
+                );
+              },
+            ).toList(),
           ),
         ],
       ),
