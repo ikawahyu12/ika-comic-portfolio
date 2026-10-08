@@ -6,7 +6,7 @@ import '../models/project_model.dart';
 
 class ProjectService {
   static const String baseUrl =
-      'http://192.168.1.3/portfolio_api/api';
+      'http://172.16.104.248/portfolio_api/api';
 
   Future<List<Project>> getProjects() async {
     try {
@@ -44,4 +44,51 @@ class ProjectService {
       );
     }
   }
+
+  Future<bool> createProject({
+  required String title,
+  required String description,
+  required String category,
+  required String technologies,
+  String? image,
+  String? githubUrl,
+}) async {
+  try {
+    final response = await http.post(
+      Uri.parse('$baseUrl/projects.php'),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: jsonEncode({
+        'title': title,
+        'description': description,
+        'category': category,
+        'technologies': technologies,
+        'image': image,
+        'github_url': githubUrl,
+      }),
+    );
+
+    if (response.statusCode != 200) {
+      throw Exception(
+        'Server error: ${response.statusCode}',
+      );
+    }
+
+    final Map<String, dynamic> body =
+        jsonDecode(response.body);
+
+    if (body['success'] != true) {
+      throw Exception(
+        body['message'] ?? 'Gagal menambahkan project',
+      );
+    }
+
+    return true;
+  } catch (e) {
+    throw Exception(
+      'Gagal menambahkan project: $e',
+    );
+  }
+}
 }
