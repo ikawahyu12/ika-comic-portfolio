@@ -1,29 +1,34 @@
 import 'package:flutter/material.dart';
 
+import '../models/project_model.dart';
 import '../services/project_service.dart';
-import 'add_portfolio_screen.dart';
 
-class AddPortfolioScreen extends StatefulWidget {
-  const AddPortfolioScreen({super.key});
+class EditPortfolioScreen extends StatefulWidget {
+  final Project project;
+
+  const EditPortfolioScreen({
+    super.key,
+    required this.project,
+  });
 
   @override
-  State<AddPortfolioScreen> createState() =>
-      _AddPortfolioScreenState();
+  State<EditPortfolioScreen> createState() =>
+      _EditPortfolioScreenState();
 }
 
-class _AddPortfolioScreenState
-    extends State<AddPortfolioScreen> {
+class _EditPortfolioScreenState
+    extends State<EditPortfolioScreen> {
   final _formKey = GlobalKey<FormState>();
 
-  final _titleController = TextEditingController();
-  final _descriptionController = TextEditingController();
-  final _technologiesController = TextEditingController();
-  final _imageController = TextEditingController();
-  final _githubController = TextEditingController();
+  late final TextEditingController _titleController;
+  late final TextEditingController _descriptionController;
+  late final TextEditingController _technologiesController;
+  late final TextEditingController _imageController;
+  late final TextEditingController _githubController;
 
   final ProjectService _projectService = ProjectService();
 
-  String _selectedCategory = 'Mobile Development';
+  late String _selectedCategory;
 
   bool _isLoading = false;
 
@@ -36,6 +41,37 @@ class _AddPortfolioScreenState
   ];
 
   @override
+  void initState() {
+    super.initState();
+
+    _titleController = TextEditingController(
+      text: widget.project.title,
+    );
+
+    _descriptionController = TextEditingController(
+      text: widget.project.description,
+    );
+
+    _technologiesController = TextEditingController(
+      text: widget.project.technologies.join(', '),
+    );
+
+    _imageController = TextEditingController(
+      text: widget.project.image ?? '',
+    );
+
+    _githubController = TextEditingController(
+      text: widget.project.githubUrl ?? '',
+    );
+
+    _selectedCategory = _categories.contains(
+      widget.project.category,
+    )
+        ? widget.project.category
+        : 'Other';
+  }
+
+  @override
   void dispose() {
     _titleController.dispose();
     _descriptionController.dispose();
@@ -46,7 +82,7 @@ class _AddPortfolioScreenState
     super.dispose();
   }
 
-  Future<void> _submitProject() async {
+  Future<void> _updateProject() async {
     if (!_formKey.currentState!.validate()) {
       return;
     }
@@ -56,7 +92,8 @@ class _AddPortfolioScreenState
     });
 
     try {
-      await _projectService.createProject(
+      await _projectService.updateProject(
+        id: widget.project.id,
         title: _titleController.text.trim(),
         description: _descriptionController.text.trim(),
         category: _selectedCategory,
@@ -74,7 +111,7 @@ class _AddPortfolioScreenState
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
           content: Text(
-            'Portfolio berhasil ditambahkan',
+            'Portfolio berhasil diperbarui',
           ),
         ),
       );
@@ -117,7 +154,7 @@ class _AddPortfolioScreenState
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Tambah Portfolio'),
+        title: const Text('Edit Portfolio'),
       ),
       body: SafeArea(
         child: SingleChildScrollView(
@@ -129,7 +166,7 @@ class _AddPortfolioScreenState
                   CrossAxisAlignment.stretch,
               children: [
                 const Text(
-                  'Tambah Portfolio Baru',
+                  'Edit Portfolio',
                   style: TextStyle(
                     fontSize: 24,
                     fontWeight: FontWeight.bold,
@@ -139,7 +176,7 @@ class _AddPortfolioScreenState
                 const SizedBox(height: 8),
 
                 const Text(
-                  'Masukkan informasi karya atau project kamu.',
+                  'Ubah informasi project yang dipilih.',
                 ),
 
                 const SizedBox(height: 24),
@@ -182,13 +219,13 @@ class _AddPortfolioScreenState
                 const SizedBox(height: 16),
 
                 DropdownButtonFormField<String>(
-                 initialValue: _selectedCategory,
+                  initialValue: _selectedCategory,
                   decoration: _inputDecoration(
                     'Kategori',
                     Icons.category,
                   ),
                   items: _categories.map((category) {
-                    return DropdownMenuItem(
+                    return DropdownMenuItem<String>(
                       value: category,
                       child: Text(category),
                     );
@@ -205,21 +242,23 @@ class _AddPortfolioScreenState
                 const SizedBox(height: 16),
 
                 TextFormField(
-                controller: _technologiesController,
-                decoration: _inputDecoration(
-                  'Teknologi',
-                  Icons.code,
-                ).copyWith(
-                  hintText: 'Contoh: Flutter, Dart, MySQL',
-                ),
-                validator: (value) {
-                  if (value == null || value.trim().isEmpty) {
-                    return 'Teknologi wajib diisi';
-                  }
+                  controller: _technologiesController,
+                  decoration: _inputDecoration(
+                    'Teknologi',
+                    Icons.code,
+                  ).copyWith(
+                    hintText:
+                        'Contoh: Flutter, Dart, MySQL',
+                  ),
+                  validator: (value) {
+                    if (value == null ||
+                        value.trim().isEmpty) {
+                      return 'Teknologi wajib diisi';
+                    }
 
-                  return null;
-                },
-              ),
+                    return null;
+                  },
+                ),
 
                 const SizedBox(height: 16),
 
@@ -229,7 +268,8 @@ class _AddPortfolioScreenState
                     'Path Gambar',
                     Icons.image,
                   ).copyWith(
-                    hintText: 'Contoh: assets/images/project.png',
+                    hintText:
+                        'Contoh: assets/images/project.png',
                   ),
                 ),
 
@@ -253,7 +293,9 @@ class _AddPortfolioScreenState
                   height: 52,
                   child: ElevatedButton(
                     onPressed:
-                        _isLoading ? null : _submitProject,
+                        _isLoading
+                            ? null
+                            : _updateProject,
                     child: _isLoading
                         ? const SizedBox(
                             width: 24,
@@ -265,7 +307,7 @@ class _AddPortfolioScreenState
                             ),
                           )
                         : const Text(
-                            'SIMPAN PORTFOLIO',
+                            'SIMPAN PERUBAHAN',
                           ),
                   ),
                 ),

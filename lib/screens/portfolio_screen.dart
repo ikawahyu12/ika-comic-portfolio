@@ -5,6 +5,8 @@ import 'project_detail_screen.dart';
 import '../theme/app_colors.dart';
 import '../models/project_model.dart';
 import '../services/project_service.dart';
+import 'add_portfolio_screen.dart';
+import 'edit_portfolio_screen.dart';
 
 // ==========================================================
 // PORTFOLIO SCREEN
@@ -789,6 +791,10 @@ class _ProjectsSectionState extends State<_ProjectsSection> {
     _loadProjects();
   }
 
+  // ==========================================================
+  // LOAD PROJECTS
+  // ==========================================================
+
   Future<void> _loadProjects() async {
     try {
       final projects = await _projectService.getProjects();
@@ -809,6 +815,139 @@ class _ProjectsSectionState extends State<_ProjectsSection> {
       });
     }
   }
+
+  // ==========================================================
+  // ADD PORTFOLIO
+  // ==========================================================
+
+  Future<void> _openAddPortfolio() async {
+    final result = await Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => const AddPortfolioScreen(),
+      ),
+    );
+
+    // Jika berhasil menambahkan portfolio,
+    // ambil ulang data dari MySQL.
+    if (result == true) {
+      setState(() {
+        _isLoading = true;
+        _errorMessage = null;
+        _currentProjectPage = 0;
+      });
+
+      if (_pageController.hasClients) {
+        _pageController.jumpToPage(0);
+      }
+
+      await _loadProjects();
+    }
+  }
+
+  Future<void> _openEditPortfolio(
+  Project project,
+) async {
+  final result = await Navigator.push(
+    context,
+    MaterialPageRoute(
+      builder: (context) => EditPortfolioScreen(
+        project: project,
+      ),
+    ),
+  );
+
+  if (result == true) {
+    setState(() {
+      _isLoading = true;
+      _errorMessage = null;
+      _currentProjectPage = 0;
+    });
+
+    if (_pageController.hasClients) {
+      _pageController.jumpToPage(0);
+    }
+
+    await _loadProjects();
+  }
+}
+
+Future<void> _deletePortfolio(Project project) async {
+  final confirmed = await showDialog<bool>(
+    context: context,
+    builder: (context) {
+      return AlertDialog(
+        title: const Text('Hapus Portfolio'),
+        content: Text(
+          'Yakin ingin menghapus '
+          '"${project.title}"?',
+        ),
+        actions: [
+          TextButton(
+            onPressed: () {
+              Navigator.pop(context, false);
+            },
+            child: const Text('BATAL'),
+          ),
+          ElevatedButton(
+            onPressed: () {
+              Navigator.pop(context, true);
+            },
+            child: const Text('HAPUS'),
+          ),
+        ],
+      );
+    },
+  );
+
+  if (confirmed != true) {
+    return;
+  }
+
+  try {
+    setState(() {
+      _isLoading = true;
+      _errorMessage = null;
+    });
+
+    await _projectService.deleteProject(
+      project.id,
+    );
+
+    if (!mounted) return;
+
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(
+        content: Text(
+          'Portfolio berhasil dihapus',
+        ),
+      ),
+    );
+
+    await _loadProjects();
+  } catch (e) {
+    if (!mounted) return;
+
+    setState(() {
+      _isLoading = false;
+    });
+
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(
+          e.toString().replaceFirst(
+            'Exception: ',
+            '',
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+  // ==========================================================
+  // FILTER TECHNOLOGY
+  // ==========================================================
 
   bool _matchesTechnology(List<String> technologies) {
     if (_selectedTechnology == 'ALL TECHNOLOGIES') {
@@ -841,6 +980,10 @@ class _ProjectsSectionState extends State<_ProjectsSection> {
     }
   }
 
+  // ==========================================================
+  // PROJECT COLOR
+  // ==========================================================
+
   Color _getProjectColor(int index) {
     const colors = [
       AppColors.blue,
@@ -851,6 +994,10 @@ class _ProjectsSectionState extends State<_ProjectsSection> {
 
     return colors[index % colors.length];
   }
+
+  // ==========================================================
+  // PROJECT ICON
+  // ==========================================================
 
   IconData _getProjectIcon(String category) {
     final categoryLower = category.toLowerCase();
@@ -874,6 +1021,10 @@ class _ProjectsSectionState extends State<_ProjectsSection> {
     return Icons.code_rounded;
   }
 
+  // ==========================================================
+  // BUILD
+  // ==========================================================
+
   @override
   Widget build(BuildContext context) {
     final filteredProjects = _filteredProjects;
@@ -886,6 +1037,11 @@ class _ProjectsSectionState extends State<_ProjectsSection> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+
+          // ====================================================
+          // CHAPTER
+          // ====================================================
+
           Transform.rotate(
             angle: 0.02,
             child: Container(
@@ -914,6 +1070,10 @@ class _ProjectsSectionState extends State<_ProjectsSection> {
 
           const SizedBox(height: 16),
 
+          // ====================================================
+          // TITLE
+          // ====================================================
+
           const Text(
             'MY\nPROJECTS!',
             style: TextStyle(
@@ -939,6 +1099,46 @@ class _ProjectsSectionState extends State<_ProjectsSection> {
           const SizedBox(height: 22),
 
           // ====================================================
+          // ADD PORTFOLIO BUTTON
+          // ====================================================
+
+          SizedBox(
+            width: double.infinity,
+            child: ElevatedButton.icon(
+              onPressed: _openAddPortfolio,
+              icon: const Icon(
+                Icons.add,
+                color: Colors.white,
+              ),
+              label: const Text(
+                'TAMBAH PORTFOLIO',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 11,
+                  fontWeight: FontWeight.w900,
+                  letterSpacing: 0.8,
+                ),
+              ),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: AppColors.red,
+                foregroundColor: Colors.white,
+                padding: const EdgeInsets.symmetric(
+                  vertical: 14,
+                ),
+                shape: const RoundedRectangleBorder(
+                  borderRadius: BorderRadius.zero,
+                  side: BorderSide(
+                    color: AppColors.ink,
+                    width: 3,
+                  ),
+                ),
+              ),
+            ),
+          ),
+
+          const SizedBox(height: 22),
+
+          // ====================================================
           // FILTER
           // ====================================================
 
@@ -955,6 +1155,7 @@ class _ProjectsSectionState extends State<_ProjectsSection> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+
                 const Text(
                   'FILTER BY TECHNOLOGY',
                   style: TextStyle(
@@ -1041,8 +1242,10 @@ class _ProjectsSectionState extends State<_ProjectsSection> {
                 child: Padding(
                   padding: const EdgeInsets.all(20),
                   child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
+                    mainAxisAlignment:
+                        MainAxisAlignment.center,
                     children: [
+
                       const Icon(
                         Icons.error_outline,
                         size: 50,
@@ -1140,6 +1343,12 @@ class _ProjectsSectionState extends State<_ProjectsSection> {
                     ),
                     githubUrl: project.githubUrl,
                     imageAsset: project.image,
+                    onEdit: () {
+                      _openEditPortfolio(project);
+                    },
+                    onDelete: () {
+                      _deletePortfolio(project);
+                    },
                   );
                 },
               ),
@@ -1155,7 +1364,8 @@ class _ProjectsSectionState extends State<_ProjectsSection> {
             Padding(
               padding: const EdgeInsets.only(top: 16),
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisAlignment:
+                    MainAxisAlignment.center,
                 children: List.generate(
                   filteredProjects.length,
                   (index) {
@@ -1166,7 +1376,8 @@ class _ProjectsSectionState extends State<_ProjectsSection> {
                       duration: const Duration(
                         milliseconds: 200,
                       ),
-                      margin: const EdgeInsets.symmetric(
+                      margin:
+                          const EdgeInsets.symmetric(
                         horizontal: 4,
                       ),
                       width: isActive ? 28 : 10,
@@ -1210,12 +1421,14 @@ class _ProjectCard extends StatelessWidget {
   final String description;
   final List<String> technologies;
   final Color color;
-
   final IconData icon;
   final String? githubUrl;
   final String? imageAsset;
+  final VoidCallback onEdit;
+  final VoidCallback onDelete;
 
   const _ProjectCard({
+    super.key,
     required this.number,
     required this.title,
     required this.category,
@@ -1223,8 +1436,10 @@ class _ProjectCard extends StatelessWidget {
     required this.technologies,
     required this.color,
     required this.icon,
-    this.githubUrl,
-    this.imageAsset,
+    required this.githubUrl,
+    required this.imageAsset,
+    required this.onEdit,
+    required this.onDelete,
   });
 
   @override
@@ -1254,14 +1469,16 @@ class _ProjectCard extends StatelessWidget {
               ),
             ),
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+              crossAxisAlignment:
+                  CrossAxisAlignment.start,
               children: [
                 Row(
                   mainAxisAlignment:
                       MainAxisAlignment.spaceBetween,
                   children: [
                     Container(
-                      padding: const EdgeInsets.symmetric(
+                      padding:
+                          const EdgeInsets.symmetric(
                         horizontal: 10,
                         vertical: 6,
                       ),
@@ -1281,7 +1498,6 @@ class _ProjectCard extends StatelessWidget {
                         ),
                       ),
                     ),
-
                     Icon(
                       icon,
                       size: 32,
@@ -1351,7 +1567,8 @@ class _ProjectCard extends StatelessWidget {
                   children: technologies.map(
                     (technology) {
                       return Container(
-                        padding: const EdgeInsets.symmetric(
+                        padding:
+                            const EdgeInsets.symmetric(
                           horizontal: 10,
                           vertical: 6,
                         ),
@@ -1397,7 +1614,8 @@ class _ProjectCard extends StatelessWidget {
                     );
                   },
                   child: Container(
-                    padding: const EdgeInsets.symmetric(
+                    padding:
+                        const EdgeInsets.symmetric(
                       horizontal: 14,
                       vertical: 10,
                     ),
@@ -1420,9 +1638,7 @@ class _ProjectCard extends StatelessWidget {
                             letterSpacing: 0.8,
                           ),
                         ),
-
                         SizedBox(width: 8),
-
                         Icon(
                           Icons.arrow_forward,
                           color: Colors.white,
@@ -1431,6 +1647,46 @@ class _ProjectCard extends StatelessWidget {
                       ],
                     ),
                   ),
+                ),
+
+                const SizedBox(height: 16),
+
+                Row(
+                  children: [
+                    Expanded(
+                      child: OutlinedButton.icon(
+                        onPressed: onEdit,
+                        icon: const Icon(
+                          Icons.edit,
+                          size: 18,
+                        ),
+                        label: const Text(
+                          'EDIT',
+                          style: TextStyle(
+                            fontWeight: FontWeight.w900,
+                          ),
+                        ),
+                      ),
+                    ),
+
+                    const SizedBox(width: 10),
+
+                    Expanded(
+                      child: ElevatedButton.icon(
+                        onPressed: onDelete,
+                        icon: const Icon(
+                          Icons.delete,
+                          size: 18,
+                        ),
+                        label: const Text(
+                          'HAPUS',
+                          style: TextStyle(
+                            fontWeight: FontWeight.w900,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               ],
             ),
