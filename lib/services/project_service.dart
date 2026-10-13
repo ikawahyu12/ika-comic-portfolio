@@ -1,3 +1,4 @@
+
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
@@ -5,41 +6,38 @@ import 'package:http/http.dart' as http;
 import '../models/project_model.dart';
 
 class ProjectService {
-  static const String baseUrl =
-      'http://172.16.103.160/portfolio_api/api';
+  // URL Laravel REST API
+  static const String baseUrl = 'http://127.0.0.1:8000/api/projects';
 
+  // READ: mengambil semua proyek
   Future<List<Project>> getProjects() async {
     try {
-      final uri = Uri.parse('$baseUrl/projects.php');
+      final response = await http.get(Uri.parse(baseUrl));
 
-      final response = await http.get(uri);
+      final Map<String, dynamic> body =
+          jsonDecode(response.body) as Map<String, dynamic>;
 
-      if (response.statusCode != 200) {
+      if (response.statusCode != 200 || body['success'] != true) {
         throw Exception(
-          'Server error: ${response.statusCode}',
+          body['message'] ?? 'Gagal mengambil data proyek',
         );
       }
 
-      final Map<String, dynamic> body = jsonDecode(response.body);
-
-      if (body['success'] != true) {
-        throw Exception(
-          'API mengembalikan status gagal',
-        );
-      }
-
-      final List<dynamic> data = body['data'] ?? [];
+      final List<dynamic> data = body['data'] as List<dynamic>;
 
       return data
-          .map((item) => Project.fromJson(item as Map<String, dynamic>))
+          .map(
+            (item) => Project.fromJson(
+              item as Map<String, dynamic>,
+            ),
+          )
           .toList();
     } catch (e) {
-      throw Exception(
-        'Gagal mengambil data project: $e',
-      );
+      throw Exception('Gagal mengambil data proyek: $e');
     }
   }
 
+  // CREATE: menambahkan proyek
   Future<bool> createProject({
     required String title,
     required String description,
@@ -50,10 +48,8 @@ class ProjectService {
   }) async {
     try {
       final response = await http.post(
-        Uri.parse('$baseUrl/projects.php'),
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        Uri.parse(baseUrl),
+        headers: {'Content-Type': 'application/json'},
         body: jsonEncode({
           'title': title,
           'description': description,
@@ -64,28 +60,22 @@ class ProjectService {
         }),
       );
 
-      if (response.statusCode != 200) {
-        throw Exception(
-          'Server error: ${response.statusCode}',
-        );
-      }
+      final Map<String, dynamic> body =
+          jsonDecode(response.body) as Map<String, dynamic>;
 
-      final Map<String, dynamic> body = jsonDecode(response.body);
-
-      if (body['success'] != true) {
+      if (response.statusCode != 201 || body['success'] != true) {
         throw Exception(
-          body['message'] ?? 'Gagal menambahkan project',
+          body['message'] ?? 'Gagal menambahkan proyek',
         );
       }
 
       return true;
     } catch (e) {
-      throw Exception(
-        'Gagal menambahkan project: $e',
-      );
+      throw Exception('Gagal menambahkan proyek: $e');
     }
   }
 
+  // UPDATE: memperbarui proyek
   Future<bool> updateProject({
     required int id,
     required String title,
@@ -97,12 +87,9 @@ class ProjectService {
   }) async {
     try {
       final response = await http.put(
-        Uri.parse('$baseUrl/projects.php'),
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        Uri.parse('$baseUrl/$id'),
+        headers: {'Content-Type': 'application/json'},
         body: jsonEncode({
-          'id': id,
           'title': title,
           'description': description,
           'category': category,
@@ -112,59 +99,41 @@ class ProjectService {
         }),
       );
 
-      if (response.statusCode != 200) {
-        throw Exception(
-          'Server error: ${response.statusCode}',
-        );
-      }
+      final Map<String, dynamic> body =
+          jsonDecode(response.body) as Map<String, dynamic>;
 
-      final Map<String, dynamic> body = jsonDecode(response.body);
-
-      if (body['success'] != true) {
+      if (response.statusCode != 200 || body['success'] != true) {
         throw Exception(
-          body['message'] ?? 'Gagal memperbarui portfolio',
+          body['message'] ?? 'Gagal memperbarui proyek',
         );
       }
 
       return true;
     } catch (e) {
-      throw Exception(
-        'Gagal memperbarui portfolio: $e',
-      );
+      throw Exception('Gagal memperbarui proyek: $e');
     }
   }
 
+  // DELETE: menghapus proyek
   Future<bool> deleteProject(int id) async {
     try {
       final response = await http.delete(
-        Uri.parse('$baseUrl/projects.php'),
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: jsonEncode({
-          'id': id,
-        }),
+        Uri.parse('$baseUrl/$id'),
+        headers: {'Content-Type': 'application/json'},
       );
 
-      if (response.statusCode != 200) {
-        throw Exception(
-          'Server error: ${response.statusCode}',
-        );
-      }
+      final Map<String, dynamic> body =
+          jsonDecode(response.body) as Map<String, dynamic>;
 
-      final Map<String, dynamic> body = jsonDecode(response.body);
-
-      if (body['success'] != true) {
+      if (response.statusCode != 200 || body['success'] != true) {
         throw Exception(
-          body['message'] ?? 'Gagal menghapus portfolio',
+          body['message'] ?? 'Gagal menghapus proyek',
         );
       }
 
       return true;
     } catch (e) {
-      throw Exception(
-        'Gagal menghapus portfolio: $e',
-      );
+      throw Exception('Gagal menghapus proyek: $e');
     }
   }
 }

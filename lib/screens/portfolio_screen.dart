@@ -7,6 +7,7 @@ import '../models/project_model.dart';
 import '../services/project_service.dart';
 import 'add_portfolio_screen.dart';
 import 'edit_portfolio_screen.dart';
+import 'polije_info_screen.dart';
 
 // ==========================================================
 // PORTFOLIO SCREEN
@@ -24,7 +25,7 @@ class _PortfolioScreenState extends State<PortfolioScreen> {
 
   int _currentPage = 0;
 
-  static const int _totalPages = 3;
+  static const int _totalPages = 4;
 
   void _goToPage(int page) {
     if (page < 0 || page >= _totalPages) return;
@@ -68,6 +69,7 @@ class _PortfolioScreenState extends State<PortfolioScreen> {
                     _currentPage = index;
                   });
                 },
+                
                 children: const [
                   SingleChildScrollView(
                     child: _AboutSection(),
@@ -78,6 +80,7 @@ class _PortfolioScreenState extends State<PortfolioScreen> {
                   SingleChildScrollView(
                     child: _OrganizationSection(),
                   ),
+                  PolijeInfoScreen(),
                 ],
               ),
             ),

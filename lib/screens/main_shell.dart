@@ -4,6 +4,7 @@ import '../theme/app_colors.dart';
 import 'home_screen.dart';
 import 'portfolio_screen.dart';
 import 'contact_screen.dart';
+import 'settings_screen.dart';
 
 class MainShell extends StatefulWidget {
   const MainShell({super.key});
@@ -23,51 +24,63 @@ class _MainShellState extends State<MainShell> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: AppColors.cream,
+    return ValueListenableBuilder<bool>(
+      valueListenable: appDarkMode,
+      builder: (context, isDark, child) {
+        final backgroundColor =
+            isDark ? const Color(0xFF171717) : AppColors.cream;
 
-      body: IndexedStack(
-        index: _currentIndex,
-        children: [
-          HomeScreen(
-            onEnterPortfolio: () {
-              _changePage(1);
-            },
+        return Scaffold(
+          backgroundColor: backgroundColor,
+          body: IndexedStack(
+            index: _currentIndex,
+            children: [
+              HomeScreen(
+                onEnterPortfolio: () {
+                  _changePage(1);
+                },
+              ),
+              const PortfolioScreen(),
+              const ContactScreen(),
+              const SettingsScreen(),
+            ],
           ),
-          const PortfolioScreen(),
-          const ContactScreen(),
-        ],
-      ),
-
-      bottomNavigationBar: _ComicBottomNavigation(
-        currentIndex: _currentIndex,
-        onTap: _changePage,
-      ),
+          bottomNavigationBar: _ComicBottomNavigation(
+            currentIndex: _currentIndex,
+            onTap: _changePage,
+            isDark: isDark,
+          ),
+        );
+      },
     );
   }
 }
 
-// =====================================================
-// COMIC BOTTOM NAVIGATION
-// =====================================================
-
 class _ComicBottomNavigation extends StatelessWidget {
   final int currentIndex;
   final ValueChanged<int> onTap;
+  final bool isDark;
 
   const _ComicBottomNavigation({
     required this.currentIndex,
     required this.onTap,
+    required this.isDark,
   });
 
   @override
   Widget build(BuildContext context) {
+    final backgroundColor =
+        isDark ? const Color(0xFF242424) : AppColors.paper;
+
+    final borderColor =
+        isDark ? Colors.white : AppColors.ink;
+
     return Container(
-      decoration: const BoxDecoration(
-        color: AppColors.paper,
+      decoration: BoxDecoration(
+        color: backgroundColor,
         border: Border(
           top: BorderSide(
-            color: AppColors.ink,
+            color: borderColor,
             width: 4,
           ),
         ),
@@ -85,9 +98,9 @@ class _ComicBottomNavigation extends StatelessWidget {
                   index: 0,
                   currentIndex: currentIndex,
                   onTap: onTap,
+                  isDark: isDark,
                 ),
               ),
-
               Expanded(
                 child: _BottomNavItem(
                   icon: Icons.auto_stories_rounded,
@@ -95,9 +108,9 @@ class _ComicBottomNavigation extends StatelessWidget {
                   index: 1,
                   currentIndex: currentIndex,
                   onTap: onTap,
+                  isDark: isDark,
                 ),
               ),
-
               Expanded(
                 child: _BottomNavItem(
                   icon: Icons.mail_rounded,
@@ -105,6 +118,17 @@ class _ComicBottomNavigation extends StatelessWidget {
                   index: 2,
                   currentIndex: currentIndex,
                   onTap: onTap,
+                  isDark: isDark,
+                ),
+              ),
+              Expanded(
+                child: _BottomNavItem(
+                  icon: Icons.settings_rounded,
+                  label: 'SETTINGS',
+                  index: 3,
+                  currentIndex: currentIndex,
+                  onTap: onTap,
+                  isDark: isDark,
                 ),
               ),
             ],
@@ -115,16 +139,13 @@ class _ComicBottomNavigation extends StatelessWidget {
   }
 }
 
-// =====================================================
-// BOTTOM NAV ITEM
-// =====================================================
-
 class _BottomNavItem extends StatelessWidget {
   final IconData icon;
   final String label;
   final int index;
   final int currentIndex;
   final ValueChanged<int> onTap;
+  final bool isDark;
 
   const _BottomNavItem({
     required this.icon,
@@ -132,24 +153,38 @@ class _BottomNavItem extends StatelessWidget {
     required this.index,
     required this.currentIndex,
     required this.onTap,
+    required this.isDark,
   });
 
   @override
   Widget build(BuildContext context) {
     final bool isActive = currentIndex == index;
 
+    final Color backgroundColor = isActive
+        ? AppColors.yellow
+        : isDark
+            ? const Color(0xFF242424)
+            : AppColors.paper;
+
+    final Color foregroundColor = isActive
+        ? AppColors.ink
+        : isDark
+            ? Colors.white
+            : AppColors.ink;
+
+    final Color borderColor =
+        isDark ? Colors.white : AppColors.ink;
+
     return Material(
-      color: isActive
-          ? AppColors.yellow
-          : AppColors.paper,
+      color: backgroundColor,
       child: InkWell(
         onTap: () => onTap(index),
         child: Container(
           decoration: BoxDecoration(
             border: Border(
-              right: index != 2
-                  ? const BorderSide(
-                      color: AppColors.ink,
+              right: index != 3
+                  ? BorderSide(
+                      color: borderColor,
                       width: 2,
                     )
                   : BorderSide.none,
@@ -161,23 +196,19 @@ class _BottomNavItem extends StatelessWidget {
               Icon(
                 icon,
                 size: 25,
-                color: AppColors.ink,
+                color: foregroundColor,
               ),
-
               const SizedBox(height: 4),
-
               Text(
                 label,
-                style: const TextStyle(
+                style: TextStyle(
                   fontSize: 9,
                   fontWeight: FontWeight.w900,
                   letterSpacing: 0.8,
-                  color: AppColors.ink,
+                  color: foregroundColor,
                 ),
               ),
-
               const SizedBox(height: 4),
-
               AnimatedContainer(
                 duration: const Duration(milliseconds: 200),
                 width: isActive ? 22 : 0,

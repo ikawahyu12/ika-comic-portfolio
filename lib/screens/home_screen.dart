@@ -13,8 +13,11 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: AppColors.cream,
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
+      return Scaffold(
+        backgroundColor:
+            isDark ? const Color(0xFF171717) : AppColors.cream,
 
       body: SafeArea(
         child: SingleChildScrollView(
@@ -38,14 +41,16 @@ class HomeScreen extends StatelessWidget {
 
               const SizedBox(height: 30),
 
-              const Text(
+              Text(
                 'SWIPE • EXPLORE • DISCOVER',
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontSize: 10,
                   fontWeight: FontWeight.w900,
                   letterSpacing: 1.4,
-                  color: AppColors.ink,
+                  color: Theme.of(context).brightness == Brightness.dark
+                      ? Colors.white
+                      : AppColors.ink,
                 ),
               ),
 
@@ -443,9 +448,11 @@ class _CoverInfo extends StatelessWidget {
 class _CoverIntroduction extends StatelessWidget {
   const _CoverIntroduction();
 
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
+@override
+Widget build(BuildContext context) {
+  final isDark = Theme.of(context).brightness == Brightness.dark;
+
+  return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20),
       child: Column(
         children: [
@@ -455,7 +462,9 @@ class _CoverIntroduction extends StatelessWidget {
               width: double.infinity,
               padding: const EdgeInsets.all(18),
               decoration: BoxDecoration(
-                color: AppColors.paper,
+                color: isDark
+                  ? const Color(0xFF292929)
+                  : AppColors.paper,
                 border: Border.all(
                   color: AppColors.ink,
                   width: 4,
@@ -480,7 +489,7 @@ class _CoverIntroduction extends StatelessWidget {
 
                   const SizedBox(height: 8),
 
-                  const Text(
+                  Text(
                     'A digital comic-book portfolio documenting '
                     'my journey, projects, skills, and adventures '
                     'in the world of technology.',
@@ -489,7 +498,7 @@ class _CoverIntroduction extends StatelessWidget {
                       fontSize: 11,
                       fontWeight: FontWeight.w600,
                       height: 1.5,
-                      color: AppColors.ink,
+                      color: isDark ? Colors.white : AppColors.ink,
                     ),
                   ),
                 ],
@@ -584,6 +593,7 @@ class _EnterPortfolioButton extends StatelessWidget {
 // QUICK INFO
 // =====================================================
 
+
 class _QuickInfo extends StatelessWidget {
   const _QuickInfo();
 
@@ -600,9 +610,7 @@ class _QuickInfo extends StatelessWidget {
               color: AppColors.yellow,
             ),
           ),
-
           const SizedBox(width: 10),
-
           Expanded(
             child: _QuickInfoBox(
               number: '03',
@@ -610,9 +618,7 @@ class _QuickInfo extends StatelessWidget {
               color: AppColors.panelBlue,
             ),
           ),
-
           const SizedBox(width: 10),
-
           Expanded(
             child: _QuickInfoBox(
               number: '03',
@@ -625,10 +631,6 @@ class _QuickInfo extends StatelessWidget {
     );
   }
 }
-
-// =====================================================
-// QUICK INFO BOX
-// =====================================================
 
 class _QuickInfoBox extends StatelessWidget {
   final String number;
@@ -643,6 +645,9 @@ class _QuickInfoBox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark =
+        Theme.of(context).brightness == Brightness.dark;
+
     return Container(
       padding: const EdgeInsets.symmetric(
         vertical: 13,
@@ -651,7 +656,7 @@ class _QuickInfoBox extends StatelessWidget {
       decoration: BoxDecoration(
         color: color,
         border: Border.all(
-          color: AppColors.ink,
+          color: isDark ? Colors.white : AppColors.ink,
           width: 3,
         ),
       ),
@@ -664,11 +669,10 @@ class _QuickInfoBox extends StatelessWidget {
               color: AppColors.ink,
             ),
           ),
-
           Text(
             label,
             textAlign: TextAlign.center,
-            style: const TextStyle(
+            style: TextStyle(
               fontSize: 9,
               fontWeight: FontWeight.w900,
               color: AppColors.ink,
@@ -679,6 +683,11 @@ class _QuickInfoBox extends StatelessWidget {
     );
   }
 }
+
+// =====================================================
+// QUICK INFO BOX
+// =====================================================
+
 
 // =====================================================
 // CITY PAINTER
