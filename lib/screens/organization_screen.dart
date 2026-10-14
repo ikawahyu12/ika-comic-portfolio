@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 import '../theme/app_colors.dart';
 
@@ -9,7 +8,7 @@ class OrganizationScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.cream,
+      backgroundColor: AppColors.pageBackground,
       body: SafeArea(
         child: Stack(
           children: [
@@ -82,10 +81,7 @@ class OrganizationScreen extends StatelessWidget {
                       child: Text(
                         'TEAMWORK MAKES THE HERO!',
                         textAlign: TextAlign.center,
-                        style: GoogleFonts.bangers(
-                          fontSize: 25,
-                          color: AppColors.red,
-                        ),
+                        style: TextStyle(fontSize: 25, color: AppColors.red),
                       ),
                     ),
                   ),
@@ -114,15 +110,9 @@ class OrganizationScreen extends StatelessWidget {
             height: 48,
             decoration: BoxDecoration(
               color: AppColors.yellow,
-              border: Border.all(
-                color: AppColors.ink,
-                width: 3,
-              ),
+              border: Border.all(color: AppColors.ink, width: 3),
             ),
-            child: const Icon(
-              Icons.arrow_back,
-              color: AppColors.ink,
-            ),
+            child: const Icon(Icons.arrow_back, color: AppColors.outline),
           ),
         ),
 
@@ -132,12 +122,7 @@ class OrganizationScreen extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                'THE DAILY CODE',
-                style: GoogleFonts.bangers(
-                  fontSize: 21,
-                ),
-              ),
+              Text('THE DAILY CODE', style: TextStyle(fontSize: 21)),
               const Text(
                 'HERO ALLIANCES',
                 style: TextStyle(
@@ -153,16 +138,10 @@ class OrganizationScreen extends StatelessWidget {
         Transform.rotate(
           angle: 0.08,
           child: Container(
-            padding: const EdgeInsets.symmetric(
-              horizontal: 9,
-              vertical: 7,
-            ),
+            padding: const EdgeInsets.symmetric(horizontal: 9, vertical: 7),
             decoration: BoxDecoration(
               color: AppColors.panelBlue,
-              border: Border.all(
-                color: AppColors.ink,
-                width: 2,
-              ),
+              border: Border.all(color: AppColors.ink, width: 2),
             ),
             child: const Text(
               'TEAM\nFILE',
@@ -188,15 +167,12 @@ class OrganizationScreen extends StatelessWidget {
       angle: -0.02,
       child: Text(
         'HERO\nALLIANCES!',
-        style: GoogleFonts.bangers(
+        style: TextStyle(
           fontSize: 52,
           height: 0.82,
           color: AppColors.red,
           shadows: const [
-            Shadow(
-              offset: Offset(3, 3),
-              color: AppColors.ink,
-            ),
+            Shadow(offset: Offset(3, 3), color: AppColors.outline),
           ],
         ),
       ),
@@ -215,15 +191,9 @@ class OrganizationScreen extends StatelessWidget {
         padding: const EdgeInsets.all(18),
         decoration: BoxDecoration(
           color: AppColors.panelBlue,
-          border: Border.all(
-            color: AppColors.ink,
-            width: 4,
-          ),
+          border: Border.all(color: AppColors.ink, width: 4),
           boxShadow: const [
-            BoxShadow(
-              color: AppColors.ink,
-              offset: Offset(6, 6),
-            ),
+            BoxShadow(color: AppColors.outline, offset: Offset(6, 6)),
           ],
         ),
         child: Column(
@@ -231,7 +201,7 @@ class OrganizationScreen extends StatelessWidget {
           children: [
             Text(
               'MY SUPERPOWERS\nUNLOCKED!',
-              style: GoogleFonts.bangers(
+              style: TextStyle(
                 fontSize: 30,
                 height: 0.9,
                 color: AppColors.paper,
@@ -284,7 +254,6 @@ class OrganizationScreen extends StatelessWidget {
   }
 }
 
-
 // =====================================================
 // ORGANIZATION CARD
 // =====================================================
@@ -318,9 +287,7 @@ class OrganizationCard extends StatelessWidget {
           Positioned.fill(
             left: 7,
             top: 7,
-            child: Container(
-              color: AppColors.ink,
-            ),
+            child: Container(color: AppColors.outline),
           ),
 
           Container(
@@ -328,10 +295,7 @@ class OrganizationCard extends StatelessWidget {
             padding: const EdgeInsets.all(18),
             decoration: BoxDecoration(
               color: color,
-              border: Border.all(
-                color: AppColors.ink,
-                width: 4,
-              ),
+              border: Border.all(color: AppColors.ink, width: 4),
             ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -345,17 +309,9 @@ class OrganizationCard extends StatelessWidget {
                       alignment: Alignment.center,
                       decoration: BoxDecoration(
                         color: AppColors.paper,
-                        border: Border.all(
-                          color: AppColors.ink,
-                          width: 3,
-                        ),
+                        border: Border.all(color: AppColors.ink, width: 3),
                       ),
-                      child: Text(
-                        number,
-                        style: GoogleFonts.bangers(
-                          fontSize: 27,
-                        ),
-                      ),
+                      child: Text(number, style: TextStyle(fontSize: 27)),
                     ),
 
                     const Spacer(),
@@ -365,16 +321,9 @@ class OrganizationCard extends StatelessWidget {
                       height: 55,
                       decoration: BoxDecoration(
                         color: AppColors.paper,
-                        border: Border.all(
-                          color: AppColors.ink,
-                          width: 3,
-                        ),
+                        border: Border.all(color: AppColors.ink, width: 3),
                       ),
-                      child: Icon(
-                        icon,
-                        size: 29,
-                        color: AppColors.ink,
-                      ),
+                      child: Icon(icon, size: 29, color: AppColors.ink),
                     ),
                   ],
                 ),
@@ -383,10 +332,7 @@ class OrganizationCard extends StatelessWidget {
 
                 Text(
                   organizationName,
-                  style: GoogleFonts.bangers(
-                    fontSize: 32,
-                    height: 0.85,
-                  ),
+                  style: TextStyle(fontSize: 32, height: 0.85),
                 ),
 
                 const SizedBox(height: 12),
@@ -396,9 +342,7 @@ class OrganizationCard extends StatelessWidget {
                     horizontal: 10,
                     vertical: 6,
                   ),
-                  decoration: const BoxDecoration(
-                    color: AppColors.ink,
-                  ),
+                  decoration: const BoxDecoration(color: AppColors.outline),
                   child: Text(
                     role,
                     style: const TextStyle(
@@ -413,10 +357,7 @@ class OrganizationCard extends StatelessWidget {
 
                 Row(
                   children: [
-                    const Icon(
-                      Icons.calendar_month,
-                      size: 17,
-                    ),
+                    const Icon(Icons.calendar_month, size: 17),
                     const SizedBox(width: 6),
                     Text(
                       period,
@@ -430,12 +371,7 @@ class OrganizationCard extends StatelessWidget {
 
                 const SizedBox(height: 18),
 
-                Text(
-                  'MISSION LOG:',
-                  style: GoogleFonts.bangers(
-                    fontSize: 20,
-                  ),
-                ),
+                Text('MISSION LOG:', style: TextStyle(fontSize: 20)),
 
                 const SizedBox(height: 10),
 
@@ -443,8 +379,7 @@ class OrganizationCard extends StatelessWidget {
                   (item) => Padding(
                     padding: const EdgeInsets.only(bottom: 8),
                     child: Row(
-                      crossAxisAlignment:
-                          CrossAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         const Text(
                           '✦',
@@ -482,10 +417,7 @@ class OrganizationCard extends StatelessWidget {
                     ),
                     decoration: BoxDecoration(
                       color: AppColors.paper,
-                      border: Border.all(
-                        color: AppColors.ink,
-                        width: 2,
-                      ),
+                      border: Border.all(color: AppColors.ink, width: 2),
                     ),
                     child: const Text(
                       'VIEW DOSSIER →',
@@ -504,7 +436,6 @@ class OrganizationCard extends StatelessWidget {
     );
   }
 }
-
 
 // =====================================================
 // IMPACT ROW
@@ -532,15 +463,9 @@ class ImpactRow extends StatelessWidget {
           height: 45,
           decoration: BoxDecoration(
             color: AppColors.yellow,
-            border: Border.all(
-              color: AppColors.ink,
-              width: 2,
-            ),
+            border: Border.all(color: AppColors.ink, width: 2),
           ),
-          child: Icon(
-            icon,
-            color: AppColors.ink,
-          ),
+          child: Icon(icon, color: AppColors.ink),
         ),
 
         const SizedBox(width: 12),
@@ -551,10 +476,7 @@ class ImpactRow extends StatelessWidget {
             children: [
               Text(
                 title,
-                style: GoogleFonts.bangers(
-                  fontSize: 19,
-                  color: AppColors.yellow,
-                ),
+                style: TextStyle(fontSize: 19, color: AppColors.yellow),
               ),
 
               const SizedBox(height: 4),
@@ -575,7 +497,6 @@ class ImpactRow extends StatelessWidget {
     );
   }
 }
-
 
 // =====================================================
 // BACKGROUND

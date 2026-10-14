@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../theme/app_colors.dart';
@@ -21,17 +20,11 @@ class ContactScreen extends StatelessWidget {
       );
 
       if (!launched && context.mounted) {
-        _showMessage(
-          context,
-          'LINK TIDAK DAPAT DIBUKA',
-        );
+        _showMessage(context, 'LINK TIDAK DAPAT DIBUKA');
       }
     } catch (_) {
       if (context.mounted) {
-        _showMessage(
-          context,
-          'TERJADI KESALAHAN SAAT MEMBUKA LINK',
-        );
+        _showMessage(context, 'TERJADI KESALAHAN SAAT MEMBUKA LINK');
       }
     }
   }
@@ -44,9 +37,7 @@ class ContactScreen extends StatelessWidget {
     final uri = Uri(
       scheme: 'mailto',
       path: 'your.email@gmail.com',
-      queryParameters: {
-        'subject': 'Hello Ika!',
-      },
+      queryParameters: {'subject': 'Hello Ika!'},
     );
 
     try {
@@ -56,17 +47,11 @@ class ContactScreen extends StatelessWidget {
       );
 
       if (!launched && context.mounted) {
-        _showMessage(
-          context,
-          'EMAIL TIDAK DAPAT DIBUKA',
-        );
+        _showMessage(context, 'EMAIL TIDAK DAPAT DIBUKA');
       }
     } catch (_) {
       if (context.mounted) {
-        _showMessage(
-          context,
-          'TERJADI KESALAHAN SAAT MEMBUKA EMAIL',
-        );
+        _showMessage(context, 'TERJADI KESALAHAN SAAT MEMBUKA EMAIL');
       }
     }
   }
@@ -77,32 +62,29 @@ class ContactScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     return Scaffold(
-      backgroundColor: AppColors.cream,
+      backgroundColor: isDark ? AppColors.darkBackground : AppColors.cream,
       body: SafeArea(
         child: Stack(
           children: [
-            const _ComicBackground(),
+            _ComicBackground(isDark: isDark),
 
             SingleChildScrollView(
-              padding: const EdgeInsets.fromLTRB(
-                20,
-                16,
-                20,
-                40,
-              ),
+              padding: const EdgeInsets.fromLTRB(20, 16, 20, 40),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  _buildHeader(),
+                  _buildHeader(isDark),
 
                   const SizedBox(height: 35),
 
-                  _buildHeroTitle(),
+                  _buildHeroTitle(isDark),
 
                   const SizedBox(height: 15),
 
-                  const Text(
+                  Text(
                     'HAVE A MISSION, IDEA, OR COLLABORATION? '
                     'SEND ME A SIGNAL!',
                     style: TextStyle(
@@ -110,21 +92,19 @@ class ContactScreen extends StatelessWidget {
                       fontWeight: FontWeight.w900,
                       letterSpacing: 0.8,
                       height: 1.4,
+                      color: AppColors.ink,
                     ),
                   ),
 
                   const SizedBox(height: 30),
 
-                  _buildSignalCard(),
+                  _buildSignalCard(isDark),
 
                   const SizedBox(height: 30),
 
                   Text(
                     'TRANSMISSION CHANNELS',
-                    style: GoogleFonts.bangers(
-                      fontSize: 28,
-                      color: AppColors.ink,
-                    ),
+                    style: TextStyle(fontSize: 28, color: AppColors.ink),
                   ),
 
                   const SizedBox(height: 18),
@@ -132,12 +112,11 @@ class ContactScreen extends StatelessWidget {
                   // =====================================================
                   // EMAIL
                   // =====================================================
-
                   ContactCard(
                     icon: Icons.email,
                     title: 'EMAIL',
                     subtitle: 'your.email@gmail.com',
-                    color: AppColors.red,
+                    color: isDark ? AppColors.darkRed : AppColors.red,
                     onTap: () {
                       _openEmail(context);
                     },
@@ -148,18 +127,13 @@ class ContactScreen extends StatelessWidget {
                   // =====================================================
                   // GITHUB
                   // =====================================================
-
                   ContactCard(
                     icon: Icons.code,
                     title: 'GITHUB',
                     subtitle: 'github.com/ikawahyu12',
-                    color: AppColors.ink,
-                    darkText: true,
+                    color: isDark ? AppColors.darkSurface : AppColors.outline,
                     onTap: () {
-                      _openLink(
-                        context,
-                        'https://github.com/ikawahyu12',
-                      );
+                      _openLink(context, 'https://github.com/ikawahyu12');
                     },
                   ),
 
@@ -168,18 +142,13 @@ class ContactScreen extends StatelessWidget {
                   // =====================================================
                   // GITLAB
                   // =====================================================
-
                   ContactCard(
                     icon: Icons.cloud,
                     title: 'GITLAB',
                     subtitle: 'gitlab.com/ikatyas327',
-                    color: AppColors.panelBlue,
-                    darkText: true,
+                    color: isDark ? AppColors.darkBlue : AppColors.panelBlue,
                     onTap: () {
-                      _openLink(
-                        context,
-                        'https://gitlab.com/ikatyas327',
-                      );
+                      _openLink(context, 'https://gitlab.com/ikatyas327');
                     },
                   ),
 
@@ -188,12 +157,11 @@ class ContactScreen extends StatelessWidget {
                   // =====================================================
                   // LINKEDIN
                   // =====================================================
-
                   ContactCard(
                     icon: Icons.business_center,
                     title: 'LINKEDIN',
                     subtitle: 'linkedin.com/in/your-profile',
-                    color: AppColors.yellow,
+                    color: AppColors.darkYellow,
                     onTap: () {
                       _openLink(
                         context,
@@ -204,7 +172,7 @@ class ContactScreen extends StatelessWidget {
 
                   const SizedBox(height: 35),
 
-                  _buildFinalMessage(),
+                  _buildFinalMessage(isDark),
                 ],
               ),
             ),
@@ -218,7 +186,7 @@ class ContactScreen extends StatelessWidget {
   // HEADER
   // =====================================================
 
-  Widget _buildHeader() {
+  Widget _buildHeader(bool isDark) {
     return Row(
       children: [
         // COMIC LOGO / BADGE
@@ -227,24 +195,15 @@ class ContactScreen extends StatelessWidget {
           height: 48,
           decoration: BoxDecoration(
             color: AppColors.yellow,
-            border: Border.all(
-              color: AppColors.ink,
-              width: 3,
-            ),
+            border: Border.all(color: AppColors.outline, width: 3),
             boxShadow: const [
-              BoxShadow(
-                color: AppColors.ink,
-                offset: Offset(3, 3),
-              ),
+              BoxShadow(color: AppColors.outline, offset: Offset(3, 3)),
             ],
           ),
           child: Center(
             child: Text(
               'IKA',
-              style: GoogleFonts.bangers(
-                fontSize: 19,
-                color: AppColors.ink,
-              ),
+              style: TextStyle(fontSize: 19, color: AppColors.outline),
             ),
           ),
         ),
@@ -258,13 +217,10 @@ class ContactScreen extends StatelessWidget {
             children: [
               Text(
                 'THE DAILY CODE',
-                style: GoogleFonts.bangers(
-                  fontSize: 21,
-                  color: AppColors.ink,
-                ),
+                style: TextStyle(fontSize: 21, color: AppColors.ink),
               ),
 
-              const Text(
+              Text(
                 'COMMUNICATION CENTER',
                 style: TextStyle(
                   fontSize: 9,
@@ -281,16 +237,10 @@ class ContactScreen extends StatelessWidget {
         Transform.rotate(
           angle: 0.08,
           child: Container(
-            padding: const EdgeInsets.symmetric(
-              horizontal: 10,
-              vertical: 7,
-            ),
+            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 7),
             decoration: BoxDecoration(
-              color: AppColors.red,
-              border: Border.all(
-                color: AppColors.ink,
-                width: 2,
-              ),
+              color: isDark ? AppColors.darkRed : AppColors.red,
+              border: Border.all(color: AppColors.outline, width: 2),
             ),
             child: const Text(
               'ONLINE',
@@ -310,20 +260,17 @@ class ContactScreen extends StatelessWidget {
   // HERO TITLE
   // =====================================================
 
-  Widget _buildHeroTitle() {
+  Widget _buildHeroTitle(bool isDark) {
     return Transform.rotate(
       angle: -0.03,
       child: Text(
         'CALL THE\nHERO!',
-        style: GoogleFonts.bangers(
+        style: TextStyle(
           fontSize: 58,
           height: 0.78,
-          color: AppColors.red,
+          color: isDark ? const Color(0xFFFF5964) : AppColors.red,
           shadows: const [
-            Shadow(
-              offset: Offset(4, 4),
-              color: AppColors.ink,
-            ),
+            Shadow(offset: Offset(4, 4), color: AppColors.outline),
           ],
         ),
       ),
@@ -334,7 +281,7 @@ class ContactScreen extends StatelessWidget {
   // SIGNAL CARD
   // =====================================================
 
-  Widget _buildSignalCard() {
+  Widget _buildSignalCard(bool isDark) {
     return Transform.rotate(
       angle: 0.01,
       child: Stack(
@@ -343,9 +290,7 @@ class ContactScreen extends StatelessWidget {
           Positioned.fill(
             left: 7,
             top: 7,
-            child: Container(
-              color: AppColors.ink,
-            ),
+            child: Container(color: AppColors.ink),
           ),
 
           // MAIN CARD
@@ -353,20 +298,17 @@ class ContactScreen extends StatelessWidget {
             width: double.infinity,
             height: 180,
             decoration: BoxDecoration(
-              color: AppColors.panelBlue,
-              border: Border.all(
-                color: AppColors.ink,
-                width: 4,
-              ),
+              color: isDark ? AppColors.darkBlue : AppColors.panelBlue,
+              border: Border.all(color: AppColors.ink, width: 4),
             ),
             child: Stack(
               children: [
                 // CENTER ICON
-                const Center(
+                Center(
                   child: Icon(
                     Icons.wifi_tethering,
                     size: 90,
-                    color: AppColors.paper,
+                    color: isDark ? AppColors.paper : AppColors.outline,
                   ),
                 ),
 
@@ -402,23 +344,17 @@ class ContactScreen extends StatelessWidget {
   // FINAL MESSAGE
   // =====================================================
 
-  Widget _buildFinalMessage() {
+  Widget _buildFinalMessage(bool isDark) {
     return Transform.rotate(
       angle: -0.02,
       child: Container(
         width: double.infinity,
         padding: const EdgeInsets.all(20),
         decoration: BoxDecoration(
-          color: AppColors.red,
-          border: Border.all(
-            color: AppColors.ink,
-            width: 4,
-          ),
+          color: isDark ? AppColors.darkRed : AppColors.red,
+          border: Border.all(color: AppColors.ink, width: 4),
           boxShadow: const [
-            BoxShadow(
-              color: AppColors.ink,
-              offset: Offset(6, 6),
-            ),
+            BoxShadow(color: AppColors.outline, offset: Offset(6, 6)),
           ],
         ),
         child: Column(
@@ -426,7 +362,7 @@ class ContactScreen extends StatelessWidget {
             Text(
               "LET'S CREATE\nSOMETHING AWESOME!",
               textAlign: TextAlign.center,
-              style: GoogleFonts.bangers(
+              style: TextStyle(
                 fontSize: 31,
                 height: 0.85,
                 color: AppColors.paper,
@@ -454,25 +390,21 @@ class ContactScreen extends StatelessWidget {
   // SNACKBAR
   // =====================================================
 
-  void _showMessage(
-    BuildContext context,
-    String message,
-  ) {
+  void _showMessage(BuildContext context, String message) {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Text(
           message,
-          style: const TextStyle(
-            fontWeight: FontWeight.w700,
-          ),
+          style: const TextStyle(fontWeight: FontWeight.w700),
         ),
-        backgroundColor: AppColors.ink,
+        backgroundColor: Theme.of(context).brightness == Brightness.dark
+            ? AppColors.darkSurface
+            : AppColors.outline,
         behavior: SnackBarBehavior.floating,
       ),
     );
   }
 }
-
 
 // =====================================================
 // CONTACT CARD
@@ -483,7 +415,6 @@ class ContactCard extends StatelessWidget {
   final String title;
   final String subtitle;
   final Color color;
-  final bool darkText;
   final VoidCallback onTap;
 
   const ContactCard({
@@ -493,13 +424,11 @@ class ContactCard extends StatelessWidget {
     required this.subtitle,
     required this.color,
     required this.onTap,
-    this.darkText = false,
   });
 
   @override
   Widget build(BuildContext context) {
-    final Color textColor =
-        darkText ? AppColors.paper : AppColors.ink;
+    final Color textColor = AppColors.onColor(color);
 
     return Transform.rotate(
       angle: title == 'GITHUB' ? -0.012 : 0.012,
@@ -511,9 +440,7 @@ class ContactCard extends StatelessWidget {
             Positioned.fill(
               left: 6,
               top: 6,
-              child: Container(
-                color: AppColors.ink,
-              ),
+              child: Container(color: AppColors.outline),
             ),
 
             // MAIN CARD
@@ -522,10 +449,7 @@ class ContactCard extends StatelessWidget {
               padding: const EdgeInsets.all(16),
               decoration: BoxDecoration(
                 color: color,
-                border: Border.all(
-                  color: AppColors.ink,
-                  width: 4,
-                ),
+                border: Border.all(color: AppColors.outline, width: 4),
               ),
               child: Row(
                 children: [
@@ -534,17 +458,10 @@ class ContactCard extends StatelessWidget {
                     width: 55,
                     height: 55,
                     decoration: BoxDecoration(
-                      color: AppColors.paper,
-                      border: Border.all(
-                        color: AppColors.ink,
-                        width: 3,
-                      ),
+                      color: AppColors.yellow,
+                      border: Border.all(color: AppColors.outline, width: 3),
                     ),
-                    child: Icon(
-                      icon,
-                      size: 28,
-                      color: AppColors.ink,
-                    ),
+                    child: Icon(icon, size: 28, color: AppColors.outline),
                   ),
 
                   const SizedBox(width: 15),
@@ -552,15 +469,11 @@ class ContactCard extends StatelessWidget {
                   // TEXT
                   Expanded(
                     child: Column(
-                      crossAxisAlignment:
-                          CrossAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
                           title,
-                          style: GoogleFonts.bangers(
-                            fontSize: 25,
-                            color: textColor,
-                          ),
+                          style: TextStyle(fontSize: 25, color: textColor),
                         ),
 
                         const SizedBox(height: 4),
@@ -580,10 +493,7 @@ class ContactCard extends StatelessWidget {
                   const SizedBox(width: 8),
 
                   // ARROW
-                  Icon(
-                    Icons.arrow_forward,
-                    color: textColor,
-                  ),
+                  Icon(Icons.arrow_forward, color: textColor),
                 ],
               ),
             ),
@@ -594,7 +504,6 @@ class ContactCard extends StatelessWidget {
   }
 }
 
-
 // =====================================================
 // COMIC LABEL
 // =====================================================
@@ -602,47 +511,38 @@ class ContactCard extends StatelessWidget {
 class _Label extends StatelessWidget {
   final String text;
   final Color color;
-  final Color textColor;
+  final Color? textColor;
 
-  const _Label({
-    required this.text,
-    required this.color,
-    this.textColor = AppColors.ink,
-  });
+  const _Label({required this.text, required this.color, this.textColor});
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(
-        horizontal: 9,
-        vertical: 5,
-      ),
+      padding: const EdgeInsets.symmetric(horizontal: 9, vertical: 5),
       decoration: BoxDecoration(
         color: color,
-        border: Border.all(
-          color: AppColors.ink,
-          width: 2,
-        ),
+        border: Border.all(color: AppColors.ink, width: 2),
       ),
       child: Text(
         text,
         style: TextStyle(
           fontSize: 9,
           fontWeight: FontWeight.w900,
-          color: textColor,
+          color: textColor ?? AppColors.onColor(color),
         ),
       ),
     );
   }
 }
 
-
 // =====================================================
 // BACKGROUND
 // =====================================================
 
 class _ComicBackground extends StatelessWidget {
-  const _ComicBackground();
+  final bool isDark;
+
+  const _ComicBackground({required this.isDark});
 
   @override
   Widget build(BuildContext context) {
@@ -658,7 +558,8 @@ class _ComicBackground extends StatelessWidget {
               height: 150,
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
-                color: AppColors.yellow.withValues(alpha: 0.12),
+                color: (isDark ? AppColors.darkBlue : AppColors.yellow)
+                    .withValues(alpha: 0.12),
               ),
             ),
           ),
@@ -672,7 +573,9 @@ class _ComicBackground extends StatelessWidget {
               height: 150,
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
-                color: AppColors.red.withValues(alpha: 0.10),
+                color: (isDark ? AppColors.darkRed : AppColors.red).withValues(
+                  alpha: 0.10,
+                ),
               ),
             ),
           ),

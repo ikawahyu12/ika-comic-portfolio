@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import '../theme/app_colors.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -58,8 +57,7 @@ class _PolijeInfoScreenState extends State<PolijeInfoScreen> {
     {
       'name': 'Produksi Media',
       'level': 'Sarjana Terapan (D4)',
-      'description':
-          'Berhubungan dengan produksi konten dan media kreatif.',
+      'description': 'Berhubungan dengan produksi konten dan media kreatif.',
     },
     {
       'name': 'Teknik Energi Terbarukan',
@@ -87,8 +85,7 @@ class _PolijeInfoScreenState extends State<PolijeInfoScreen> {
     {
       'icon': Icons.local_hospital,
       'title': 'Klinik Kampus',
-      'description':
-          'Layanan kesehatan dasar bagi civitas akademika.',
+      'description': 'Layanan kesehatan dasar bagi civitas akademika.',
       'color': AppColors.red,
     },
     {
@@ -130,24 +127,17 @@ class _PolijeInfoScreenState extends State<PolijeInfoScreen> {
   String _selectedProgram = 'Teknik Informatika';
 
   Map<String, String> get _currentProgram =>
-      programs.firstWhere(
-        (program) => program['name'] == _selectedProgram,
-      );
+      programs.firstWhere((program) => program['name'] == _selectedProgram);
 
   Future<void> _openWebsite(String url) async {
     final uri = Uri.parse(url);
 
     try {
-      final opened = await launchUrl(
-        uri,
-        mode: LaunchMode.platformDefault,
-      );
+      final opened = await launchUrl(uri, mode: LaunchMode.platformDefault);
 
       if (!opened && mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('Website tidak dapat dibuka.'),
-          ),
+          const SnackBar(content: Text('Website tidak dapat dibuka.')),
         );
       }
     } catch (_) {
@@ -164,7 +154,7 @@ class _PolijeInfoScreenState extends State<PolijeInfoScreen> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: AppColors.cream,
+      color: AppColors.pageBackground,
       child: SingleChildScrollView(
         padding: const EdgeInsets.fromLTRB(20, 32, 20, 40),
         child: Column(
@@ -173,7 +163,7 @@ class _PolijeInfoScreenState extends State<PolijeInfoScreen> {
             _chapterLabel('CHAPTER 04'),
             const SizedBox(height: 16),
 
-            const Text(
+            Text(
               'POLIJE\nINFO!',
               style: TextStyle(
                 fontSize: 46,
@@ -203,7 +193,7 @@ class _PolijeInfoScreenState extends State<PolijeInfoScreen> {
                   const Icon(
                     Icons.school_rounded,
                     size: 42,
-                    color: AppColors.ink,
+                    color: AppColors.outline,
                   ),
                   const SizedBox(height: 12),
                   const Text(
@@ -212,7 +202,7 @@ class _PolijeInfoScreenState extends State<PolijeInfoScreen> {
                       fontSize: 23,
                       height: 1.1,
                       fontWeight: FontWeight.w900,
-                      color: AppColors.ink,
+                      color: AppColors.outline,
                     ),
                   ),
                   const SizedBox(height: 12),
@@ -226,7 +216,7 @@ class _PolijeInfoScreenState extends State<PolijeInfoScreen> {
                       fontSize: 12,
                       height: 1.6,
                       fontWeight: FontWeight.w600,
-                      color: AppColors.ink,
+                      color: AppColors.outline,
                     ),
                   ),
                   const SizedBox(height: 16),
@@ -235,10 +225,7 @@ class _PolijeInfoScreenState extends State<PolijeInfoScreen> {
                     text: 'Jl. Mastrip, Jember, Jawa Timur',
                   ),
                   const SizedBox(height: 8),
-                  const _InfoLine(
-                    icon: Icons.phone,
-                    text: '(0331) 333533',
-                  ),
+                  const _InfoLine(icon: Icons.phone, text: '(0331) 333533'),
                   const SizedBox(height: 18),
                   _websiteButton(
                     label: 'WEBSITE RESMI POLIJE',
@@ -259,10 +246,7 @@ class _PolijeInfoScreenState extends State<PolijeInfoScreen> {
               padding: const EdgeInsets.symmetric(horizontal: 12),
               decoration: BoxDecoration(
                 color: AppColors.paper,
-                border: Border.all(
-                  color: AppColors.ink,
-                  width: 3,
-                ),
+                border: Border.all(color: AppColors.outline, width: 3),
               ),
               child: DropdownButtonHideUnderline(
                 child: DropdownButton<String>(
@@ -278,7 +262,7 @@ class _PolijeInfoScreenState extends State<PolijeInfoScreen> {
                         style: const TextStyle(
                           fontSize: 12,
                           fontWeight: FontWeight.w800,
-                          color: AppColors.ink,
+                          color: AppColors.outline,
                         ),
                       ),
                     );
@@ -319,7 +303,7 @@ class _PolijeInfoScreenState extends State<PolijeInfoScreen> {
                       fontSize: 22,
                       height: 1.1,
                       fontWeight: FontWeight.w900,
-                      color: AppColors.ink,
+                      color: AppColors.outline,
                     ),
                   ),
                   const SizedBox(height: 7),
@@ -337,7 +321,7 @@ class _PolijeInfoScreenState extends State<PolijeInfoScreen> {
                     style: const TextStyle(
                       fontSize: 12,
                       height: 1.6,
-                      color: AppColors.ink,
+                      color: AppColors.outline,
                     ),
                   ),
                   const SizedBox(height: 14),
@@ -361,18 +345,14 @@ class _PolijeInfoScreenState extends State<PolijeInfoScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Icon(
-                    Icons.computer,
-                    size: 40,
-                    color: AppColors.red,
-                  ),
+                  const Icon(Icons.computer, size: 40, color: AppColors.red),
                   const SizedBox(height: 10),
                   const Text(
                     'D4 TEKNIK INFORMATIKA',
                     style: TextStyle(
                       fontSize: 22,
                       fontWeight: FontWeight.w900,
-                      color: AppColors.ink,
+                      color: AppColors.outline,
                     ),
                   ),
                   const SizedBox(height: 10),
@@ -385,7 +365,7 @@ class _PolijeInfoScreenState extends State<PolijeInfoScreen> {
                     style: TextStyle(
                       fontSize: 12,
                       height: 1.6,
-                      color: AppColors.ink,
+                      color: AppColors.outline,
                     ),
                   ),
                   const SizedBox(height: 14),
@@ -458,7 +438,7 @@ class _PolijeInfoScreenState extends State<PolijeInfoScreen> {
 
             const SizedBox(height: 36),
             _shadowPanel(
-              color: AppColors.ink,
+              color: AppColors.outline,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -499,7 +479,7 @@ class _PolijeInfoScreenState extends State<PolijeInfoScreen> {
                 style: TextStyle(
                   fontSize: 9,
                   fontWeight: FontWeight.w800,
-                  color: AppColors.ink,
+                  color: AppColors.outline,
                 ),
               ),
             ),
@@ -513,16 +493,10 @@ class _PolijeInfoScreenState extends State<PolijeInfoScreen> {
     return Transform.rotate(
       angle: -0.02,
       child: Container(
-        padding: const EdgeInsets.symmetric(
-          horizontal: 14,
-          vertical: 7,
-        ),
+        padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 7),
         decoration: BoxDecoration(
           color: AppColors.yellow,
-          border: Border.all(
-            color: AppColors.ink,
-            width: 3,
-          ),
+          border: Border.all(color: AppColors.outline, width: 3),
         ),
         child: Text(
           label,
@@ -530,17 +504,14 @@ class _PolijeInfoScreenState extends State<PolijeInfoScreen> {
             fontSize: 11,
             fontWeight: FontWeight.w900,
             letterSpacing: 1,
-            color: AppColors.ink,
+            color: AppColors.outline,
           ),
         ),
       ),
     );
   }
 
-  Widget _shadowPanel({
-    required Color color,
-    required Widget child,
-  }) {
+  Widget _shadowPanel({required Color color, required Widget child}) {
     return Stack(
       children: [
         Positioned(
@@ -548,17 +519,14 @@ class _PolijeInfoScreenState extends State<PolijeInfoScreen> {
           top: 6,
           right: 0,
           bottom: 0,
-          child: Container(color: AppColors.ink),
+          child: Container(color: AppColors.outline),
         ),
         Container(
           width: double.infinity,
           padding: const EdgeInsets.all(18),
           decoration: BoxDecoration(
             color: color,
-            border: Border.all(
-              color: AppColors.ink,
-              width: 3,
-            ),
+            border: Border.all(color: AppColors.outline, width: 3),
           ),
           child: child,
         ),
@@ -591,17 +559,9 @@ class _PolijeInfoScreenState extends State<PolijeInfoScreen> {
         ),
         style: OutlinedButton.styleFrom(
           backgroundColor: inverted ? AppColors.yellow : AppColors.red,
-          side: const BorderSide(
-            color: AppColors.ink,
-            width: 2,
-          ),
-          padding: const EdgeInsets.symmetric(
-            horizontal: 10,
-            vertical: 13,
-          ),
-          shape: const RoundedRectangleBorder(
-            borderRadius: BorderRadius.zero,
-          ),
+          side: const BorderSide(color: AppColors.outline, width: 2),
+          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 13),
+          shape: const RoundedRectangleBorder(borderRadius: BorderRadius.zero),
         ),
       ),
     );
@@ -612,10 +572,7 @@ class _SectionHeading extends StatelessWidget {
   final String title;
   final String subtitle;
 
-  const _SectionHeading({
-    required this.title,
-    required this.subtitle,
-  });
+  const _SectionHeading({required this.title, required this.subtitle});
 
   @override
   Widget build(BuildContext context) {
@@ -627,15 +584,11 @@ class _SectionHeading extends StatelessWidget {
           style: const TextStyle(
             fontSize: 25,
             fontWeight: FontWeight.w900,
-            color: AppColors.ink,
+            color: AppColors.outline,
           ),
         ),
         const SizedBox(height: 5),
-        Container(
-          width: 120,
-          height: 4,
-          color: AppColors.red,
-        ),
+        Container(width: 120, height: 4, color: AppColors.red),
         const SizedBox(height: 7),
         Text(
           subtitle,
@@ -643,7 +596,7 @@ class _SectionHeading extends StatelessWidget {
             fontSize: 9,
             fontWeight: FontWeight.w900,
             letterSpacing: 0.8,
-            color: AppColors.ink,
+            color: AppColors.outline,
           ),
         ),
       ],
@@ -655,17 +608,14 @@ class _InfoLine extends StatelessWidget {
   final IconData icon;
   final String text;
 
-  const _InfoLine({
-    required this.icon,
-    required this.text,
-  });
+  const _InfoLine({required this.icon, required this.text});
 
   @override
   Widget build(BuildContext context) {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Icon(icon, size: 18, color: AppColors.ink),
+        Icon(icon, size: 18, color: AppColors.outline),
         const SizedBox(width: 9),
         Expanded(
           child: Text(
@@ -673,7 +623,7 @@ class _InfoLine extends StatelessWidget {
             style: const TextStyle(
               fontSize: 11,
               fontWeight: FontWeight.w700,
-              color: AppColors.ink,
+              color: AppColors.outline,
             ),
           ),
         ),
@@ -690,23 +640,17 @@ class _Tag extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(
-        horizontal: 9,
-        vertical: 7,
-      ),
+      padding: const EdgeInsets.symmetric(horizontal: 9, vertical: 7),
       decoration: BoxDecoration(
         color: AppColors.cream,
-        border: Border.all(
-          color: AppColors.ink,
-          width: 2,
-        ),
+        border: Border.all(color: AppColors.outline, width: 2),
       ),
       child: Text(
         label,
         style: const TextStyle(
           fontSize: 9,
           fontWeight: FontWeight.w900,
-          color: AppColors.ink,
+          color: AppColors.outline,
         ),
       ),
     );
@@ -733,15 +677,9 @@ class _FeatureCard extends StatelessWidget {
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
         color: color,
-        border: Border.all(
-          color: AppColors.ink,
-          width: 3,
-        ),
+        border: Border.all(color: AppColors.outline, width: 3),
         boxShadow: const [
-          BoxShadow(
-            color: AppColors.ink,
-            offset: Offset(4, 4),
-          ),
+          BoxShadow(color: AppColors.outline, offset: Offset(4, 4)),
         ],
       ),
       child: Row(
@@ -753,16 +691,9 @@ class _FeatureCard extends StatelessWidget {
             alignment: Alignment.center,
             decoration: BoxDecoration(
               color: AppColors.paper,
-              border: Border.all(
-                color: AppColors.ink,
-                width: 2,
-              ),
+              border: Border.all(color: AppColors.outline, width: 2),
             ),
-            child: Icon(
-              icon,
-              size: 26,
-              color: AppColors.ink,
-            ),
+            child: Icon(icon, size: 26, color: AppColors.outline),
           ),
           const SizedBox(width: 13),
           Expanded(
@@ -774,7 +705,7 @@ class _FeatureCard extends StatelessWidget {
                   style: const TextStyle(
                     fontSize: 15,
                     fontWeight: FontWeight.w900,
-                    color: AppColors.ink,
+                    color: AppColors.outline,
                   ),
                 ),
                 const SizedBox(height: 7),
@@ -783,7 +714,7 @@ class _FeatureCard extends StatelessWidget {
                   style: const TextStyle(
                     fontSize: 12,
                     height: 1.5,
-                    color: AppColors.ink,
+                    color: AppColors.outline,
                   ),
                 ),
               ],

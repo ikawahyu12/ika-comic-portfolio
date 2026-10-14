@@ -53,8 +53,10 @@ class _PortfolioScreenState extends State<PortfolioScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     return Scaffold(
-      backgroundColor: AppColors.cream,
+      backgroundColor: isDark ? AppColors.darkBackground : AppColors.cream,
       body: SafeArea(
         child: Column(
           children: [
@@ -69,17 +71,11 @@ class _PortfolioScreenState extends State<PortfolioScreen> {
                     _currentPage = index;
                   });
                 },
-                
+
                 children: const [
-                  SingleChildScrollView(
-                    child: _AboutSection(),
-                  ),
-                  SingleChildScrollView(
-                    child: _ProjectsSection(),
-                  ),
-                  SingleChildScrollView(
-                    child: _OrganizationSection(),
-                  ),
+                  SingleChildScrollView(child: _AboutSection()),
+                  SingleChildScrollView(child: _ProjectsSection()),
+                  SingleChildScrollView(child: _OrganizationSection()),
                   PolijeInfoScreen(),
                 ],
               ),
@@ -116,14 +112,20 @@ class _PortfolioHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     return Container(
       height: 62,
       padding: const EdgeInsets.symmetric(horizontal: 16),
-      decoration: const BoxDecoration(
-        color: AppColors.paper,
+      decoration: BoxDecoration(
+        color: Theme.of(context).brightness == Brightness.dark
+            ? AppColors.darkSurface
+            : AppColors.paper,
         border: Border(
           bottom: BorderSide(
-            color: AppColors.ink,
+            color: Theme.of(context).brightness == Brightness.dark
+                ? Colors.white
+                : AppColors.ink,
             width: 3,
           ),
         ),
@@ -135,11 +137,8 @@ class _PortfolioHeader extends StatelessWidget {
             height: 44,
             alignment: Alignment.center,
             decoration: BoxDecoration(
-              color: AppColors.red,
-              border: Border.all(
-                color: AppColors.ink,
-                width: 3,
-              ),
+              color: isDark ? AppColors.darkRed : AppColors.red,
+              border: Border.all(color: AppColors.outline, width: 3),
             ),
             child: const Text(
               'IKA',
@@ -153,7 +152,7 @@ class _PortfolioHeader extends StatelessWidget {
 
           const SizedBox(width: 10),
 
-          const Column(
+          Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -162,7 +161,9 @@ class _PortfolioHeader extends StatelessWidget {
                 style: TextStyle(
                   fontSize: 15,
                   fontWeight: FontWeight.w900,
-                  color: AppColors.ink,
+                  color: Theme.of(context).brightness == Brightness.dark
+                      ? Colors.white
+                      : AppColors.ink,
                 ),
               ),
               Text(
@@ -179,13 +180,15 @@ class _PortfolioHeader extends StatelessWidget {
 
           const Spacer(),
 
-          const Text(
+          Text(
             'ISSUE\n#03',
             textAlign: TextAlign.center,
             style: TextStyle(
               fontSize: 8,
               fontWeight: FontWeight.w900,
-              color: AppColors.ink,
+              color: Theme.of(context).brightness == Brightness.dark
+                  ? Colors.white
+                  : AppColors.ink,
             ),
           ),
         ],
@@ -211,28 +214,27 @@ class _PortfolioPageIndicator extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
-      children: List.generate(
-        totalPages,
-        (index) {
-          final bool isActive = index == currentPage;
+      children: List.generate(totalPages, (index) {
+        final bool isActive = index == currentPage;
 
-          return AnimatedContainer(
-            duration: const Duration(milliseconds: 250),
-            margin: const EdgeInsets.symmetric(horizontal: 4),
-            width: isActive ? 24 : 8,
-            height: 8,
-            decoration: BoxDecoration(
-              color: isActive
-                  ? AppColors.red
-                  : AppColors.ink.withValues(alpha: 0.25),
-              border: Border.all(
-                color: AppColors.ink,
-                width: 1,
-              ),
+        return AnimatedContainer(
+          duration: const Duration(milliseconds: 250),
+          margin: const EdgeInsets.symmetric(horizontal: 4),
+          width: isActive ? 24 : 8,
+          height: 8,
+          decoration: BoxDecoration(
+            color: isActive
+                ? AppColors.red
+                : AppColors.ink.withValues(alpha: 0.25),
+            border: Border.all(
+              color: Theme.of(context).brightness == Brightness.dark
+                  ? Colors.white
+                  : AppColors.ink,
+              width: 1,
             ),
-          );
-        },
-      ),
+          ),
+        );
+      }),
     );
   }
 }
@@ -301,28 +303,27 @@ class _PortfolioNavigationButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     return Material(
-      color: enabled ? AppColors.red : AppColors.panelBlue,
+      color: enabled
+          ? (isDark ? AppColors.darkRed : AppColors.red)
+          : (isDark ? AppColors.darkPanel : AppColors.panelBlue),
       child: InkWell(
         onTap: enabled ? onPressed : null,
         child: Container(
-          padding: const EdgeInsets.symmetric(
-            vertical: 12,
-            horizontal: 8,
-          ),
+          padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 8),
           decoration: BoxDecoration(
-            border: Border.all(
-              color: AppColors.ink,
-              width: 3,
-            ),
+            border: Border.all(color: AppColors.darkOutline, width: 3),
           ),
           child: Text(
             label,
             textAlign: TextAlign.center,
             style: TextStyle(
               color: enabled
-                  ? Colors.white
-                  : AppColors.ink.withValues(alpha: 0.4),
+                  ? AppColors.paper
+                  : (isDark ? AppColors.mutedText : AppColors.outline)
+                        .withValues(alpha: 0.65),
               fontSize: 9,
               fontWeight: FontWeight.w900,
               letterSpacing: 0.5,
@@ -343,35 +344,28 @@ class _AboutSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     return Container(
-      padding: const EdgeInsets.symmetric(
-        horizontal: 20,
-        vertical: 35,
-      ),
+      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 35),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Transform.rotate(
             angle: -0.03,
             child: Container(
-              padding: const EdgeInsets.symmetric(
-                horizontal: 14,
-                vertical: 7,
-              ),
+              padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 7),
               decoration: BoxDecoration(
                 color: AppColors.yellow,
-                border: Border.all(
-                  color: AppColors.ink,
-                  width: 3,
-                ),
+                border: Border.all(color: AppColors.outline, width: 3),
               ),
-              child: const Text(
+              child: Text(
                 'CHAPTER 01',
                 style: TextStyle(
                   fontSize: 11,
                   fontWeight: FontWeight.w900,
                   letterSpacing: 1,
-                  color: AppColors.ink,
+                  color: AppColors.outline,
                 ),
               ),
             ),
@@ -379,13 +373,13 @@ class _AboutSection extends StatelessWidget {
 
           const SizedBox(height: 16),
 
-          const Text(
+          Text(
             'ABOUT\nME!',
             style: TextStyle(
               fontSize: 48,
               height: 0.85,
               fontWeight: FontWeight.w900,
-              color: AppColors.ink,
+              color: isDark ? AppColors.paper : AppColors.outline,
             ),
           ),
 
@@ -412,20 +406,15 @@ class _AboutSection extends StatelessWidget {
                   top: 7,
                   right: 0,
                   bottom: 0,
-                  child: Container(
-                    color: AppColors.ink,
-                  ),
+                  child: Container(color: AppColors.outline),
                 ),
 
                 Container(
                   width: double.infinity,
                   padding: const EdgeInsets.all(18),
                   decoration: BoxDecoration(
-                    color: AppColors.blue,
-                    border: Border.all(
-                      color: AppColors.ink,
-                      width: 4,
-                    ),
+                    color: isDark ? AppColors.darkBlue : AppColors.blue,
+                    border: Border.all(color: AppColors.ink, width: 4),
                   ),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -437,10 +426,7 @@ class _AboutSection extends StatelessWidget {
                         ),
                         decoration: BoxDecoration(
                           color: AppColors.red,
-                          border: Border.all(
-                            color: AppColors.ink,
-                            width: 2,
-                          ),
+                          border: Border.all(color: AppColors.ink, width: 2),
                         ),
                         child: const Text(
                           'CHARACTER PROFILE',
@@ -460,16 +446,19 @@ class _AboutSection extends StatelessWidget {
                         children: [
                           Expanded(
                             child: Column(
-                              crossAxisAlignment:
-                                  CrossAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                const Text(
+                                Text(
                                   'IKA\nWAHYUNINGTYAS',
                                   style: TextStyle(
                                     fontSize: 21,
                                     height: 0.95,
                                     fontWeight: FontWeight.w900,
-                                    color: AppColors.ink,
+                                    color: AppColors.onColor(
+                                      isDark
+                                          ? AppColors.darkBlue
+                                          : AppColors.blue,
+                                    ),
                                   ),
                                 ),
 
@@ -487,7 +476,7 @@ class _AboutSection extends StatelessWidget {
 
                                 const SizedBox(height: 10),
 
-                                const Text(
+                                Text(
                                   'An Informatics Engineering student '
                                   'who loves technology, creativity, '
                                   'and turning ideas into digital experiences.',
@@ -495,7 +484,11 @@ class _AboutSection extends StatelessWidget {
                                     fontSize: 11,
                                     height: 1.4,
                                     fontWeight: FontWeight.w600,
-                                    color: AppColors.ink,
+                                    color: AppColors.onColor(
+                                      isDark
+                                          ? AppColors.darkBlue
+                                          : AppColors.blue,
+                                    ),
                                   ),
                                 ),
                               ],
@@ -511,12 +504,12 @@ class _AboutSection extends StatelessWidget {
                             decoration: BoxDecoration(
                               color: AppColors.paper,
                               border: Border.all(
-                                color: AppColors.ink,
+                                color: AppColors.outline,
                                 width: 3,
                               ),
                               boxShadow: const [
                                 BoxShadow(
-                                  color: AppColors.ink,
+                                  color: AppColors.outline,
                                   offset: Offset(3, 3),
                                 ),
                               ],
@@ -535,20 +528,11 @@ class _AboutSection extends StatelessWidget {
 
                       const Row(
                         children: [
-                          _StatBox(
-                            number: '03',
-                            label: 'SEMESTER',
-                          ),
+                          _StatBox(number: '03', label: 'SEMESTER'),
                           SizedBox(width: 10),
-                          _StatBox(
-                            number: 'TI',
-                            label: 'MAJOR',
-                          ),
+                          _StatBox(number: 'TI', label: 'MAJOR'),
                           SizedBox(width: 10),
-                          _StatBox(
-                            number: '∞',
-                            label: 'IDEAS',
-                          ),
+                          _StatBox(number: '∞', label: 'IDEAS'),
                         ],
                       ),
                     ],
@@ -721,11 +705,8 @@ class _AboutSection extends StatelessWidget {
                   vertical: 10,
                 ),
                 decoration: BoxDecoration(
-                  color: AppColors.ink,
-                  border: Border.all(
-                    color: AppColors.ink,
-                    width: 3,
-                  ),
+                  color: AppColors.outline,
+                  border: Border.all(color: AppColors.darkOutline, width: 3),
                 ),
                 child: const Text(
                   'TO BE CONTINUED...',
@@ -752,7 +733,7 @@ class _AboutSection extends StatelessWidget {
 // ==========================================================
 
 class _ProjectsSection extends StatefulWidget {
-  const _ProjectsSection({super.key});
+  const _ProjectsSection();
 
   @override
   State<_ProjectsSection> createState() => _ProjectsSectionState();
@@ -826,11 +807,8 @@ class _ProjectsSectionState extends State<_ProjectsSection> {
   Future<void> _openAddPortfolio() async {
     final result = await Navigator.push(
       context,
-      MaterialPageRoute(
-        builder: (context) => const AddPortfolioScreen(),
-      ),
+      MaterialPageRoute(builder: (context) => const AddPortfolioScreen()),
     );
-
     // Jika berhasil menambahkan portfolio,
     // ambil ulang data dari MySQL.
     if (result == true) {
@@ -848,105 +826,88 @@ class _ProjectsSectionState extends State<_ProjectsSection> {
     }
   }
 
-  Future<void> _openEditPortfolio(
-  Project project,
-) async {
-  final result = await Navigator.push(
-    context,
-    MaterialPageRoute(
-      builder: (context) => EditPortfolioScreen(
-        project: project,
+  Future<void> _openEditPortfolio(Project project) async {
+    final result = await Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => EditPortfolioScreen(project: project),
       ),
-    ),
-  );
+    );
 
-  if (result == true) {
-    setState(() {
-      _isLoading = true;
-      _errorMessage = null;
-      _currentProjectPage = 0;
-    });
+    if (result == true) {
+      setState(() {
+        _isLoading = true;
+        _errorMessage = null;
+        _currentProjectPage = 0;
+      });
 
-    if (_pageController.hasClients) {
-      _pageController.jumpToPage(0);
+      if (_pageController.hasClients) {
+        _pageController.jumpToPage(0);
+      }
+
+      await _loadProjects();
+    }
+  }
+
+  Future<void> _deletePortfolio(Project project) async {
+    final confirmed = await showDialog<bool>(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: const Text('Hapus Portfolio'),
+          content: Text(
+            'Yakin ingin menghapus '
+            '"${project.title}"?',
+          ),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.pop(context, false);
+              },
+              child: const Text('BATAL'),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.pop(context, true);
+              },
+              child: const Text('HAPUS'),
+            ),
+          ],
+        );
+      },
+    );
+
+    if (confirmed != true) {
+      return;
     }
 
-    await _loadProjects();
-  }
-}
+    try {
+      setState(() {
+        _isLoading = true;
+        _errorMessage = null;
+      });
 
-Future<void> _deletePortfolio(Project project) async {
-  final confirmed = await showDialog<bool>(
-    context: context,
-    builder: (context) {
-      return AlertDialog(
-        title: const Text('Hapus Portfolio'),
-        content: Text(
-          'Yakin ingin menghapus '
-          '"${project.title}"?',
-        ),
-        actions: [
-          TextButton(
-            onPressed: () {
-              Navigator.pop(context, false);
-            },
-            child: const Text('BATAL'),
-          ),
-          ElevatedButton(
-            onPressed: () {
-              Navigator.pop(context, true);
-            },
-            child: const Text('HAPUS'),
-          ),
-        ],
+      await _projectService.deleteProject(project.id);
+
+      if (!mounted) return;
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Portfolio berhasil dihapus')),
       );
-    },
-  );
 
-  if (confirmed != true) {
-    return;
+      await _loadProjects();
+    } catch (e) {
+      if (!mounted) return;
+
+      setState(() {
+        _isLoading = false;
+      });
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(e.toString().replaceFirst('Exception: ', ''))),
+      );
+    }
   }
-
-  try {
-    setState(() {
-      _isLoading = true;
-      _errorMessage = null;
-    });
-
-    await _projectService.deleteProject(
-      project.id,
-    );
-
-    if (!mounted) return;
-
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(
-        content: Text(
-          'Portfolio berhasil dihapus',
-        ),
-      ),
-    );
-
-    await _loadProjects();
-  } catch (e) {
-    if (!mounted) return;
-
-    setState(() {
-      _isLoading = false;
-    });
-
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text(
-          e.toString().replaceFirst(
-            'Exception: ',
-            '',
-          ),
-        ),
-      ),
-    );
-  }
-}
 
   // ==========================================================
   // FILTER TECHNOLOGY
@@ -962,11 +923,7 @@ Future<void> _deletePortfolio(Project project) async {
 
   List<Project> get _filteredProjects {
     return _projects
-        .where(
-          (project) => _matchesTechnology(
-            project.technologies,
-          ),
-        )
+        .where((project) => _matchesTechnology(project.technologies))
         .toList();
   }
 
@@ -987,13 +944,20 @@ Future<void> _deletePortfolio(Project project) async {
   // PROJECT COLOR
   // ==========================================================
 
-  Color _getProjectColor(int index) {
-    const colors = [
-      AppColors.blue,
-      AppColors.red,
-      AppColors.yellow,
-      AppColors.panelBlue,
-    ];
+  Color _getProjectColor(int index, bool isDark) {
+    final colors = isDark
+        ? const [
+            AppColors.darkBlue,
+            AppColors.darkRed,
+            AppColors.darkYellow,
+            AppColors.darkPanel,
+          ]
+        : const [
+            AppColors.panelBlue,
+            AppColors.red,
+            AppColors.yellow,
+            AppColors.cream,
+          ];
 
     return colors[index % colors.length];
   }
@@ -1030,34 +994,24 @@ Future<void> _deletePortfolio(Project project) async {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
     final filteredProjects = _filteredProjects;
 
     return Container(
-      padding: const EdgeInsets.symmetric(
-        horizontal: 20,
-        vertical: 35,
-      ),
+      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 35),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-
           // ====================================================
           // CHAPTER
           // ====================================================
-
           Transform.rotate(
             angle: 0.02,
             child: Container(
-              padding: const EdgeInsets.symmetric(
-                horizontal: 14,
-                vertical: 7,
-              ),
+              padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 7),
               decoration: BoxDecoration(
                 color: AppColors.yellow,
-                border: Border.all(
-                  color: AppColors.ink,
-                  width: 3,
-                ),
+                border: Border.all(color: AppColors.ink, width: 3),
               ),
               child: const Text(
                 'CHAPTER 02',
@@ -1065,7 +1019,7 @@ Future<void> _deletePortfolio(Project project) async {
                   fontSize: 11,
                   fontWeight: FontWeight.w900,
                   letterSpacing: 1,
-                  color: AppColors.ink,
+                  color: AppColors.outline,
                 ),
               ),
             ),
@@ -1076,8 +1030,7 @@ Future<void> _deletePortfolio(Project project) async {
           // ====================================================
           // TITLE
           // ====================================================
-
-          const Text(
+          Text(
             'MY\nPROJECTS!',
             style: TextStyle(
               fontSize: 48,
@@ -1104,36 +1057,27 @@ Future<void> _deletePortfolio(Project project) async {
           // ====================================================
           // ADD PORTFOLIO BUTTON
           // ====================================================
-
           SizedBox(
             width: double.infinity,
             child: ElevatedButton.icon(
               onPressed: _openAddPortfolio,
-              icon: const Icon(
-                Icons.add,
-                color: Colors.white,
-              ),
+              icon: const Icon(Icons.add, color: AppColors.paper),
               label: const Text(
                 'TAMBAH PORTFOLIO',
                 style: TextStyle(
-                  color: Colors.white,
+                  color: AppColors.paper,
                   fontSize: 11,
                   fontWeight: FontWeight.w900,
                   letterSpacing: 0.8,
                 ),
               ),
               style: ElevatedButton.styleFrom(
-                backgroundColor: AppColors.red,
-                foregroundColor: Colors.white,
-                padding: const EdgeInsets.symmetric(
-                  vertical: 14,
-                ),
+                backgroundColor: isDark ? AppColors.darkRed : AppColors.red,
+                foregroundColor: AppColors.paper,
+                padding: const EdgeInsets.symmetric(vertical: 14),
                 shape: const RoundedRectangleBorder(
                   borderRadius: BorderRadius.zero,
-                  side: BorderSide(
-                    color: AppColors.ink,
-                    width: 3,
-                  ),
+                  side: BorderSide(color: AppColors.outline, width: 3),
                 ),
               ),
             ),
@@ -1144,21 +1088,16 @@ Future<void> _deletePortfolio(Project project) async {
           // ====================================================
           // FILTER
           // ====================================================
-
           Container(
             width: double.infinity,
             padding: const EdgeInsets.all(14),
             decoration: BoxDecoration(
-              color: AppColors.ink,
-              border: Border.all(
-                color: AppColors.ink,
-                width: 3,
-              ),
+              color: isDark ? AppColors.darkSurface : AppColors.outline,
+              border: Border.all(color: AppColors.darkOutline, width: 3),
             ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-
                 const Text(
                   'FILTER BY TECHNOLOGY',
                   style: TextStyle(
@@ -1173,45 +1112,42 @@ Future<void> _deletePortfolio(Project project) async {
 
                 Container(
                   width: double.infinity,
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 12,
-                  ),
+                  padding: const EdgeInsets.symmetric(horizontal: 12),
                   decoration: BoxDecoration(
-                    color: AppColors.cream,
-                    border: Border.all(
-                      color: AppColors.ink,
-                      width: 3,
-                    ),
+                    color: isDark ? AppColors.darkPanel : AppColors.cream,
+                    border: Border.all(color: AppColors.darkOutline, width: 3),
                   ),
                   child: DropdownButtonHideUnderline(
                     child: DropdownButton<String>(
                       value: _selectedTechnology,
                       isExpanded: true,
-                      dropdownColor: AppColors.paper,
-                      icon: const Icon(
+                      dropdownColor: isDark
+                          ? AppColors.darkPanel
+                          : AppColors.paper,
+                      icon: Icon(
                         Icons.keyboard_arrow_down,
-                        color: AppColors.ink,
+                        color: isDark ? AppColors.paper : AppColors.outline,
                       ),
-                      style: const TextStyle(
-                        color: AppColors.ink,
+                      style: TextStyle(
+                        color: isDark ? AppColors.paper : AppColors.outline,
                         fontSize: 11,
                         fontWeight: FontWeight.w900,
                       ),
-                      items: _technologies.map(
-                        (technology) {
-                          return DropdownMenuItem<String>(
-                            value: technology,
-                            child: Text(
-                              technology,
-                              style: const TextStyle(
-                                color: AppColors.ink,
-                                fontSize: 11,
-                                fontWeight: FontWeight.w900,
-                              ),
+                      items: _technologies.map((technology) {
+                        return DropdownMenuItem<String>(
+                          value: technology,
+                          child: Text(
+                            technology,
+                            style: TextStyle(
+                              color: isDark
+                                  ? AppColors.paper
+                                  : AppColors.outline,
+                              fontSize: 11,
+                              fontWeight: FontWeight.w900,
                             ),
-                          );
-                        },
-                      ).toList(),
+                          ),
+                        );
+                      }).toList(),
                       onChanged: _changeTechnology,
                     ),
                   ),
@@ -1225,19 +1161,14 @@ Future<void> _deletePortfolio(Project project) async {
           // ====================================================
           // LOADING
           // ====================================================
-
           if (_isLoading)
             const SizedBox(
               height: 430,
-              child: Center(
-                child: CircularProgressIndicator(),
-              ),
+              child: Center(child: CircularProgressIndicator()),
             )
-
           // ====================================================
           // ERROR
           // ====================================================
-
           else if (_errorMessage != null)
             SizedBox(
               height: 430,
@@ -1245,10 +1176,8 @@ Future<void> _deletePortfolio(Project project) async {
                 child: Padding(
                   padding: const EdgeInsets.all(20),
                   child: Column(
-                    mainAxisAlignment:
-                        MainAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-
                       const Icon(
                         Icons.error_outline,
                         size: 50,
@@ -1257,13 +1186,13 @@ Future<void> _deletePortfolio(Project project) async {
 
                       const SizedBox(height: 12),
 
-                      const Text(
+                      Text(
                         'FAILED TO LOAD PROJECTS',
                         textAlign: TextAlign.center,
                         style: TextStyle(
                           fontSize: 14,
                           fontWeight: FontWeight.w900,
-                          color: AppColors.ink,
+                          color: AppColors.outline,
                         ),
                       ),
 
@@ -1272,10 +1201,7 @@ Future<void> _deletePortfolio(Project project) async {
                       Text(
                         _errorMessage!,
                         textAlign: TextAlign.center,
-                        style: const TextStyle(
-                          fontSize: 10,
-                          color: AppColors.ink,
-                        ),
+                        style: TextStyle(fontSize: 10, color: AppColors.ink),
                       ),
 
                       const SizedBox(height: 16),
@@ -1296,13 +1222,11 @@ Future<void> _deletePortfolio(Project project) async {
                 ),
               ),
             )
-
           // ====================================================
           // EMPTY
           // ====================================================
-
           else if (filteredProjects.isEmpty)
-            const SizedBox(
+            SizedBox(
               height: 430,
               child: Center(
                 child: Text(
@@ -1310,16 +1234,14 @@ Future<void> _deletePortfolio(Project project) async {
                   style: TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.w900,
-                    color: AppColors.ink,
+                    color: AppColors.outline,
                   ),
                 ),
               ),
             )
-
           // ====================================================
           // PROJECT PAGE VIEW
           // ====================================================
-
           else
             SizedBox(
               height: 430,
@@ -1340,10 +1262,8 @@ Future<void> _deletePortfolio(Project project) async {
                     category: project.category.toUpperCase(),
                     description: project.description,
                     technologies: project.technologies,
-                    color: _getProjectColor(index),
-                    icon: _getProjectIcon(
-                      project.category,
-                    ),
+                    color: _getProjectColor(index, isDark),
+                    icon: _getProjectIcon(project.category),
                     githubUrl: project.githubUrl,
                     imageAsset: project.image,
                     onEdit: () {
@@ -1360,43 +1280,27 @@ Future<void> _deletePortfolio(Project project) async {
           // ====================================================
           // PROJECT INDICATOR
           // ====================================================
-
           if (!_isLoading &&
               _errorMessage == null &&
               filteredProjects.isNotEmpty)
             Padding(
               padding: const EdgeInsets.only(top: 16),
               child: Row(
-                mainAxisAlignment:
-                    MainAxisAlignment.center,
-                children: List.generate(
-                  filteredProjects.length,
-                  (index) {
-                    final isActive =
-                        index == _currentProjectPage;
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: List.generate(filteredProjects.length, (index) {
+                  final isActive = index == _currentProjectPage;
 
-                    return AnimatedContainer(
-                      duration: const Duration(
-                        milliseconds: 200,
-                      ),
-                      margin:
-                          const EdgeInsets.symmetric(
-                        horizontal: 4,
-                      ),
-                      width: isActive ? 28 : 10,
-                      height: 10,
-                      decoration: BoxDecoration(
-                        color: isActive
-                            ? AppColors.red
-                            : AppColors.ink,
-                        border: Border.all(
-                          color: AppColors.ink,
-                          width: 2,
-                        ),
-                      ),
-                    );
-                  },
-                ),
+                  return AnimatedContainer(
+                    duration: const Duration(milliseconds: 200),
+                    margin: const EdgeInsets.symmetric(horizontal: 4),
+                    width: isActive ? 28 : 10,
+                    height: 10,
+                    decoration: BoxDecoration(
+                      color: isActive ? AppColors.red : AppColors.ink,
+                      border: Border.all(color: AppColors.outline, width: 2),
+                    ),
+                  );
+                }),
               ),
             ),
 
@@ -1431,7 +1335,6 @@ class _ProjectCard extends StatelessWidget {
   final VoidCallback onDelete;
 
   const _ProjectCard({
-    super.key,
     required this.number,
     required this.title,
     required this.category,
@@ -1447,6 +1350,10 @@ class _ProjectCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final foreground = AppColors.onColor(color);
+    final panelAccent = isDark ? AppColors.darkYellow : AppColors.yellow;
+
     return Transform.rotate(
       angle: number == '01' ? -0.01 : 0.01,
       child: Stack(
@@ -1456,156 +1363,169 @@ class _ProjectCard extends StatelessWidget {
             top: 7,
             right: 0,
             bottom: 0,
-            child: Container(
-              color: AppColors.ink,
-            ),
+            child: Container(color: AppColors.darkOutline),
           ),
 
           Container(
             width: double.infinity,
-            padding: const EdgeInsets.all(18),
+            padding: const EdgeInsets.all(15),
             decoration: BoxDecoration(
               color: color,
-              border: Border.all(
-                color: AppColors.ink,
-                width: 4,
-              ),
+              border: Border.all(color: AppColors.darkOutline, width: 4),
             ),
             child: Column(
-              crossAxisAlignment:
-                  CrossAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Row(
-                  mainAxisAlignment:
-                      MainAxisAlignment.spaceBetween,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Container(
-                      padding:
-                          const EdgeInsets.symmetric(
+                      padding: const EdgeInsets.symmetric(
                         horizontal: 10,
                         vertical: 6,
                       ),
                       decoration: BoxDecoration(
-                        color: AppColors.red,
+                        color: panelAccent,
                         border: Border.all(
-                          color: AppColors.ink,
+                          color: AppColors.darkOutline,
                           width: 2,
                         ),
                       ),
                       child: Text(
                         'MISSION #$number',
-                        style: const TextStyle(
-                          color: Colors.white,
+                        style: TextStyle(
+                          color: AppColors.onColor(panelAccent),
                           fontSize: 9,
                           fontWeight: FontWeight.w900,
                         ),
                       ),
                     ),
-                    Icon(
-                      icon,
-                      size: 32,
-                      color: AppColors.ink,
-                    ),
+                    Icon(icon, size: 30, color: foreground),
                   ],
                 ),
 
-                const SizedBox(height: 20),
+                const SizedBox(height: 12),
 
-                Text(
-                  title,
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
-                  style: const TextStyle(
-                    fontSize: 25,
-                    fontWeight: FontWeight.w900,
-                    color: AppColors.ink,
-                  ),
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Container(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 7,
+                              vertical: 4,
+                            ),
+                            decoration: BoxDecoration(
+                              color: isDark
+                                  ? AppColors.darkSurface
+                                  : AppColors.paper,
+                              border: Border.all(
+                                color: AppColors.darkOutline,
+                                width: 2,
+                              ),
+                            ),
+                            child: Text(
+                              category,
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                              style: TextStyle(
+                                fontSize: 8,
+                                fontWeight: FontWeight.w900,
+                                letterSpacing: 0.5,
+                                color: isDark
+                                    ? AppColors.paper
+                                    : AppColors.outline,
+                              ),
+                            ),
+                          ),
+                          const SizedBox(height: 7),
+                          Text(
+                            title,
+                            maxLines: 2,
+                            overflow: TextOverflow.ellipsis,
+                            style: TextStyle(
+                              fontSize: 23,
+                              height: 0.98,
+                              fontWeight: FontWeight.w900,
+                              color: foreground,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(width: 12),
+                    _ProjectArtwork(image: imageAsset, color: color),
+                  ],
                 ),
 
-                const SizedBox(height: 5),
-
-                Text(
-                  category,
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
-                  style: const TextStyle(
-                    fontSize: 9,
-                    fontWeight: FontWeight.w900,
-                    letterSpacing: 1,
-                    color: AppColors.red,
-                  ),
-                ),
-
-                const SizedBox(height: 18),
+                const SizedBox(height: 10),
 
                 Text(
                   description,
-                  maxLines: 4,
+                  maxLines: 3,
                   overflow: TextOverflow.ellipsis,
-                  style: const TextStyle(
-                    fontSize: 12,
-                    height: 1.5,
+                  style: TextStyle(
+                    fontSize: 11,
+                    height: 1.4,
                     fontWeight: FontWeight.w600,
-                    color: AppColors.ink,
+                    color: foreground,
                   ),
                 ),
 
-                const SizedBox(height: 20),
+                const SizedBox(height: 12),
 
-                const Text(
+                Text(
                   'TECH STACK',
                   style: TextStyle(
                     fontSize: 9,
                     fontWeight: FontWeight.w900,
                     letterSpacing: 1,
-                    color: AppColors.ink,
+                    color: foreground,
                   ),
                 ),
 
-                const SizedBox(height: 10),
+                const SizedBox(height: 7),
 
                 Wrap(
                   spacing: 8,
                   runSpacing: 8,
-                  children: technologies.map(
-                    (technology) {
-                      return Container(
-                        padding:
-                            const EdgeInsets.symmetric(
-                          horizontal: 10,
-                          vertical: 6,
+                  children: technologies.take(4).map((technology) {
+                    return Container(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 8,
+                        vertical: 5,
+                      ),
+                      decoration: BoxDecoration(
+                        color: isDark ? AppColors.darkSurface : AppColors.cream,
+                        border: Border.all(
+                          color: AppColors.darkOutline,
+                          width: 2,
                         ),
-                        decoration: BoxDecoration(
-                          color: AppColors.cream,
-                          border: Border.all(
-                            color: AppColors.ink,
-                            width: 2,
-                          ),
+                      ),
+                      child: Text(
+                        technology,
+                        style: TextStyle(
+                          fontSize: 8,
+                          fontWeight: FontWeight.w900,
+                          color: isDark ? AppColors.paper : AppColors.outline,
                         ),
-                        child: Text(
-                          technology,
-                          style: const TextStyle(
-                            fontSize: 9,
-                            fontWeight: FontWeight.w900,
-                            color: AppColors.ink,
-                          ),
-                        ),
-                      );
-                    },
-                  ).toList(),
+                      ),
+                    );
+                  }).toList(),
                 ),
 
-                const SizedBox(height: 22),
+                const SizedBox(height: 12),
 
                 GestureDetector(
                   onTap: () {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) =>
-                            ProjectDetailScreen(
-                          projectNumber:
-                              'MISSION #$number',
+                        builder: (context) => ProjectDetailScreen(
+                          projectNumber: 'MISSION #$number',
                           title: title,
                           category: category,
                           description: description,
@@ -1617,34 +1537,39 @@ class _ProjectCard extends StatelessWidget {
                     );
                   },
                   child: Container(
-                    padding:
-                        const EdgeInsets.symmetric(
+                    padding: const EdgeInsets.symmetric(
                       horizontal: 14,
                       vertical: 10,
                     ),
                     decoration: BoxDecoration(
-                      color: AppColors.ink,
+                      color: isDark ? AppColors.darkRed : AppColors.red,
                       border: Border.all(
-                        color: AppColors.ink,
+                        color: AppColors.darkOutline,
                         width: 2,
                       ),
+                      boxShadow: const [
+                        BoxShadow(
+                          color: AppColors.darkOutline,
+                          offset: Offset(3, 3),
+                        ),
+                      ],
                     ),
-                    child: const Row(
+                    child: Row(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        Text(
+                        const Text(
                           'VIEW MISSION',
                           style: TextStyle(
-                            color: Colors.white,
+                            color: AppColors.paper,
                             fontSize: 9,
                             fontWeight: FontWeight.w900,
                             letterSpacing: 0.8,
                           ),
                         ),
-                        SizedBox(width: 8),
-                        Icon(
+                        const SizedBox(width: 8),
+                        const Icon(
                           Icons.arrow_forward,
-                          color: Colors.white,
+                          color: AppColors.paper,
                           size: 16,
                         ),
                       ],
@@ -1652,39 +1577,54 @@ class _ProjectCard extends StatelessWidget {
                   ),
                 ),
 
-                const SizedBox(height: 16),
+                const SizedBox(height: 12),
 
                 Row(
                   children: [
                     Expanded(
                       child: OutlinedButton.icon(
                         onPressed: onEdit,
-                        icon: const Icon(
-                          Icons.edit,
-                          size: 18,
-                        ),
+                        icon: Icon(Icons.edit, size: 17, color: foreground),
                         label: const Text(
                           'EDIT',
-                          style: TextStyle(
-                            fontWeight: FontWeight.w900,
+                          style: TextStyle(fontWeight: FontWeight.w900),
+                        ),
+                        style: OutlinedButton.styleFrom(
+                          foregroundColor: foreground,
+                          padding: const EdgeInsets.symmetric(vertical: 9),
+                          side: const BorderSide(
+                            color: AppColors.darkOutline,
+                            width: 2,
+                          ),
+                          shape: const RoundedRectangleBorder(
+                            borderRadius: BorderRadius.zero,
                           ),
                         ),
                       ),
                     ),
 
-                    const SizedBox(width: 10),
+                    const SizedBox(width: 8),
 
                     Expanded(
                       child: ElevatedButton.icon(
                         onPressed: onDelete,
-                        icon: const Icon(
-                          Icons.delete,
-                          size: 18,
-                        ),
+                        icon: const Icon(Icons.delete, size: 17),
                         label: const Text(
                           'HAPUS',
-                          style: TextStyle(
-                            fontWeight: FontWeight.w900,
+                          style: TextStyle(fontWeight: FontWeight.w900),
+                        ),
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: isDark
+                              ? AppColors.darkRed
+                              : AppColors.red,
+                          foregroundColor: AppColors.paper,
+                          padding: const EdgeInsets.symmetric(vertical: 9),
+                          side: const BorderSide(
+                            color: AppColors.darkOutline,
+                            width: 2,
+                          ),
+                          shape: const RoundedRectangleBorder(
+                            borderRadius: BorderRadius.zero,
                           ),
                         ),
                       ),
@@ -1700,24 +1640,79 @@ class _ProjectCard extends StatelessWidget {
   }
 }
 
+class _ProjectArtwork extends StatelessWidget {
+  final String? image;
+  final Color color;
+
+  const _ProjectArtwork({required this.image, required this.color});
+
+  @override
+  Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final placeholderColor = isDark ? AppColors.darkSurface : AppColors.paper;
+
+    Widget fallback() => Container(
+      color: placeholderColor,
+      alignment: Alignment.center,
+      child: Icon(
+        Icons.auto_stories_rounded,
+        color: AppColors.onColor(placeholderColor),
+      ),
+    );
+
+    if (image == null || image!.isEmpty) {
+      return Container(
+        width: 76,
+        height: 78,
+        decoration: BoxDecoration(
+          color: color,
+          border: Border.all(color: AppColors.darkOutline, width: 2),
+        ),
+        child: fallback(),
+      );
+    }
+
+    final isNetworkImage = image!.startsWith('http');
+    return Container(
+      width: 76,
+      height: 78,
+      clipBehavior: Clip.antiAlias,
+      decoration: BoxDecoration(
+        color: placeholderColor,
+        border: Border.all(color: AppColors.darkOutline, width: 2),
+      ),
+      child: isNetworkImage
+          ? Image.network(
+              image!,
+              fit: BoxFit.cover,
+              errorBuilder: (context, error, stackTrace) => fallback(),
+            )
+          : Image.asset(
+              image!,
+              fit: BoxFit.cover,
+              errorBuilder: (context, error, stackTrace) => fallback(),
+            ),
+    );
+  }
+}
+
 // ==========================================================
 // ORGANIZATION SECTION
 // ==========================================================
 
 class _OrganizationSection extends StatelessWidget {
-  const _OrganizationSection({super.key});
+  const _OrganizationSection();
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     return Container(
-      padding: const EdgeInsets.fromLTRB(
-        24,
-        35,
-        24,
-        50,
-      ),
-      decoration: const BoxDecoration(
-        color: AppColors.cream,
+      padding: const EdgeInsets.fromLTRB(24, 35, 24, 50),
+      decoration: BoxDecoration(
+        color: Theme.of(context).brightness == Brightness.dark
+            ? AppColors.darkBackground
+            : AppColors.cream,
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -1775,16 +1770,10 @@ class _OrganizationSection extends StatelessWidget {
             width: double.infinity,
             padding: const EdgeInsets.all(22),
             decoration: BoxDecoration(
-              color: AppColors.ink,
-              border: Border.all(
-                color: AppColors.ink,
-                width: 4,
-              ),
+              color: isDark ? AppColors.darkSurface : AppColors.outline,
+              border: Border.all(color: AppColors.darkOutline, width: 4),
               boxShadow: const [
-                BoxShadow(
-                  color: AppColors.red,
-                  offset: Offset(7, 7),
-                ),
+                BoxShadow(color: AppColors.red, offset: Offset(7, 7)),
               ],
             ),
             child: const Column(
@@ -1847,16 +1836,12 @@ class _OrganizationCard extends StatelessWidget {
       width: double.infinity,
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
-        color: AppColors.paper,
-        border: Border.all(
-          color: AppColors.ink,
-          width: 4,
-        ),
+        color: Theme.of(context).brightness == Brightness.dark
+            ? AppColors.darkSurface
+            : AppColors.paper,
+        border: Border.all(color: AppColors.ink, width: 4),
         boxShadow: const [
-          BoxShadow(
-            color: AppColors.ink,
-            offset: Offset(7, 7),
-          ),
+          BoxShadow(color: AppColors.outline, offset: Offset(7, 7)),
         ],
       ),
       child: Row(
@@ -1868,16 +1853,13 @@ class _OrganizationCard extends StatelessWidget {
             alignment: Alignment.center,
             decoration: BoxDecoration(
               color: color,
-              border: Border.all(
-                color: AppColors.ink,
-                width: 3,
-              ),
+              border: Border.all(color: AppColors.ink, width: 3),
               shape: BoxShape.circle,
             ),
             child: Text(
               number,
               style: const TextStyle(
-                color: AppColors.ink,
+                color: AppColors.outline,
                 fontSize: 20,
                 fontWeight: FontWeight.w900,
               ),
@@ -1892,7 +1874,7 @@ class _OrganizationCard extends StatelessWidget {
               children: [
                 Text(
                   organization,
-                  style: const TextStyle(
+                  style: TextStyle(
                     color: AppColors.ink,
                     fontSize: 20,
                     fontWeight: FontWeight.w900,
@@ -1915,8 +1897,8 @@ class _OrganizationCard extends StatelessWidget {
 
                 Text(
                   period,
-                  style: const TextStyle(
-                    color: Colors.black54,
+                  style: TextStyle(
+                    color: AppColors.secondaryText,
                     fontSize: 12,
                     fontWeight: FontWeight.w700,
                   ),
@@ -1926,7 +1908,7 @@ class _OrganizationCard extends StatelessWidget {
 
                 Text(
                   description,
-                  style: const TextStyle(
+                  style: TextStyle(
                     color: AppColors.ink,
                     fontSize: 13,
                     height: 1.5,
@@ -1946,34 +1928,19 @@ class _OrganizationCard extends StatelessWidget {
 // ==========================================================
 
 class _ComicSectionTitle extends StatelessWidget {
-  final String? chapter;
   final String title;
   final String subtitle;
 
-  const _ComicSectionTitle({
-    this.chapter,
-    required this.title,
-    required this.subtitle,
-  });
+  const _ComicSectionTitle({required this.title, required this.subtitle});
 
   @override
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        if (chapter != null)
-          Text(
-            chapter!,
-            style: const TextStyle(
-              fontSize: 16,
-              fontWeight: FontWeight.w900,
-              color: AppColors.ink,
-            ),
-          ),
-
         Text(
           title,
-          style: const TextStyle(
+          style: TextStyle(
             fontSize: 28,
             fontWeight: FontWeight.w900,
             color: AppColors.ink,
@@ -1982,17 +1949,13 @@ class _ComicSectionTitle extends StatelessWidget {
 
         const SizedBox(height: 4),
 
-        Container(
-          width: 150,
-          height: 4,
-          color: AppColors.red,
-        ),
+        Container(width: 150, height: 4, color: AppColors.red),
 
         const SizedBox(height: 7),
 
         Text(
           subtitle,
-          style: const TextStyle(
+          style: TextStyle(
             fontSize: 9,
             fontWeight: FontWeight.bold,
             letterSpacing: 1.2,
@@ -2027,8 +1990,9 @@ class _StoryPanel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final Color textColor =
-        lightText ? Colors.white : AppColors.ink;
+    final Color textColor = lightText
+        ? AppColors.paper
+        : AppColors.onColor(color);
 
     return Transform.rotate(
       angle: rotation,
@@ -2037,15 +2001,9 @@ class _StoryPanel extends StatelessWidget {
         padding: const EdgeInsets.all(16),
         decoration: BoxDecoration(
           color: color,
-          border: Border.all(
-            color: AppColors.ink,
-            width: 3,
-          ),
+          border: Border.all(color: AppColors.ink, width: 3),
           boxShadow: const [
-            BoxShadow(
-              color: AppColors.ink,
-              offset: Offset(5, 5),
-            ),
+            BoxShadow(color: AppColors.outline, offset: Offset(5, 5)),
           ],
         ),
         child: Row(
@@ -2056,7 +2014,7 @@ class _StoryPanel extends StatelessWidget {
               height: 45,
               alignment: Alignment.center,
               decoration: const BoxDecoration(
-                color: AppColors.ink,
+                color: AppColors.outline,
                 shape: BoxShape.circle,
               ),
               child: Text(
@@ -2073,8 +2031,7 @@ class _StoryPanel extends StatelessWidget {
 
             Expanded(
               child: Column(
-                crossAxisAlignment:
-                    CrossAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
                     title,
@@ -2127,6 +2084,9 @@ class _EducationCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final textColor = AppColors.onColor(color);
+
     return Transform.rotate(
       angle: -0.01,
       child: Container(
@@ -2134,15 +2094,9 @@ class _EducationCard extends StatelessWidget {
         padding: const EdgeInsets.all(16),
         decoration: BoxDecoration(
           color: color,
-          border: Border.all(
-            color: AppColors.ink,
-            width: 3,
-          ),
+          border: Border.all(color: AppColors.ink, width: 3),
           boxShadow: const [
-            BoxShadow(
-              color: AppColors.ink,
-              offset: Offset(5, 5),
-            ),
+            BoxShadow(color: AppColors.outline, offset: Offset(5, 5)),
           ],
         ),
         child: Row(
@@ -2152,31 +2106,23 @@ class _EducationCard extends StatelessWidget {
               height: 55,
               decoration: BoxDecoration(
                 color: AppColors.cream,
-                border: Border.all(
-                  color: AppColors.ink,
-                  width: 3,
-                ),
+                border: Border.all(color: AppColors.ink, width: 3),
               ),
-              child: Icon(
-                icon,
-                color: AppColors.ink,
-                size: 30,
-              ),
+              child: Icon(icon, color: AppColors.outline, size: 30),
             ),
 
             const SizedBox(width: 14),
 
             Expanded(
               child: Column(
-                crossAxisAlignment:
-                    CrossAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
                     year,
-                    style: const TextStyle(
+                    style: TextStyle(
                       fontSize: 9,
                       fontWeight: FontWeight.w900,
-                      color: AppColors.red,
+                      color: isDark ? const Color(0xFFFF6973) : AppColors.red,
                     ),
                   ),
 
@@ -2184,10 +2130,10 @@ class _EducationCard extends StatelessWidget {
 
                   Text(
                     title,
-                    style: const TextStyle(
+                    style: TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.w900,
-                      color: AppColors.ink,
+                      color: textColor,
                     ),
                   ),
 
@@ -2195,11 +2141,11 @@ class _EducationCard extends StatelessWidget {
 
                   Text(
                     subtitle,
-                    style: const TextStyle(
+                    style: TextStyle(
                       fontSize: 9,
                       fontWeight: FontWeight.bold,
                       letterSpacing: 0.7,
-                      color: AppColors.ink,
+                      color: textColor,
                     ),
                   ),
                 ],
@@ -2220,24 +2166,18 @@ class _StatBox extends StatelessWidget {
   final String number;
   final String label;
 
-  const _StatBox({
-    required this.number,
-    required this.label,
-  });
+  const _StatBox({required this.number, required this.label});
 
   @override
   Widget build(BuildContext context) {
     return Expanded(
       child: Container(
-        padding: const EdgeInsets.symmetric(
-          vertical: 10,
-        ),
+        padding: const EdgeInsets.symmetric(vertical: 10),
         decoration: BoxDecoration(
-          color: AppColors.cream,
-          border: Border.all(
-            color: AppColors.ink,
-            width: 2,
-          ),
+          color: Theme.of(context).brightness == Brightness.dark
+              ? AppColors.darkSurface
+              : AppColors.cream,
+          border: Border.all(color: AppColors.ink, width: 2),
         ),
         child: Column(
           children: [
@@ -2254,7 +2194,7 @@ class _StatBox extends StatelessWidget {
 
             Text(
               label,
-              style: const TextStyle(
+              style: TextStyle(
                 fontSize: 7,
                 fontWeight: FontWeight.w900,
                 letterSpacing: 0.5,
@@ -2285,41 +2225,30 @@ class _SkillBadge extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final foreground = AppColors.onColor(color);
+
     return Container(
-      padding: const EdgeInsets.symmetric(
-        horizontal: 13,
-        vertical: 11,
-      ),
+      padding: const EdgeInsets.symmetric(horizontal: 13, vertical: 11),
       decoration: BoxDecoration(
         color: color,
-        border: Border.all(
-          color: AppColors.ink,
-          width: 3,
-        ),
+        border: Border.all(color: AppColors.ink, width: 3),
         boxShadow: const [
-          BoxShadow(
-            color: AppColors.ink,
-            offset: Offset(3, 3),
-          ),
+          BoxShadow(color: AppColors.outline, offset: Offset(3, 3)),
         ],
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Icon(
-            icon,
-            size: 17,
-            color: AppColors.ink,
-          ),
+          Icon(icon, size: 17, color: foreground),
 
           const SizedBox(width: 7),
 
           Text(
             label,
-            style: const TextStyle(
+            style: TextStyle(
               fontSize: 9,
               fontWeight: FontWeight.w900,
-              color: AppColors.ink,
+              color: foreground,
             ),
           ),
         ],
@@ -2352,15 +2281,9 @@ class _ToolCard extends StatelessWidget {
       padding: const EdgeInsets.all(18),
       decoration: BoxDecoration(
         color: color,
-        border: Border.all(
-          color: AppColors.ink,
-          width: 4,
-        ),
+        border: Border.all(color: AppColors.ink, width: 4),
         boxShadow: const [
-          BoxShadow(
-            color: AppColors.ink,
-            offset: Offset(6, 6),
-          ),
+          BoxShadow(color: AppColors.outline, offset: Offset(6, 6)),
         ],
       ),
       child: Column(
@@ -2368,11 +2291,7 @@ class _ToolCard extends StatelessWidget {
         children: [
           Row(
             children: [
-              Icon(
-                icon,
-                size: 28,
-                color: AppColors.ink,
-              ),
+              Icon(icon, size: 28, color: AppColors.outline),
 
               const SizedBox(width: 10),
 
@@ -2381,7 +2300,7 @@ class _ToolCard extends StatelessWidget {
                 style: const TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.w900,
-                  color: AppColors.ink,
+                  color: AppColors.outline,
                 ),
               ),
             ],
@@ -2392,31 +2311,26 @@ class _ToolCard extends StatelessWidget {
           Wrap(
             spacing: 8,
             runSpacing: 8,
-            children: items.map(
-              (item) {
-                return Container(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 10,
-                    vertical: 7,
+            children: items.map((item) {
+              return Container(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 10,
+                  vertical: 7,
+                ),
+                decoration: BoxDecoration(
+                  color: AppColors.cream,
+                  border: Border.all(color: AppColors.ink, width: 2),
+                ),
+                child: Text(
+                  item,
+                  style: const TextStyle(
+                    fontSize: 9,
+                    fontWeight: FontWeight.w900,
+                    color: AppColors.outline,
                   ),
-                  decoration: BoxDecoration(
-                    color: AppColors.cream,
-                    border: Border.all(
-                      color: AppColors.ink,
-                      width: 2,
-                    ),
-                  ),
-                  child: Text(
-                    item,
-                    style: const TextStyle(
-                      fontSize: 9,
-                      fontWeight: FontWeight.w900,
-                      color: AppColors.ink,
-                    ),
-                  ),
-                );
-              },
-            ).toList(),
+                ),
+              );
+            }).toList(),
           ),
         ],
       ),

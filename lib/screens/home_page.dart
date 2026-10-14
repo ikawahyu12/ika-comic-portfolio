@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 import '../theme/app_colors.dart';
 
@@ -44,7 +43,7 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.cream,
+      backgroundColor: AppColors.pageBackground,
 
       body: SafeArea(
         child: Column(
@@ -52,13 +51,11 @@ class _HomePageState extends State<HomePage> {
             // ======================================================
             // HEADER
             // ======================================================
-
             _HomeHeader(),
 
             // ======================================================
             // PAGE VIEW
             // ======================================================
-
             Expanded(
               child: PageView(
                 controller: _pageController,
@@ -69,26 +66,18 @@ class _HomePageState extends State<HomePage> {
                   });
                 },
 
-                children: const [
-                  _ComicCoverPage(),
-                  _ProfilePhotoPage(),
-                ],
+                children: const [_ComicCoverPage(), _ProfilePhotoPage()],
               ),
             ),
 
             // ======================================================
             // PAGE INDICATOR
             // ======================================================
-
-            _PageIndicator(
-              currentPage: _currentPage,
-              totalPages: _totalPages,
-            ),
+            _PageIndicator(currentPage: _currentPage, totalPages: _totalPages),
 
             // ======================================================
             // PREVIOUS / NEXT
             // ======================================================
-
             _PageNavigation(
               currentPage: _currentPage,
               totalPages: _totalPages,
@@ -103,7 +92,6 @@ class _HomePageState extends State<HomePage> {
     );
   }
 }
-
 
 // ==========================================================
 // HOME HEADER
@@ -121,12 +109,7 @@ class _HomeHeader extends StatelessWidget {
       decoration: const BoxDecoration(
         color: AppColors.paper,
 
-        border: Border(
-          bottom: BorderSide(
-            color: AppColors.ink,
-            width: 3,
-          ),
-        ),
+        border: Border(bottom: BorderSide(color: AppColors.outline, width: 3)),
       ),
 
       child: Row(
@@ -139,10 +122,7 @@ class _HomeHeader extends StatelessWidget {
             decoration: BoxDecoration(
               color: AppColors.red,
 
-              border: Border.all(
-                color: AppColors.ink,
-                width: 3,
-              ),
+              border: Border.all(color: AppColors.outline, width: 3),
             ),
 
             alignment: Alignment.center,
@@ -170,7 +150,7 @@ class _HomeHeader extends StatelessWidget {
                 style: TextStyle(
                   fontSize: 15,
                   fontWeight: FontWeight.w900,
-                  color: AppColors.ink,
+                  color: AppColors.outline,
                 ),
               ),
 
@@ -194,7 +174,7 @@ class _HomeHeader extends StatelessWidget {
             style: TextStyle(
               fontSize: 8,
               fontWeight: FontWeight.w900,
-              color: AppColors.ink,
+              color: AppColors.outline,
             ),
           ),
         ],
@@ -202,7 +182,6 @@ class _HomeHeader extends StatelessWidget {
     );
   }
 }
-
 
 // ==========================================================
 // PAGE 1 — COMIC COVER
@@ -220,9 +199,9 @@ class _ComicCoverPage extends StatelessWidget {
         children: [
           Text(
             'THE DAILY CODE',
-            style: GoogleFonts.bangers(
+            style: TextStyle(
               fontSize: 20,
-              color: AppColors.ink,
+              color: AppColors.outline,
               letterSpacing: 1,
             ),
           ),
@@ -231,16 +210,16 @@ class _ComicCoverPage extends StatelessWidget {
 
           Text(
             'THE AMAZING',
-            style: GoogleFonts.bangers(
+            style: TextStyle(
               fontSize: 34,
-              color: AppColors.ink,
+              color: AppColors.outline,
               letterSpacing: 1,
             ),
           ),
 
           Text(
             'IKA.EXE',
-            style: GoogleFonts.bangers(
+            style: TextStyle(
               fontSize: 54,
               color: AppColors.red,
               letterSpacing: 1,
@@ -258,16 +237,10 @@ class _ComicCoverPage extends StatelessWidget {
             decoration: BoxDecoration(
               color: AppColors.paper,
 
-              border: Border.all(
-                color: AppColors.ink,
-                width: 4,
-              ),
+              border: Border.all(color: AppColors.outline, width: 4),
 
               boxShadow: const [
-                BoxShadow(
-                  color: AppColors.ink,
-                  offset: Offset(7, 7),
-                ),
+                BoxShadow(color: AppColors.outline, offset: Offset(7, 7)),
               ],
             ),
 
@@ -289,7 +262,7 @@ class _ComicCoverPage extends StatelessWidget {
                     style: TextStyle(
                       fontSize: 11,
                       fontWeight: FontWeight.w900,
-                      color: AppColors.ink,
+                      color: AppColors.outline,
                     ),
                   ),
                 ),
@@ -298,18 +271,12 @@ class _ComicCoverPage extends StatelessWidget {
 
                 Text(
                   'WELCOME TO',
-                  style: GoogleFonts.bangers(
-                    fontSize: 18,
-                    color: AppColors.ink,
-                  ),
+                  style: TextStyle(fontSize: 18, color: AppColors.outline),
                 ),
 
                 Text(
                   'IKA.EXE',
-                  style: GoogleFonts.bangers(
-                    fontSize: 46,
-                    color: AppColors.red,
-                  ),
+                  style: TextStyle(fontSize: 46, color: AppColors.red),
                 ),
 
                 const SizedBox(height: 10),
@@ -325,7 +292,7 @@ class _ComicCoverPage extends StatelessWidget {
                     height: 1.5,
                     fontWeight: FontWeight.w900,
                     letterSpacing: 1,
-                    color: AppColors.ink,
+                    color: AppColors.outline,
                   ),
                 ),
 
@@ -340,10 +307,7 @@ class _ComicCoverPage extends StatelessWidget {
                   decoration: BoxDecoration(
                     color: AppColors.blue,
 
-                    border: Border.all(
-                      color: AppColors.ink,
-                      width: 3,
-                    ),
+                    border: Border.all(color: AppColors.outline, width: 3),
                   ),
 
                   child: const Text(
@@ -368,7 +332,7 @@ class _ComicCoverPage extends StatelessWidget {
               fontSize: 9,
               fontWeight: FontWeight.w900,
               letterSpacing: 1.2,
-              color: AppColors.ink,
+              color: AppColors.outline,
             ),
           ),
         ],
@@ -376,7 +340,6 @@ class _ComicCoverPage extends StatelessWidget {
     );
   }
 }
-
 
 // ==========================================================
 // PAGE 2 — PROFILE PHOTO
@@ -394,9 +357,9 @@ class _ProfilePhotoPage extends StatelessWidget {
         children: [
           Text(
             'MEET THE HERO',
-            style: GoogleFonts.bangers(
+            style: TextStyle(
               fontSize: 28,
-              color: AppColors.ink,
+              color: AppColors.outline,
               letterSpacing: 1,
             ),
           ),
@@ -411,23 +374,17 @@ class _ProfilePhotoPage extends StatelessWidget {
             decoration: BoxDecoration(
               color: AppColors.panelBlue,
 
-              border: Border.all(
-                color: AppColors.ink,
-                width: 4,
-              ),
+              border: Border.all(color: AppColors.outline, width: 4),
 
               boxShadow: const [
-                BoxShadow(
-                  color: AppColors.ink,
-                  offset: Offset(7, 7),
-                ),
+                BoxShadow(color: AppColors.outline, offset: Offset(7, 7)),
               ],
             ),
 
             child: Image.asset(
-            'assets/images/ika_hero.jpeg',
-            fit: BoxFit.cover,
-          ),
+              'assets/images/ika_hero.jpeg',
+              fit: BoxFit.cover,
+            ),
           ),
 
           const SizedBox(height: 20),
@@ -437,7 +394,7 @@ class _ProfilePhotoPage extends StatelessWidget {
             'IKA WAHYUNINGTYAS',
             textAlign: TextAlign.center,
 
-            style: GoogleFonts.bangers(
+            style: TextStyle(
               fontSize: 30,
               color: AppColors.red,
               letterSpacing: 1,
@@ -452,7 +409,7 @@ class _ProfilePhotoPage extends StatelessWidget {
               fontSize: 10,
               fontWeight: FontWeight.w900,
               letterSpacing: 1.2,
-              color: AppColors.ink,
+              color: AppColors.outline,
             ),
           ),
 
@@ -467,10 +424,7 @@ class _ProfilePhotoPage extends StatelessWidget {
             decoration: BoxDecoration(
               color: AppColors.yellow,
 
-              border: Border.all(
-                color: AppColors.ink,
-                width: 3,
-              ),
+              border: Border.all(color: AppColors.outline, width: 3),
             ),
 
             child: const Text(
@@ -483,7 +437,7 @@ class _ProfilePhotoPage extends StatelessWidget {
                 fontSize: 10,
                 height: 1.5,
                 fontWeight: FontWeight.w900,
-                color: AppColors.ink,
+                color: AppColors.outline,
               ),
             ),
           ),
@@ -493,7 +447,6 @@ class _ProfilePhotoPage extends StatelessWidget {
   }
 }
 
-
 // ==========================================================
 // PAGE INDICATOR
 // ==========================================================
@@ -502,45 +455,35 @@ class _PageIndicator extends StatelessWidget {
   final int currentPage;
   final int totalPages;
 
-  const _PageIndicator({
-    required this.currentPage,
-    required this.totalPages,
-  });
+  const _PageIndicator({required this.currentPage, required this.totalPages});
 
   @override
   Widget build(BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
-      children: List.generate(
-        totalPages,
-        (index) {
-          final isActive = index == currentPage;
+      children: List.generate(totalPages, (index) {
+        final isActive = index == currentPage;
 
-          return AnimatedContainer(
-            duration: const Duration(milliseconds: 250),
+        return AnimatedContainer(
+          duration: const Duration(milliseconds: 250),
 
-            margin: const EdgeInsets.symmetric(horizontal: 4),
+          margin: const EdgeInsets.symmetric(horizontal: 4),
 
-            width: isActive ? 24 : 8,
-            height: 8,
+          width: isActive ? 24 : 8,
+          height: 8,
 
-            decoration: BoxDecoration(
-              color: isActive
-                  ? AppColors.red
-                  : AppColors.ink.withValues(alpha: 0.25),
+          decoration: BoxDecoration(
+            color: isActive
+                ? AppColors.red
+                : AppColors.ink.withValues(alpha: 0.25),
 
-              border: Border.all(
-                color: AppColors.ink,
-                width: 1,
-              ),
-            ),
-          );
-        },
-      ),
+            border: Border.all(color: AppColors.outline, width: 1),
+          ),
+        );
+      }),
     );
   }
 }
-
 
 // ==========================================================
 // PREVIOUS / NEXT
@@ -589,7 +532,6 @@ class _PageNavigation extends StatelessWidget {
   }
 }
 
-
 // ==========================================================
 // NAVIGATION BUTTON
 // ==========================================================
@@ -608,24 +550,16 @@ class _NavigationButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Material(
-      color: enabled
-          ? AppColors.red
-          : AppColors.panelBlue,
+      color: enabled ? AppColors.red : AppColors.panelBlue,
 
       child: InkWell(
         onTap: enabled ? onPressed : null,
 
         child: Container(
-          padding: const EdgeInsets.symmetric(
-            vertical: 12,
-            horizontal: 8,
-          ),
+          padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 8),
 
           decoration: BoxDecoration(
-            border: Border.all(
-              color: AppColors.ink,
-              width: 3,
-            ),
+            border: Border.all(color: AppColors.outline, width: 3),
           ),
 
           child: Text(

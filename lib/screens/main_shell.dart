@@ -27,8 +27,9 @@ class _MainShellState extends State<MainShell> {
     return ValueListenableBuilder<bool>(
       valueListenable: appDarkMode,
       builder: (context, isDark, child) {
-        final backgroundColor =
-            isDark ? const Color(0xFF171717) : AppColors.cream;
+        final backgroundColor = isDark
+            ? AppColors.darkBackground
+            : AppColors.cream;
 
         return Scaffold(
           backgroundColor: backgroundColor,
@@ -69,21 +70,14 @@ class _ComicBottomNavigation extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final backgroundColor =
-        isDark ? const Color(0xFF242424) : AppColors.paper;
+    final backgroundColor = isDark ? AppColors.darkSurface : AppColors.paper;
 
-    final borderColor =
-        isDark ? Colors.white : AppColors.ink;
+    final borderColor = isDark ? const Color(0xFFFFF8E7) : AppColors.outline;
 
     return Container(
       decoration: BoxDecoration(
         color: backgroundColor,
-        border: Border(
-          top: BorderSide(
-            color: borderColor,
-            width: 4,
-          ),
-        ),
+        border: Border(top: BorderSide(color: borderColor, width: 4)),
       ),
       child: SafeArea(
         top: false,
@@ -163,17 +157,18 @@ class _BottomNavItem extends StatelessWidget {
     final Color backgroundColor = isActive
         ? AppColors.yellow
         : isDark
-            ? const Color(0xFF242424)
-            : AppColors.paper;
+        ? AppColors.darkSurface
+        : AppColors.paper;
 
     final Color foregroundColor = isActive
-        ? AppColors.ink
+        ? AppColors.outline
         : isDark
-            ? Colors.white
-            : AppColors.ink;
+        ? Colors.white
+        : AppColors.outline;
 
-    final Color borderColor =
-        isDark ? Colors.white : AppColors.ink;
+    final Color borderColor = isDark
+        ? const Color(0xFFFFF8E7)
+        : AppColors.outline;
 
     return Material(
       color: backgroundColor,
@@ -183,21 +178,14 @@ class _BottomNavItem extends StatelessWidget {
           decoration: BoxDecoration(
             border: Border(
               right: index != 3
-                  ? BorderSide(
-                      color: borderColor,
-                      width: 2,
-                    )
+                  ? BorderSide(color: borderColor, width: 2)
                   : BorderSide.none,
             ),
           ),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Icon(
-                icon,
-                size: 25,
-                color: foregroundColor,
-              ),
+              Icon(icon, size: 25, color: foregroundColor),
               const SizedBox(height: 4),
               Text(
                 label,

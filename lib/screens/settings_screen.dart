@@ -10,35 +10,24 @@ class SettingsScreen extends StatelessWidget {
     return ValueListenableBuilder<bool>(
       valueListenable: appDarkMode,
       builder: (context, isDark, child) {
-        final background =
-            isDark ? const Color(0xFF171717) : AppColors.cream;
-        final paper =
-            isDark ? const Color(0xFF292929) : AppColors.paper;
-        final panel =
-            isDark ? const Color(0xFF303944) : AppColors.panelBlue;
-        final ink =
-            isDark ? Colors.white : AppColors.ink;
+        final background = isDark ? AppColors.darkBackground : AppColors.cream;
+        final paper = AppColors.surface;
+        final panel = AppColors.panel;
+        final ink = AppColors.ink;
 
         return Scaffold(
           backgroundColor: background,
           appBar: AppBar(
-            backgroundColor:
-                isDark ? const Color(0xFF242424) : AppColors.yellow,
+            backgroundColor: isDark ? AppColors.darkSurface : AppColors.yellow,
             foregroundColor: ink,
             elevation: 0,
             title: const Text(
               'SETTINGS',
-              style: TextStyle(
-                fontWeight: FontWeight.w900,
-                letterSpacing: 1.5,
-              ),
+              style: TextStyle(fontWeight: FontWeight.w900, letterSpacing: 1.5),
             ),
             bottom: PreferredSize(
               preferredSize: const Size.fromHeight(4),
-              child: Container(
-                height: 4,
-                color: ink,
-              ),
+              child: Container(height: 4, color: ink),
             ),
           ),
           body: ListView(
@@ -71,11 +60,7 @@ class SettingsScreen extends StatelessWidget {
                         ),
                       ],
                     ),
-                    Divider(
-                      color: ink,
-                      thickness: 2,
-                      height: 28,
-                    ),
+                    Divider(color: ink, thickness: 2, height: 28),
                     SwitchListTile(
                       contentPadding: EdgeInsets.zero,
                       title: Text(
@@ -86,9 +71,7 @@ class SettingsScreen extends StatelessWidget {
                         ),
                       ),
                       subtitle: Text(
-                        isDark
-                            ? 'Mode malam aktif'
-                            : 'Mode terang aktif',
+                        isDark ? 'Mode malam aktif' : 'Mode terang aktif',
                         style: TextStyle(color: ink),
                       ),
                       secondary: Icon(
@@ -108,10 +91,7 @@ class SettingsScreen extends StatelessWidget {
                     Text(
                       'Ubah tampilan aplikasi antara mode terang '
                       'dan mode malam.',
-                      style: TextStyle(
-                        color: ink,
-                        fontSize: 12,
-                      ),
+                      style: TextStyle(color: ink, fontSize: 12),
                     ),
                   ],
                 ),
@@ -147,10 +127,7 @@ class SettingsScreen extends StatelessWidget {
                       style: TextStyle(color: ink),
                     ),
                     const SizedBox(height: 6),
-                    Text(
-                      'Flutter • MySQL API',
-                      style: TextStyle(color: ink),
-                    ),
+                    Text('Flutter • MySQL API', style: TextStyle(color: ink)),
                   ],
                 ),
               ),
@@ -179,16 +156,8 @@ class _SettingsPanel extends StatelessWidget {
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
         color: background,
-        border: Border.all(
-          color: ink,
-          width: 3,
-        ),
-        boxShadow: [
-          BoxShadow(
-            color: ink,
-            offset: const Offset(5, 5),
-          ),
-        ],
+        border: Border.all(color: ink, width: 3),
+        boxShadow: [BoxShadow(color: ink, offset: const Offset(5, 5))],
       ),
       child: child,
     );

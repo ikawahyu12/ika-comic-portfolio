@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 import '../theme/app_colors.dart';
 import 'project_detail_screen.dart';
@@ -10,7 +9,7 @@ class ProjectScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.cream,
+      backgroundColor: AppColors.pageBackground,
       body: SafeArea(
         child: Stack(
           children: [
@@ -33,14 +32,11 @@ class ProjectScreen extends StatelessWidget {
                           height: 48,
                           decoration: BoxDecoration(
                             color: AppColors.yellow,
-                            border: Border.all(
-                              color: AppColors.ink,
-                              width: 3,
-                            ),
+                            border: Border.all(color: AppColors.ink, width: 3),
                           ),
                           child: const Icon(
                             Icons.arrow_back,
-                            color: AppColors.ink,
+                            color: AppColors.outline,
                           ),
                         ),
                       ),
@@ -49,15 +45,11 @@ class ProjectScreen extends StatelessWidget {
 
                       Expanded(
                         child: Column(
-                          crossAxisAlignment:
-                              CrossAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
                               'THE DAILY CODE',
-                              style: GoogleFonts.bangers(
-                                fontSize: 20,
-                                letterSpacing: 1,
-                              ),
+                              style: TextStyle(fontSize: 20, letterSpacing: 1),
                             ),
                             const Text(
                               'MISSION ARCHIVES',
@@ -81,7 +73,7 @@ class ProjectScreen extends StatelessWidget {
                           decoration: BoxDecoration(
                             color: AppColors.red,
                             border: Border.all(
-                              color: AppColors.ink,
+                              color: AppColors.outline,
                               width: 2,
                             ),
                           ),
@@ -106,14 +98,14 @@ class ProjectScreen extends StatelessWidget {
                     angle: -0.02,
                     child: Text(
                       'MISSION\nARCHIVES!',
-                      style: GoogleFonts.bangers(
+                      style: TextStyle(
                         fontSize: 50,
                         height: 0.82,
                         color: AppColors.red,
                         shadows: const [
                           Shadow(
                             offset: Offset(3, 3),
-                            color: AppColors.ink,
+                            color: AppColors.outline,
                           ),
                         ],
                       ),
@@ -144,14 +136,13 @@ class ProjectScreen extends StatelessWidget {
                     icon: Icons.phone_android,
                     color: AppColors.red,
                     onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) =>
-                            const ProjectDetailScreen(),
-                      ),
-                    );
-                  },
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const ProjectDetailScreen(),
+                        ),
+                      );
+                    },
                   ),
 
                   const SizedBox(height: 24),
@@ -204,9 +195,9 @@ class ProjectScreen extends StatelessWidget {
                       angle: -0.03,
                       child: Text(
                         'MORE MISSIONS COMING SOON...',
-                        style: GoogleFonts.bangers(
+                        style: TextStyle(
                           fontSize: 20,
-                          color: AppColors.ink,
+                          color: AppColors.outline,
                         ),
                       ),
                     ),
@@ -222,13 +213,10 @@ class ProjectScreen extends StatelessWidget {
 
   void _showComingSoon(BuildContext context) {
     ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(
-        content: Text('Project detail page coming soon!'),
-      ),
+      const SnackBar(content: Text('Project detail page coming soon!')),
     );
   }
 }
-
 
 // ===============================================
 // PROJECT CARD
@@ -266,9 +254,7 @@ class ProjectCard extends StatelessWidget {
             Positioned.fill(
               left: 7,
               top: 7,
-              child: Container(
-                color: AppColors.ink,
-              ),
+              child: Container(color: AppColors.outline),
             ),
 
             // CARD
@@ -277,18 +263,13 @@ class ProjectCard extends StatelessWidget {
               padding: const EdgeInsets.all(18),
               decoration: BoxDecoration(
                 color: color,
-                border: Border.all(
-                  color: AppColors.ink,
-                  width: 4,
-                ),
+                border: Border.all(color: AppColors.ink, width: 4),
               ),
               child: Column(
-                crossAxisAlignment:
-                    CrossAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Row(
-                    crossAxisAlignment:
-                        CrossAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       // NUMBER
                       Container(
@@ -297,17 +278,11 @@ class ProjectCard extends StatelessWidget {
                         alignment: Alignment.center,
                         decoration: BoxDecoration(
                           color: AppColors.paper,
-                          border: Border.all(
-                            color: AppColors.ink,
-                            width: 3,
-                          ),
+                          border: Border.all(color: AppColors.ink, width: 3),
                         ),
                         child: Text(
                           number,
-                          style: GoogleFonts.bangers(
-                            fontSize: 27,
-                            color: AppColors.ink,
-                          ),
+                          style: TextStyle(fontSize: 27, color: AppColors.ink),
                         ),
                       ),
 
@@ -319,16 +294,9 @@ class ProjectCard extends StatelessWidget {
                         height: 58,
                         decoration: BoxDecoration(
                           color: AppColors.paper,
-                          border: Border.all(
-                            color: AppColors.ink,
-                            width: 3,
-                          ),
+                          border: Border.all(color: AppColors.ink, width: 3),
                         ),
-                        child: Icon(
-                          icon,
-                          size: 30,
-                          color: AppColors.ink,
-                        ),
+                        child: Icon(icon, size: 30, color: AppColors.ink),
                       ),
                     ],
                   ),
@@ -337,7 +305,7 @@ class ProjectCard extends StatelessWidget {
 
                   Text(
                     title,
-                    style: GoogleFonts.bangers(
+                    style: TextStyle(
                       fontSize: 31,
                       height: 0.85,
                       color: AppColors.ink,
@@ -351,9 +319,7 @@ class ProjectCard extends StatelessWidget {
                       horizontal: 9,
                       vertical: 5,
                     ),
-                    decoration: BoxDecoration(
-                      color: AppColors.ink,
-                    ),
+                    decoration: BoxDecoration(color: AppColors.ink),
                     child: Text(
                       category,
                       style: const TextStyle(
@@ -373,7 +339,7 @@ class ProjectCard extends StatelessWidget {
                       fontSize: 12,
                       fontWeight: FontWeight.w600,
                       height: 1.4,
-                      color: AppColors.ink,
+                      color: AppColors.outline,
                     ),
                   ),
 
@@ -388,17 +354,14 @@ class ProjectCard extends StatelessWidget {
                       ),
                       decoration: BoxDecoration(
                         color: AppColors.paper,
-                        border: Border.all(
-                          color: AppColors.ink,
-                          width: 2,
-                        ),
+                        border: Border.all(color: AppColors.ink, width: 2),
                       ),
                       child: const Text(
                         'OPEN FILE →',
                         style: TextStyle(
                           fontSize: 10,
                           fontWeight: FontWeight.w900,
-                          color: AppColors.ink,
+                          color: AppColors.outline,
                         ),
                       ),
                     ),
@@ -413,7 +376,6 @@ class ProjectCard extends StatelessWidget {
   }
 }
 
-
 // ===============================================
 // ADD PROJECT CARD
 // ===============================================
@@ -421,9 +383,7 @@ class ProjectCard extends StatelessWidget {
 class _AddProjectCard extends StatelessWidget {
   final VoidCallback onTap;
 
-  const _AddProjectCard({
-    required this.onTap,
-  });
+  const _AddProjectCard({required this.onTap});
 
   @override
   Widget build(BuildContext context) {
@@ -436,19 +396,15 @@ class _AddProjectCard extends StatelessWidget {
           height: 100,
           decoration: BoxDecoration(
             color: AppColors.paper,
-            border: Border.all(
-              color: AppColors.ink,
-              width: 3,
-            ),
+            border: Border.all(color: AppColors.ink, width: 3),
           ),
           child: Row(
-            mainAxisAlignment:
-                MainAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
               const Icon(
                 Icons.add_circle_outline,
                 size: 35,
-                color: AppColors.ink,
+                color: AppColors.outline,
               ),
 
               const SizedBox(width: 12),
@@ -456,7 +412,7 @@ class _AddProjectCard extends StatelessWidget {
               Text(
                 'NEW MISSION\nCOMING SOON!',
                 textAlign: TextAlign.center,
-                style: GoogleFonts.bangers(
+                style: TextStyle(
                   fontSize: 21,
                   height: 0.9,
                   color: AppColors.ink,
@@ -469,7 +425,6 @@ class _AddProjectCard extends StatelessWidget {
     );
   }
 }
-
 
 // ===============================================
 // BACKGROUND

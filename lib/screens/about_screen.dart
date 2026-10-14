@@ -1,7 +1,6 @@
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 import '../theme/app_colors.dart';
 
@@ -11,7 +10,7 @@ class AboutScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.cream,
+      backgroundColor: AppColors.pageBackground,
       body: SafeArea(
         child: Stack(
           children: [
@@ -36,14 +35,11 @@ class AboutScreen extends StatelessWidget {
                           height: 48,
                           decoration: BoxDecoration(
                             color: AppColors.yellow,
-                            border: Border.all(
-                              color: AppColors.ink,
-                              width: 3,
-                            ),
+                            border: Border.all(color: AppColors.ink, width: 3),
                           ),
                           child: const Icon(
                             Icons.arrow_back,
-                            color: AppColors.ink,
+                            color: AppColors.outline,
                           ),
                         ),
                       ),
@@ -56,7 +52,7 @@ class AboutScreen extends StatelessWidget {
                           children: [
                             Text(
                               'THE DAILY CODE',
-                              style: GoogleFonts.bangers(
+                              style: TextStyle(
                                 fontSize: 20,
                                 color: AppColors.ink,
                                 letterSpacing: 1,
@@ -87,14 +83,14 @@ class AboutScreen extends StatelessWidget {
                     angle: -0.015,
                     child: Text(
                       'THE AMAZING\nIKA!',
-                      style: GoogleFonts.bangers(
+                      style: TextStyle(
                         fontSize: 48,
                         height: 0.85,
                         color: AppColors.red,
                         shadows: const [
                           Shadow(
                             offset: Offset(3, 3),
-                            color: AppColors.ink,
+                            color: AppColors.outline,
                           ),
                         ],
                       ),
@@ -103,7 +99,7 @@ class AboutScreen extends StatelessWidget {
 
                   const SizedBox(height: 10),
 
-                  const Text(
+                  Text(
                     'ORIGIN STORY • SKILLS • EDUCATION',
                     style: TextStyle(
                       fontSize: 11,
@@ -234,14 +230,11 @@ class AboutScreen extends StatelessWidget {
                         ),
                         decoration: BoxDecoration(
                           color: AppColors.blue,
-                          border: Border.all(
-                            color: AppColors.ink,
-                            width: 3,
-                          ),
+                          border: Border.all(color: AppColors.ink, width: 3),
                         ),
                         child: Text(
                           'TO BE CONTINUED...',
-                          style: GoogleFonts.bangers(
+                          style: TextStyle(
                             fontSize: 22,
                             color: AppColors.paper,
                             letterSpacing: 1,
@@ -260,7 +253,6 @@ class AboutScreen extends StatelessWidget {
   }
 }
 
-
 // =====================================================
 // PROFILE CARD
 // =====================================================
@@ -277,19 +269,14 @@ class _ProfileCard extends StatelessWidget {
           Positioned.fill(
             left: 7,
             top: 7,
-            child: Container(
-              color: AppColors.ink,
-            ),
+            child: Container(color: AppColors.ink),
           ),
 
           Container(
             padding: const EdgeInsets.all(18),
             decoration: BoxDecoration(
               color: AppColors.paper,
-              border: Border.all(
-                color: AppColors.ink,
-                width: 4,
-              ),
+              border: Border.all(color: AppColors.ink, width: 4),
             ),
             child: Column(
               children: [
@@ -304,10 +291,7 @@ class _ProfileCard extends StatelessWidget {
                           height: 125,
                           decoration: BoxDecoration(
                             color: AppColors.panelBlue,
-                            border: Border.all(
-                              color: AppColors.ink,
-                              width: 3,
-                            ),
+                            border: Border.all(color: AppColors.ink, width: 3),
                           ),
                         ),
 
@@ -350,7 +334,7 @@ class _ProfileCard extends StatelessWidget {
                         children: [
                           Text(
                             'IKA\nWAHYUNINGTYAS',
-                            style: GoogleFonts.bangers(
+                            style: TextStyle(
                               fontSize: 27,
                               height: 0.9,
                               color: AppColors.ink,
@@ -382,10 +366,7 @@ class _ProfileCard extends StatelessWidget {
 
                 const SizedBox(height: 18),
 
-                const Divider(
-                  thickness: 2,
-                  color: AppColors.ink,
-                ),
+                const Divider(thickness: 2, color: AppColors.outline),
 
                 const SizedBox(height: 10),
 
@@ -397,7 +378,7 @@ class _ProfileCard extends StatelessWidget {
                     fontSize: 13,
                     height: 1.5,
                     fontWeight: FontWeight.w500,
-                    color: AppColors.ink,
+                    color: AppColors.outline,
                   ),
                 ),
 
@@ -414,17 +395,11 @@ class _ProfileCard extends StatelessWidget {
                       ),
                       decoration: BoxDecoration(
                         color: AppColors.yellow,
-                        border: Border.all(
-                          color: AppColors.ink,
-                          width: 2,
-                        ),
+                        border: Border.all(color: AppColors.ink, width: 2),
                       ),
                       child: Text(
                         'POW! FUTURE DEVELOPER',
-                        style: GoogleFonts.bangers(
-                          fontSize: 16,
-                          color: AppColors.ink,
-                        ),
+                        style: TextStyle(fontSize: 16, color: AppColors.ink),
                       ),
                     ),
                   ),
@@ -437,7 +412,6 @@ class _ProfileCard extends StatelessWidget {
     );
   }
 }
-
 
 // =====================================================
 // SECTION TITLE
@@ -464,17 +438,11 @@ class _SectionTitle extends StatelessWidget {
           alignment: Alignment.center,
           decoration: BoxDecoration(
             color: AppColors.red,
-            border: Border.all(
-              color: AppColors.ink,
-              width: 3,
-            ),
+            border: Border.all(color: AppColors.ink, width: 3),
           ),
           child: Text(
             number,
-            style: GoogleFonts.bangers(
-              fontSize: 22,
-              color: AppColors.paper,
-            ),
+            style: TextStyle(fontSize: 22, color: AppColors.paper),
           ),
         ),
 
@@ -484,13 +452,7 @@ class _SectionTitle extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                title,
-                style: GoogleFonts.bangers(
-                  fontSize: 27,
-                  color: AppColors.ink,
-                ),
-              ),
+              Text(title, style: TextStyle(fontSize: 27, color: AppColors.ink)),
               Text(
                 subtitle,
                 style: const TextStyle(
@@ -506,7 +468,6 @@ class _SectionTitle extends StatelessWidget {
     );
   }
 }
-
 
 // =====================================================
 // EDUCATION TIMELINE
@@ -548,7 +509,6 @@ class _EducationTimeline extends StatelessWidget {
   }
 }
 
-
 class _EducationCard extends StatelessWidget {
   final String year;
   final String title;
@@ -570,10 +530,7 @@ class _EducationCard extends StatelessWidget {
         padding: const EdgeInsets.all(14),
         decoration: BoxDecoration(
           color: color,
-          border: Border.all(
-            color: AppColors.ink,
-            width: 3,
-          ),
+          border: Border.all(color: AppColors.ink, width: 3),
         ),
         child: Row(
           children: [
@@ -583,18 +540,12 @@ class _EducationCard extends StatelessWidget {
               alignment: Alignment.center,
               decoration: BoxDecoration(
                 color: AppColors.paper,
-                border: Border.all(
-                  color: AppColors.ink,
-                  width: 2,
-                ),
+                border: Border.all(color: AppColors.ink, width: 2),
               ),
               child: Text(
                 year,
                 textAlign: TextAlign.center,
-                style: GoogleFonts.bangers(
-                  fontSize: 17,
-                  color: AppColors.ink,
-                ),
+                style: TextStyle(fontSize: 17, color: AppColors.ink),
               ),
             ),
 
@@ -606,10 +557,7 @@ class _EducationCard extends StatelessWidget {
                 children: [
                   Text(
                     title,
-                    style: GoogleFonts.bangers(
-                      fontSize: 19,
-                      color: AppColors.ink,
-                    ),
+                    style: TextStyle(fontSize: 19, color: AppColors.ink),
                   ),
                   const SizedBox(height: 4),
                   Text(
@@ -628,7 +576,6 @@ class _EducationCard extends StatelessWidget {
     );
   }
 }
-
 
 // =====================================================
 // SKILL BADGE
@@ -655,30 +602,19 @@ class _SkillBadge extends StatelessWidget {
         padding: const EdgeInsets.all(14),
         decoration: BoxDecoration(
           color: color,
-          border: Border.all(
-            color: AppColors.ink,
-            width: 3,
-          ),
+          border: Border.all(color: AppColors.ink, width: 3),
         ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(
-              icon,
-              size: 35,
-              color: AppColors.ink,
-            ),
+            Icon(icon, size: 35, color: AppColors.ink),
 
             const SizedBox(height: 8),
 
             Text(
               title,
               textAlign: TextAlign.center,
-              style: GoogleFonts.bangers(
-                fontSize: 19,
-                height: 0.9,
-                color: AppColors.ink,
-              ),
+              style: TextStyle(fontSize: 19, height: 0.9, color: AppColors.ink),
             ),
           ],
         ),
@@ -686,7 +622,6 @@ class _SkillBadge extends StatelessWidget {
     );
   }
 }
-
 
 // =====================================================
 // TOOLS PANEL
@@ -714,10 +649,7 @@ class _ToolPanel extends StatelessWidget {
         padding: const EdgeInsets.all(18),
         decoration: BoxDecoration(
           color: AppColors.paper,
-          border: Border.all(
-            color: AppColors.ink,
-            width: 4,
-          ),
+          border: Border.all(color: AppColors.ink, width: 4),
         ),
         child: Column(
           children: [
@@ -728,25 +660,16 @@ class _ToolPanel extends StatelessWidget {
                   height: 55,
                   decoration: BoxDecoration(
                     color: color,
-                    border: Border.all(
-                      color: AppColors.ink,
-                      width: 3,
-                    ),
+                    border: Border.all(color: AppColors.ink, width: 3),
                   ),
-                  child: Icon(
-                    icon,
-                    color: AppColors.ink,
-                  ),
+                  child: Icon(icon, color: AppColors.ink),
                 ),
 
                 const SizedBox(width: 14),
 
                 Text(
                   title,
-                  style: GoogleFonts.bangers(
-                    fontSize: 27,
-                    color: AppColors.ink,
-                  ),
+                  style: TextStyle(fontSize: 27, color: AppColors.ink),
                 ),
               ],
             ),
@@ -765,10 +688,7 @@ class _ToolPanel extends StatelessWidget {
                       ),
                       decoration: BoxDecoration(
                         color: AppColors.cream,
-                        border: Border.all(
-                          color: AppColors.ink,
-                          width: 2,
-                        ),
+                        border: Border.all(color: AppColors.ink, width: 2),
                       ),
                       child: Text(
                         tool,
@@ -788,7 +708,6 @@ class _ToolPanel extends StatelessWidget {
   }
 }
 
-
 // =====================================================
 // ISSUE BADGE
 // =====================================================
@@ -801,16 +720,10 @@ class _IssueBadge extends StatelessWidget {
     return Transform.rotate(
       angle: 0.08,
       child: Container(
-        padding: const EdgeInsets.symmetric(
-          horizontal: 10,
-          vertical: 8,
-        ),
+        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
         decoration: BoxDecoration(
           color: AppColors.red,
-          border: Border.all(
-            color: AppColors.ink,
-            width: 2,
-          ),
+          border: Border.all(color: AppColors.ink, width: 2),
         ),
         child: const Text(
           'VOL.\n03',
@@ -825,7 +738,6 @@ class _IssueBadge extends StatelessWidget {
     );
   }
 }
-
 
 // =====================================================
 // BACKGROUND

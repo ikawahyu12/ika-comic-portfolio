@@ -1,35 +1,36 @@
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 
 import '../models/project_model.dart';
 import '../services/project_service.dart';
+import '../theme/app_colors.dart';
 
 class EditPortfolioScreen extends StatefulWidget {
   final Project project;
 
-  const EditPortfolioScreen({
-    super.key,
-    required this.project,
-  });
+  const EditPortfolioScreen({super.key, required this.project});
 
   @override
-  State<EditPortfolioScreen> createState() =>
-      _EditPortfolioScreenState();
+  State<EditPortfolioScreen> createState() => _EditPortfolioScreenState();
 }
 
-class _EditPortfolioScreenState
-    extends State<EditPortfolioScreen> {
+class _EditPortfolioScreenState extends State<EditPortfolioScreen> {
   final _formKey = GlobalKey<FormState>();
 
   late final TextEditingController _titleController;
   late final TextEditingController _descriptionController;
   late final TextEditingController _technologiesController;
-  late final TextEditingController _imageController;
   late final TextEditingController _githubController;
 
   final ProjectService _projectService = ProjectService();
+  final ImagePicker _imagePicker = ImagePicker();
 
   late String _selectedCategory;
-
+  XFile? _selectedImage;
+  Uint8List? _selectedImageBytes;
+  String? _existingImageUrl;
   bool _isLoading = false;
 
   final List<String> _categories = [
@@ -44,9 +45,7 @@ class _EditPortfolioScreenState
   void initState() {
     super.initState();
 
-    _titleController = TextEditingController(
-      text: widget.project.title,
-    );
+    _titleController = TextEditingController(text: widget.project.title);
 
     _descriptionController = TextEditingController(
       text: widget.project.description,
@@ -56,17 +55,13 @@ class _EditPortfolioScreenState
       text: widget.project.technologies.join(', '),
     );
 
-    _imageController = TextEditingController(
-      text: widget.project.image ?? '',
-    );
-
     _githubController = TextEditingController(
       text: widget.project.githubUrl ?? '',
     );
 
-    _selectedCategory = _categories.contains(
-      widget.project.category,
-    )
+    _existingImageUrl = widget.project.image;
+
+    _selectedCategory = _categories.contains(widget.project.category)
         ? widget.project.category
         : 'Other';
   }
@@ -76,10 +71,53 @@ class _EditPortfolioScreenState
     _titleController.dispose();
     _descriptionController.dispose();
     _technologiesController.dispose();
-    _imageController.dispose();
     _githubController.dispose();
 
     super.dispose();
+  }
+
+  Future<void> _pickImage() async {
+    try {
+      final pickedFile = await _imagePicker.pickImage(
+        source: ImageSource.gallery,
+        imageQuality: 85,
+        maxWidth: 1600,
+        maxHeight: 1600,
+      );
+
+      if (pickedFile == null) {
+        return;
+      }
+
+      final fileName = pickedFile.name.toLowerCase();
+      final allowedExtensions = ['.jpg', '.jpeg', '.png', '.webp'];
+      if (!allowedExtensions.any((ext) => fileName.endsWith(ext))) {
+        throw Exception(
+          'Format gambar tidak didukung. Gunakan JPG, PNG, atau WEBP.',
+        );
+      }
+
+      final bytes = await pickedFile.readAsBytes();
+
+      if (!mounted) return;
+      setState(() {
+        _selectedImage = pickedFile;
+        _selectedImageBytes = bytes;
+      });
+    } catch (e) {
+      if (!mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(e.toString().replaceFirst('Exception: ', ''))),
+      );
+    }
+  }
+
+  void _removeSelectedImage() {
+    setState(() {
+      _selectedImage = null;
+      _selectedImageBytes = null;
+      _existingImageUrl = widget.project.image;
+    });
   }
 
   Future<void> _updateProject() async {
@@ -98,9 +136,7 @@ class _EditPortfolioScreenState
         description: _descriptionController.text.trim(),
         category: _selectedCategory,
         technologies: _technologiesController.text.trim(),
-        image: _imageController.text.trim().isEmpty
-            ? null
-            : _imageController.text.trim(),
+        imageFile: _selectedImage,
         githubUrl: _githubController.text.trim().isEmpty
             ? null
             : _githubController.text.trim(),
@@ -109,11 +145,8 @@ class _EditPortfolioScreenState
       if (!mounted) return;
 
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text(
-            'Portfolio berhasil diperbarui',
-          ),
-        ),
+        const SnackBar(content: Text
+        ('Portfolio berhasil diperbarui')),
       );
 
       Navigator.pop(context, true);
@@ -121,14 +154,9 @@ class _EditPortfolioScreenState
       if (!mounted) return;
 
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(
-            e.toString().replaceFirst(
-              'Exception: ',
-              '',
-            ),
-          ),
-        ),
+        SnackBar(content: Text
+        (e.toString().replaceFirst
+        ('Exception: ', ''))),
       );
     } finally {
       if (mounted) {
@@ -139,10 +167,7 @@ class _EditPortfolioScreenState
     }
   }
 
-  InputDecoration _inputDecoration(
-    String label,
-    IconData icon,
-  ) {
+  InputDecoration _inputDecoration(String label, IconData icon) {
     return InputDecoration(
       labelText: label,
       prefixIcon: Icon(icon),
@@ -152,166 +177,252 @@ class _EditPortfolioScreenState
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Edit Portfolio'),
-      ),
+      appBar: AppBar(title: const Text('Edit Portfolio')),
       body: SafeArea(
         child: SingleChildScrollView(
           padding: const EdgeInsets.all(20),
           child: Form(
             key: _formKey,
-            child: Column(
-              crossAxisAlignment:
-                  CrossAxisAlignment.stretch,
-              children: [
-                const Text(
-                  'Edit Portfolio',
-                  style: TextStyle(
-                    fontSize: 24,
-                    fontWeight: FontWeight.bold,
+            child: Container(
+              padding: const EdgeInsets.all(18),
+              decoration: BoxDecoration(
+                color: isDark ? AppColors.darkSurface : AppColors.paper,
+                border: Border.all(color: AppColors.darkOutline, width: 3),
+                boxShadow: const [
+                  BoxShadow(color: AppColors.darkOutline, offset: Offset(5, 5)),
+                ],
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  const Text(
+                    'Edit Portfolio',
+                    style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
                   ),
-                ),
 
-                const SizedBox(height: 8),
+                  const SizedBox(height: 8),
 
-                const Text(
-                  'Ubah informasi project yang dipilih.',
-                ),
+                  const Text('Ubah informasi project yang dipilih.'),
 
-                const SizedBox(height: 24),
+                  const SizedBox(height: 24),
 
-                TextFormField(
-                  controller: _titleController,
-                  decoration: _inputDecoration(
-                    'Judul Project',
-                    Icons.title,
+                  TextFormField(
+                    controller: _titleController,
+                    decoration: _inputDecoration('Judul Project', Icons.title),
+                    validator: (value) {
+                      if (value == null || value.trim().isEmpty) {
+                        return 'Judul project wajib diisi';
+                      }
+
+                      return null;
+                    },
                   ),
-                  validator: (value) {
-                    if (value == null ||
-                        value.trim().isEmpty) {
-                      return 'Judul project wajib diisi';
-                    }
 
-                    return null;
-                  },
-                ),
+                  const SizedBox(height: 16),
 
-                const SizedBox(height: 16),
+                  TextFormField(
+                    controller: _descriptionController,
+                    maxLines: 4,
+                    decoration: _inputDecoration(
+                      'Deskripsi',
+                      Icons.description,
+                    ),
+                    validator: (value) {
+                      if (value == null || value.trim().isEmpty) {
+                        return 'Deskripsi wajib diisi';
+                      }
 
-                TextFormField(
-                  controller: _descriptionController,
-                  maxLines: 4,
-                  decoration: _inputDecoration(
-                    'Deskripsi',
-                    Icons.description,
+                      return null;
+                    },
                   ),
-                  validator: (value) {
-                    if (value == null ||
-                        value.trim().isEmpty) {
-                      return 'Deskripsi wajib diisi';
-                    }
 
-                    return null;
-                  },
-                ),
+                  const SizedBox(height: 16),
 
-                const SizedBox(height: 16),
+                  DropdownButtonFormField<String>(
+                    initialValue: _selectedCategory,
+                    decoration: _inputDecoration('Kategori', Icons.category),
+                    items: _categories.map((category) {
+                      return DropdownMenuItem<String>(
+                        value: category,
+                        child: Text(category),
+                      );
+                    }).toList(),
+                    onChanged: (value) {
+                      if (value == null) return;
 
-                DropdownButtonFormField<String>(
-                  initialValue: _selectedCategory,
-                  decoration: _inputDecoration(
-                    'Kategori',
-                    Icons.category,
+                      setState(() {
+                        _selectedCategory = value;
+                      });
+                    },
                   ),
-                  items: _categories.map((category) {
-                    return DropdownMenuItem<String>(
-                      value: category,
-                      child: Text(category),
-                    );
-                  }).toList(),
-                  onChanged: (value) {
-                    if (value == null) return;
 
-                    setState(() {
-                      _selectedCategory = value;
-                    });
-                  },
-                ),
+                  const SizedBox(height: 16),
 
-                const SizedBox(height: 16),
+                  TextFormField(
+                    controller: _technologiesController,
+                    decoration: _inputDecoration(
+                      'Teknologi',
+                      Icons.code,
+                    ).copyWith(hintText: 'Contoh: Flutter, Dart, MySQL'),
+                    validator: (value) {
+                      if (value == null || value.trim().isEmpty) {
+                        return 'Teknologi wajib diisi';
+                      }
 
-                TextFormField(
-                  controller: _technologiesController,
-                  decoration: _inputDecoration(
-                    'Teknologi',
-                    Icons.code,
-                  ).copyWith(
-                    hintText:
-                        'Contoh: Flutter, Dart, MySQL',
+                      return null;
+                    },
                   ),
-                  validator: (value) {
-                    if (value == null ||
-                        value.trim().isEmpty) {
-                      return 'Teknologi wajib diisi';
-                    }
 
-                    return null;
-                  },
-                ),
+                  const SizedBox(height: 16),
 
-                const SizedBox(height: 16),
-
-                TextFormField(
-                  controller: _imageController,
-                  decoration: _inputDecoration(
-                    'Path Gambar',
-                    Icons.image,
-                  ).copyWith(
-                    hintText:
-                        'Contoh: assets/images/project.png',
-                  ),
-                ),
-
-                const SizedBox(height: 16),
-
-                TextFormField(
-                  controller: _githubController,
-                  keyboardType: TextInputType.url,
-                  decoration: _inputDecoration(
-                    'GitHub URL',
-                    Icons.link,
-                  ).copyWith(
-                    hintText:
-                        'https://github.com/username/project',
-                  ),
-                ),
-
-                const SizedBox(height: 28),
-
-                SizedBox(
-                  height: 52,
-                  child: ElevatedButton(
-                    onPressed:
-                        _isLoading
-                            ? null
-                            : _updateProject,
-                    child: _isLoading
-                        ? const SizedBox(
-                            width: 24,
-                            height: 24,
-                            child:
-                                CircularProgressIndicator(
-                              strokeWidth: 2,
-                              color: Colors.white,
+                  Container(
+                    padding: const EdgeInsets.all(16),
+                    decoration: BoxDecoration(
+                      color: isDark ? AppColors.darkPanel : AppColors.cream,
+                      border: Border.all(
+                        color: AppColors.darkOutline,
+                        width: 2,
+                      ),
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          children: [
+                            const Icon(Icons.image_outlined),
+                            const SizedBox(width: 8),
+                            const Expanded(
+                              child: Text(
+                                'Gambar Karya',
+                                style: TextStyle(fontWeight: FontWeight.w700),
+                              ),
+                            ),
+                            if (_selectedImage != null ||
+                                _existingImageUrl != null)
+                              TextButton.icon(
+                                onPressed: _removeSelectedImage,
+                                icon: const Icon(Icons.delete_outline),
+                                label: const Text('Hapus'),
+                              ),
+                          ],
+                        ),
+                        const SizedBox(height: 12),
+                        if (_selectedImageBytes != null)
+                          ClipRRect(
+                            borderRadius: BorderRadius.circular(10),
+                            child: Image.memory(
+                              _selectedImageBytes!,
+                              height: 160,
+                              width: double.infinity,
+                              fit: BoxFit.cover,
                             ),
                           )
-                        : const Text(
-                            'SIMPAN PERUBAHAN',
+                        else if (_existingImageUrl != null &&
+                            _existingImageUrl!.isNotEmpty)
+                          ClipRRect(
+                            borderRadius: BorderRadius.circular(10),
+                            child: _existingImageUrl!.startsWith('http')
+                                ? Image.network(
+                                    _existingImageUrl!,
+                                    height: 160,
+                                    width: double.infinity,
+                                    fit: BoxFit.cover,
+                                  )
+                                : Image.asset(
+                                    _existingImageUrl!,
+                                    height: 160,
+                                    width: double.infinity,
+                                    fit: BoxFit.cover,
+                                  ),
+                          )
+                        else
+                          Container(
+                            height: 120,
+                            width: double.infinity,
+                            decoration: BoxDecoration(
+                              color: isDark
+                                  ? AppColors.darkSurface
+                                  : AppColors.panelBlue,
+                              border: Border.all(
+                                color: AppColors.darkOutline,
+                                width: 2,
+                              ),
+                            ),
+                            child: Center(
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Icon(
+                                    Icons.add_photo_alternate_outlined,
+                                    size: 36,
+                                    color: isDark
+                                        ? AppColors.paper
+                                        : AppColors.outline,
+                                  ),
+                                  const SizedBox(height: 8),
+                                  Text(
+                                    'Belum ada gambar dipilih',
+                                    style: TextStyle(
+                                      color: isDark
+                                          ? AppColors.paper
+                                          : AppColors.outline,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
                           ),
+                        const SizedBox(height: 12),
+                        SizedBox(
+                          width: double.infinity,
+                          child: OutlinedButton.icon(
+                            onPressed: _isLoading ? null : _pickImage,
+                            icon: const Icon(Icons.upload_file),
+                            label: Text(
+                              _selectedImage == null
+                                  ? 'Pilih Gambar'
+                                  : 'Ganti Gambar',
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-              ],
+
+                  const SizedBox(height: 16),
+
+                  TextFormField(
+                    controller: _githubController,
+                    keyboardType: TextInputType.url,
+                    decoration: _inputDecoration(
+                      'GitHub URL',
+                      Icons.link,
+                    ).copyWith(hintText: 'https://github.com/username/project'),
+                  ),
+
+                  const SizedBox(height: 28),
+
+                  SizedBox(
+                    height: 52,
+                    child: ElevatedButton(
+                      onPressed: _isLoading ? null : _updateProject,
+                      child: _isLoading
+                          ? const SizedBox(
+                              width: 24,
+                              height: 24,
+                              child: CircularProgressIndicator(
+                                strokeWidth: 2,
+                                color: Colors.white,
+                              ),
+                            )
+                          : const Text('SIMPAN PERUBAHAN'),
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
         ),

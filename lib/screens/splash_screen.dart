@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import '../theme/app_colors.dart';
 import 'main_shell.dart';
 
@@ -45,7 +44,7 @@ class SplashScreen extends StatelessWidget {
                         child: Text(
                           'THE AMAZING',
                           textAlign: TextAlign.center,
-                          style: GoogleFonts.bangers(
+                          style: TextStyle(
                             fontSize: 35,
                             height: 0.95,
                             color: AppColors.ink,
@@ -61,7 +60,7 @@ class SplashScreen extends StatelessWidget {
                             child: Text(
                               'IKA.EXE',
                               textAlign: TextAlign.center,
-                              style: GoogleFonts.bangers(
+                              style: TextStyle(
                                 fontSize: 58,
                                 height: 0.9,
                                 color: AppColors.yellow,
@@ -71,7 +70,7 @@ class SplashScreen extends StatelessWidget {
                           Text(
                             'IKA.EXE',
                             textAlign: TextAlign.center,
-                            style: GoogleFonts.bangers(
+                            style: TextStyle(
                               fontSize: 58,
                               height: 0.9,
                               color: AppColors.red,
@@ -87,7 +86,11 @@ class SplashScreen extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: const [
                           _Explosion(text: 'BAM!', rotate: -0.10),
-                          _Explosion(text: 'CODE!', rotate: 0.11, compact: true),
+                          _Explosion(
+                            text: 'CODE!',
+                            rotate: 0.11,
+                            compact: true,
+                          ),
                         ],
                       ),
                       const SizedBox(height: 9),
@@ -102,7 +105,7 @@ class SplashScreen extends StatelessWidget {
                           child: Text(
                             'EVERY IDEA STARTS\nWITH A SINGLE LINE OF CODE.',
                             textAlign: TextAlign.center,
-                            style: GoogleFonts.poppins(
+                            style: TextStyle(
                               fontSize: 12.5,
                               height: 1.35,
                               fontWeight: FontWeight.w800,
@@ -115,7 +118,7 @@ class SplashScreen extends StatelessWidget {
                       Text(
                         'COMPUTER SCIENCE STUDENT · FLUTTER DEVELOPER',
                         textAlign: TextAlign.center,
-                        style: GoogleFonts.poppins(
+                        style: TextStyle(
                           fontSize: 9.5,
                           letterSpacing: 0.3,
                           fontWeight: FontWeight.w700,
@@ -124,20 +127,20 @@ class SplashScreen extends StatelessWidget {
                       ),
                       const SizedBox(height: 14),
 
-_ComicButton(
-  onPressed: () {
-    Navigator.pushReplacement(
-      context,
-      MaterialPageRoute(
-        builder: (context) => const MainShell(),
-      ),
-    );
-  },
-),
+                      _ComicButton(
+                        onPressed: () {
+                          Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const MainShell(),
+                            ),
+                          );
+                        },
+                      ),
 
-const SizedBox(height: 15),
+                      const SizedBox(height: 15),
 
-const _ComicFooter(),
+                      const _ComicFooter(),
                     ],
                   ),
                 ),
@@ -171,14 +174,11 @@ class _ComicHeader extends StatelessWidget {
               children: [
                 Text(
                   'IKA',
-                  style: GoogleFonts.bangers(
-                    fontSize: 14,
-                    color: AppColors.paper,
-                  ),
+                  style: TextStyle(fontSize: 14, color: AppColors.paper),
                 ),
                 Text(
                   'UNIVERSE',
-                  style: GoogleFonts.poppins(
+                  style: TextStyle(
                     fontSize: 6.5,
                     fontWeight: FontWeight.w900,
                     color: AppColors.paper,
@@ -195,10 +195,7 @@ class _ComicHeader extends StatelessWidget {
             child: Text(
               'THE DAILY CODE',
               textAlign: TextAlign.center,
-              style: GoogleFonts.bangers(
-                fontSize: 18,
-                color: AppColors.ink,
-              ),
+              style: TextStyle(fontSize: 18, color: AppColors.ink),
             ),
           ),
         ),
@@ -207,7 +204,7 @@ class _ComicHeader extends StatelessWidget {
           children: [
             Text(
               'ISSUE',
-              style: GoogleFonts.poppins(
+              style: TextStyle(
                 fontSize: 7,
                 fontWeight: FontWeight.w900,
                 color: AppColors.ink,
@@ -215,7 +212,7 @@ class _ComicHeader extends StatelessWidget {
             ),
             Text(
               '#03',
-              style: GoogleFonts.poppins(
+              style: TextStyle(
                 fontSize: 14,
                 fontWeight: FontWeight.w900,
                 color: AppColors.red,
@@ -270,7 +267,7 @@ class _HeroPanel extends StatelessWidget {
                   angle: -0.20,
                   child: Text(
                     '</>',
-                    style: GoogleFonts.poppins(
+                    style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.w900,
                       color: AppColors.blue.withValues(alpha: 0.35),
@@ -285,7 +282,7 @@ class _HeroPanel extends StatelessWidget {
                   angle: 0.12,
                   child: Text(
                     'DART',
-                    style: GoogleFonts.bangers(
+                    style: TextStyle(
                       fontSize: 21,
                       color: AppColors.blue.withValues(alpha: 0.35),
                     ),
@@ -324,11 +321,11 @@ class _Explosion extends StatelessWidget {
           alignment: Alignment.center,
           child: Text(
             text,
-            style: GoogleFonts.bangers(
+            style: TextStyle(
               fontSize: compact ? 26 : 30,
               color: compact ? AppColors.paper : AppColors.red,
               shadows: const [
-                Shadow(offset: Offset(1.5, 1.5), color: AppColors.ink),
+                Shadow(offset: Offset(1.5, 1.5), color: AppColors.outline),
               ],
             ),
           ),
@@ -354,7 +351,7 @@ class _ComicButton extends StatelessWidget {
             top: 7,
             right: 0,
             bottom: 0,
-            child: Container(color: AppColors.ink),
+            child: Container(color: AppColors.outline),
           ),
           Transform.rotate(
             angle: -0.018,
@@ -363,14 +360,14 @@ class _ComicButton extends StatelessWidget {
               style: OutlinedButton.styleFrom(
                 backgroundColor: AppColors.red,
                 foregroundColor: AppColors.paper,
-                side: const BorderSide(color: AppColors.ink, width: 3),
+                side: const BorderSide(color: AppColors.outline, width: 3),
                 shape: const RoundedRectangleBorder(
                   borderRadius: BorderRadius.zero,
                 ),
               ),
               child: Text(
                 'ENTER THE PORTFOLIO  →',
-                style: GoogleFonts.bangers(
+                style: TextStyle(
                   fontSize: 23,
                   letterSpacing: 0.4,
                   color: AppColors.paper,
@@ -391,7 +388,7 @@ class _ComicFooter extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Container(height: 2, color: AppColors.ink),
+        Container(height: 2, color: AppColors.outline),
         const SizedBox(height: 7),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -406,13 +403,13 @@ class _ComicFooter extends StatelessWidget {
   }
 
   Widget _meta(String text) => Text(
-        text,
-        style: GoogleFonts.poppins(
-          fontSize: 8,
-          fontWeight: FontWeight.w800,
-          color: AppColors.ink,
-        ),
-      );
+    text,
+    style: TextStyle(
+      fontSize: 8,
+      fontWeight: FontWeight.w800,
+      color: AppColors.ink,
+    ),
+  );
 }
 
 class _Halftone extends StatelessWidget {
@@ -441,14 +438,16 @@ class _Halftone extends StatelessWidget {
     final dots = <Widget>[];
     for (var row = 0; row < rows; row++) {
       for (var col = 0; col < columns; col++) {
-        dots.add(Positioned(
-          left: col * spacing,
-          top: row * spacing,
-          child: CircleAvatar(
-            radius: radius,
-            backgroundColor: AppColors.ink.withValues(alpha: 0.18),
+        dots.add(
+          Positioned(
+            left: col * spacing,
+            top: row * spacing,
+            child: CircleAvatar(
+              radius: radius,
+              backgroundColor: AppColors.ink.withValues(alpha: 0.18),
+            ),
           ),
-        ));
+        );
       }
     }
 
@@ -471,7 +470,9 @@ class _BurstClipper extends CustomClipper<Path> {
     final cx = size.width / 2;
     final cy = size.height / 2;
     const points = 20;
-    final outer = size.width > size.height ? size.width / 1.8 : size.height / 1.8;
+    final outer = size.width > size.height
+        ? size.width / 1.8
+        : size.height / 1.8;
     final inner = outer * 0.70;
 
     for (var i = 0; i < points; i++) {
@@ -504,15 +505,23 @@ class MathHelper {
 
   // Small approximation to avoid any dependency for this decorative shape.
   static double _cos(double x) {
-    while (x > 3.141592653589793) x -= 6.283185307179586;
-    while (x < -3.141592653589793) x += 6.283185307179586;
+    while (x > 3.141592653589793) {
+      x -= 6.283185307179586;
+    }
+    while (x < -3.141592653589793) {
+      x += 6.283185307179586;
+    }
     final x2 = x * x;
     return 1 - x2 / 2 + x2 * x2 / 24 - x2 * x2 * x2 / 720;
   }
 
   static double _sin(double x) {
-    while (x > 3.141592653589793) x -= 6.283185307179586;
-    while (x < -3.141592653589793) x += 6.283185307179586;
+    while (x > 3.141592653589793) {
+      x -= 6.283185307179586;
+    }
+    while (x < -3.141592653589793) {
+      x += 6.283185307179586;
+    }
     final x2 = x * x;
     return x - x * x2 / 6 + x * x2 * x2 / 120 - x * x2 * x2 * x2 / 5040;
   }

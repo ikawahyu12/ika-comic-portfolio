@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../theme/app_colors.dart';
@@ -13,11 +12,7 @@ class ProjectDetailScreen extends StatelessWidget {
     this.description =
         'A personal portfolio application built using Flutter '
         'with a unique comic-inspired user interface.',
-    this.techStack = const [
-      'Flutter',
-      'Dart',
-      'UI Design',
-    ],
+    this.techStack = const ['Flutter', 'Dart', 'UI Design'],
     this.githubUrl,
     this.imageAsset,
   });
@@ -32,20 +27,17 @@ class ProjectDetailScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     return Scaffold(
-      backgroundColor: AppColors.cream,
+      backgroundColor: isDark ? AppColors.darkBackground : AppColors.cream,
       body: SafeArea(
         child: Stack(
           children: [
             const _DetailBackground(),
 
             SingleChildScrollView(
-              padding: const EdgeInsets.fromLTRB(
-                18,
-                14,
-                18,
-                35,
-              ),
+              padding: const EdgeInsets.fromLTRB(18, 14, 18, 35),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -57,11 +49,11 @@ class ProjectDetailScreen extends StatelessWidget {
 
                   const SizedBox(height: 15),
 
-                  _buildTitle(),
+                  _buildTitle(isDark),
 
                   const SizedBox(height: 25),
 
-                  _buildProjectPoster(),
+                  _buildProjectPoster(isDark),
 
                   const SizedBox(height: 28),
 
@@ -69,7 +61,7 @@ class ProjectDetailScreen extends StatelessWidget {
 
                   const SizedBox(height: 12),
 
-                  _buildDescription(),
+                  _buildDescription(isDark),
 
                   const SizedBox(height: 28),
 
@@ -97,7 +89,7 @@ class ProjectDetailScreen extends StatelessWidget {
 
                   const SizedBox(height: 30),
 
-                  _buildMissionStatus(),
+                  _buildMissionStatus(isDark),
 
                   const SizedBox(height: 25),
 
@@ -105,7 +97,7 @@ class ProjectDetailScreen extends StatelessWidget {
 
                   const SizedBox(height: 20),
 
-                  _buildFooter(),
+                  _buildFooter(isDark),
                 ],
               ),
             ),
@@ -120,6 +112,8 @@ class ProjectDetailScreen extends StatelessWidget {
   // =====================================================
 
   Widget _buildHeader(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     return Row(
       children: [
         GestureDetector(
@@ -131,21 +125,12 @@ class ProjectDetailScreen extends StatelessWidget {
             height: 46,
             decoration: BoxDecoration(
               color: AppColors.yellow,
-              border: Border.all(
-                color: AppColors.ink,
-                width: 3,
-              ),
+              border: Border.all(color: AppColors.outline, width: 3),
               boxShadow: const [
-                BoxShadow(
-                  color: AppColors.ink,
-                  offset: Offset(3, 3),
-                ),
+                BoxShadow(color: AppColors.outline, offset: Offset(3, 3)),
               ],
             ),
-            child: const Icon(
-              Icons.arrow_back,
-              color: AppColors.ink,
-            ),
+            child: const Icon(Icons.arrow_back, color: AppColors.outline),
           ),
         ),
 
@@ -153,23 +138,22 @@ class ProjectDetailScreen extends StatelessWidget {
 
         Expanded(
           child: Column(
-            crossAxisAlignment:
-                CrossAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
                 'HERO ARCHIVES',
-                style: GoogleFonts.bangers(
+                style: TextStyle(
                   fontSize: 21,
-                  color: AppColors.ink,
+                  color: isDark ? AppColors.paper : AppColors.outline,
                 ),
               ),
-              const Text(
+              Text(
                 'PROJECT INTELLIGENCE FILE',
                 style: TextStyle(
                   fontSize: 8,
                   fontWeight: FontWeight.w900,
                   letterSpacing: 0.8,
-                  color: AppColors.ink,
+                  color: isDark ? AppColors.mutedText : AppColors.outline,
                 ),
               ),
             ],
@@ -179,16 +163,10 @@ class ProjectDetailScreen extends StatelessWidget {
         Transform.rotate(
           angle: 0.08,
           child: Container(
-            padding: const EdgeInsets.symmetric(
-              horizontal: 9,
-              vertical: 6,
-            ),
+            padding: const EdgeInsets.symmetric(horizontal: 9, vertical: 6),
             decoration: BoxDecoration(
-              color: AppColors.red,
-              border: Border.all(
-                color: AppColors.ink,
-                width: 2,
-              ),
+              color: isDark ? AppColors.darkRed : AppColors.red,
+              border: Border.all(color: AppColors.outline, width: 2),
             ),
             child: Text(
               'FILE #${projectNumber.replaceAll('MISSION #', '')}',
@@ -212,21 +190,12 @@ class ProjectDetailScreen extends StatelessWidget {
     return Transform.rotate(
       angle: -0.025,
       child: Container(
-        padding: const EdgeInsets.symmetric(
-          horizontal: 12,
-          vertical: 7,
-        ),
+        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 7),
         decoration: BoxDecoration(
           color: AppColors.yellow,
-          border: Border.all(
-            color: AppColors.ink,
-            width: 3,
-          ),
+          border: Border.all(color: AppColors.outline, width: 3),
           boxShadow: const [
-            BoxShadow(
-              color: AppColors.ink,
-              offset: Offset(3, 3),
-            ),
+            BoxShadow(color: AppColors.outline, offset: Offset(3, 3)),
           ],
         ),
         child: Text(
@@ -235,7 +204,7 @@ class ProjectDetailScreen extends StatelessWidget {
             fontSize: 10,
             fontWeight: FontWeight.w900,
             letterSpacing: 0.8,
-            color: AppColors.ink,
+            color: AppColors.outline,
           ),
         ),
       ),
@@ -246,19 +215,14 @@ class ProjectDetailScreen extends StatelessWidget {
   // TITLE
   // =====================================================
 
-  Widget _buildTitle() {
+  Widget _buildTitle(bool isDark) {
     return Text(
       title,
-      style: GoogleFonts.bangers(
+      style: TextStyle(
         fontSize: 48,
         height: 0.85,
-        color: AppColors.ink,
-        shadows: const [
-          Shadow(
-            offset: Offset(3, 3),
-            color: AppColors.red,
-          ),
-        ],
+        color: isDark ? AppColors.paper : AppColors.outline,
+        shadows: const [Shadow(offset: Offset(3, 3), color: AppColors.red)],
       ),
     );
   }
@@ -267,7 +231,7 @@ class ProjectDetailScreen extends StatelessWidget {
   // PROJECT POSTER
   // =====================================================
 
-  Widget _buildProjectPoster() {
+  Widget _buildProjectPoster(bool isDark) {
     return Transform.rotate(
       angle: 0.012,
       child: Stack(
@@ -275,24 +239,18 @@ class ProjectDetailScreen extends StatelessWidget {
           Positioned.fill(
             left: 7,
             top: 7,
-            child: Container(
-              color: AppColors.ink,
-            ),
+            child: Container(color: AppColors.outline),
           ),
 
           Container(
             width: double.infinity,
             padding: const EdgeInsets.all(18),
             decoration: BoxDecoration(
-              color: AppColors.panelBlue,
-              border: Border.all(
-                color: AppColors.ink,
-                width: 4,
-              ),
+              color: isDark ? AppColors.darkBlue : AppColors.panelBlue,
+              border: Border.all(color: AppColors.outline, width: 4),
             ),
             child: Column(
-              crossAxisAlignment:
-                  CrossAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Container(
                   padding: const EdgeInsets.symmetric(
@@ -300,11 +258,8 @@ class ProjectDetailScreen extends StatelessWidget {
                     vertical: 6,
                   ),
                   decoration: BoxDecoration(
-                    color: AppColors.red,
-                    border: Border.all(
-                      color: AppColors.ink,
-                      width: 2,
-                    ),
+                    color: isDark ? AppColors.darkRed : AppColors.red,
+                    border: Border.all(color: AppColors.outline, width: 2),
                   ),
                   child: Text(
                     category,
@@ -320,66 +275,67 @@ class ProjectDetailScreen extends StatelessWidget {
                 const SizedBox(height: 22),
 
                 Center(
-  child: Container(
-    width: 135,
-    height: 135,
-    decoration: BoxDecoration(
-      color: AppColors.paper,
-      border: Border.all(
-        color: AppColors.ink,
-        width: 4,
-      ),
-    ),
-    child: imageAsset != null
-        ? ClipRect(
-            child: Image.asset(
-              imageAsset!,
-              width: 135,
-              height: 135,
-              fit: BoxFit.cover,
-            ),
-          )
-        : const Icon(
-            Icons.auto_stories_rounded,
-            size: 72,
-            color: AppColors.red,
-          ),
-  ),
-),
+                  child: Container(
+                    width: 135,
+                    height: 135,
+                    decoration: BoxDecoration(
+                      color: AppColors.paper,
+                      border: Border.all(color: AppColors.ink, width: 4),
+                    ),
+                    child: imageAsset != null && imageAsset!.isNotEmpty
+                        ? ClipRect(
+                            child: imageAsset!.startsWith('http')
+                                ? Image.network(
+                                    imageAsset!,
+                                    width: 135,
+                                    height: 135,
+                                    fit: BoxFit.cover,
+                                  )
+                                : Image.asset(
+                                    imageAsset!,
+                                    width: 135,
+                                    height: 135,
+                                    fit: BoxFit.cover,
+                                  ),
+                          )
+                        : const Icon(
+                            Icons.auto_stories_rounded,
+                            size: 72,
+                            color: AppColors.red,
+                          ),
+                  ),
+                ),
 
                 const SizedBox(height: 20),
 
                 Text(
-                title,
-                style: GoogleFonts.bangers(
-                  fontSize: 34,
-                  color: AppColors.ink,
+                  title,
+                  style: TextStyle(fontSize: 34, color: AppColors.ink),
                 ),
-              ),
 
-              if (projectNumber == 'MISSION #03') ...[
-                const SizedBox(height: 3), 
+                if (projectNumber == 'MISSION #03') ...[
+                  const SizedBox(height: 3),
 
-                const Text(
-                  'YEAR: 2026',
-                  style: TextStyle(
-                    fontSize: 9,
-                    fontWeight: FontWeight.w900,
-                    letterSpacing: 0.8,
-                    color: AppColors.ink,
+                  Text(
+                    'YEAR: 2026',
+                    style: TextStyle(
+                      fontSize: 9,
+                      fontWeight: FontWeight.w900,
+                      letterSpacing: 0.8,
+                      color: isDark ? AppColors.paper : AppColors.outline,
+                    ),
                   ),
-                ),
-              ],
+                ],
 
-              const SizedBox(height: 5),
+                const SizedBox(height: 5),
 
-              const Text(
-                'PROJECT STATUS: COMPLETED',
+                Text(
+                  'PROJECT STATUS: COMPLETED',
                   style: TextStyle(
                     fontSize: 9,
                     fontWeight: FontWeight.w900,
                     letterSpacing: 0.7,
-                    color: AppColors.red,
+                    color: isDark ? const Color(0xFFFF6973) : AppColors.red,
                   ),
                 ),
               ],
@@ -397,13 +353,7 @@ class ProjectDetailScreen extends StatelessWidget {
   Widget _buildSectionTitle(String title) {
     return Transform.rotate(
       angle: -0.015,
-      child: Text(
-        title,
-        style: GoogleFonts.bangers(
-          fontSize: 27,
-          color: AppColors.ink,
-        ),
-      ),
+      child: Text(title, style: TextStyle(fontSize: 27, color: AppColors.ink)),
     );
   }
 
@@ -411,21 +361,15 @@ class ProjectDetailScreen extends StatelessWidget {
   // DESCRIPTION
   // =====================================================
 
-  Widget _buildDescription() {
+  Widget _buildDescription(bool isDark) {
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.all(17),
       decoration: BoxDecoration(
-        color: AppColors.paper,
-        border: Border.all(
-          color: AppColors.ink,
-          width: 3,
-        ),
+        color: isDark ? AppColors.paper : AppColors.paper,
+        border: Border.all(color: AppColors.outline, width: 3),
         boxShadow: const [
-          BoxShadow(
-            color: AppColors.ink,
-            offset: Offset(5, 5),
-          ),
+          BoxShadow(color: AppColors.outline, offset: Offset(5, 5)),
         ],
       ),
       child: Text(
@@ -434,7 +378,7 @@ class ProjectDetailScreen extends StatelessWidget {
           fontSize: 12,
           height: 1.6,
           fontWeight: FontWeight.w600,
-          color: AppColors.ink,
+          color: AppColors.outline,
         ),
       ),
     );
@@ -444,141 +388,141 @@ class ProjectDetailScreen extends StatelessWidget {
   // OBJECTIVES
   // =====================================================
 
-Widget _buildObjectives() {
-  if (projectNumber == 'MISSION #01') {
+  Widget _buildObjectives() {
+    if (projectNumber == 'MISSION #01') {
+      return Column(
+        children: [
+          _ObjectiveCard(
+            number: '01',
+            title: 'MANAGE QUEUE',
+            description:
+                'Help manage customer queues and workshop '
+                'service orders through a web-based system.',
+          ),
+
+          const SizedBox(height: 12),
+
+          _ObjectiveCard(
+            number: '02',
+            title: 'DIGITALIZE SERVICE',
+            description:
+                'Provide a digital solution to support the '
+                'daily queue process at the lathe workshop.',
+          ),
+
+          const SizedBox(height: 12),
+
+          _ObjectiveCard(
+            number: '03',
+            title: 'STORE DATA',
+            description:
+                'Use a database to manage and store '
+                'customer and queue-related information.',
+          ),
+        ],
+      );
+    }
+
+    if (projectNumber == 'MISSION #02') {
+      return Column(
+        children: [
+          _ObjectiveCard(
+            number: '01',
+            title: 'RENTAL MANAGEMENT',
+            description:
+                'Support the clothing rental process through '
+                'a mobile application.',
+          ),
+
+          const SizedBox(height: 12),
+
+          _ObjectiveCard(
+            number: '02',
+            title: 'EASY ACCESS',
+            description:
+                'Provide a simple mobile interface for users '
+                'to access clothing rental information.',
+          ),
+
+          const SizedBox(height: 12),
+
+          _ObjectiveCard(
+            number: '03',
+            title: 'DATA MANAGEMENT',
+            description:
+                'Connect the application with a database to '
+                'manage rental-related data.',
+          ),
+        ],
+      );
+    }
+
+    if (projectNumber == 'MISSION #03') {
+      return Column(
+        children: [
+          _ObjectiveCard(
+            number: '01',
+            title: 'SMART SOLUTION',
+            description:
+                'Explore an IoT-based solution for a '
+                'Smart City environmental project.',
+          ),
+
+          const SizedBox(height: 12),
+
+          _ObjectiveCard(
+            number: '02',
+            title: 'IOT INTEGRATION',
+            description:
+                'Combine IoT hardware and software technologies '
+                'to support the project concept.',
+          ),
+
+          const SizedBox(height: 12),
+
+          _ObjectiveCard(
+            number: '03',
+            title: 'COLLABORATION',
+            description:
+                'Develop the project through collaboration with '
+                'Korean students during WFK.',
+          ),
+        ],
+      );
+    }
+
     return Column(
       children: [
         _ObjectiveCard(
           number: '01',
-          title: 'MANAGE QUEUE',
+          title: 'STUDENT ATTENDANCE',
           description:
-              'Help manage customer queues and workshop '
-              'service orders through a web-based system.',
+              'Plan a digital attendance system for SMK '
+              'students during their PKL internship.',
         ),
 
         const SizedBox(height: 12),
 
         _ObjectiveCard(
           number: '02',
-          title: 'DIGITALIZE SERVICE',
+          title: 'MOBILE & WEB',
           description:
-              'Provide a digital solution to support the '
-              'daily queue process at the lathe workshop.',
+              'Provide mobile and web applications to support '
+              'attendance management.',
         ),
 
         const SizedBox(height: 12),
 
         _ObjectiveCard(
           number: '03',
-          title: 'STORE DATA',
+          title: 'EASY MONITORING',
           description:
-              'Use a database to manage and store '
-              'customer and queue-related information.',
+              'Create a system that can support attendance '
+              'monitoring during the PKL period.',
         ),
       ],
     );
   }
-
-  if (projectNumber == 'MISSION #02') {
-    return Column(
-      children: [
-        _ObjectiveCard(
-          number: '01',
-          title: 'RENTAL MANAGEMENT',
-          description:
-              'Support the clothing rental process through '
-              'a mobile application.',
-        ),
-
-        const SizedBox(height: 12),
-
-        _ObjectiveCard(
-          number: '02',
-          title: 'EASY ACCESS',
-          description:
-              'Provide a simple mobile interface for users '
-              'to access clothing rental information.',
-        ),
-
-        const SizedBox(height: 12),
-
-        _ObjectiveCard(
-          number: '03',
-          title: 'DATA MANAGEMENT',
-          description:
-              'Connect the application with a database to '
-              'manage rental-related data.',
-        ),
-      ],
-    );
-  }
-
-  if (projectNumber == 'MISSION #03') {
-    return Column(
-      children: [
-        _ObjectiveCard(
-          number: '01',
-          title: 'SMART SOLUTION',
-          description:
-              'Explore an IoT-based solution for a '
-              'Smart City environmental project.',
-        ),
-
-        const SizedBox(height: 12),
-
-        _ObjectiveCard(
-          number: '02',
-          title: 'IOT INTEGRATION',
-          description:
-              'Combine IoT hardware and software technologies '
-              'to support the project concept.',
-        ),
-
-        const SizedBox(height: 12),
-
-        _ObjectiveCard(
-          number: '03',
-          title: 'COLLABORATION',
-          description:
-              'Develop the project through collaboration with '
-              'Korean students during WFK.',
-        ),
-      ],
-    );
-  }
-
-  return Column(
-    children: [
-      _ObjectiveCard(
-        number: '01',
-        title: 'STUDENT ATTENDANCE',
-        description:
-            'Plan a digital attendance system for SMK '
-            'students during their PKL internship.',
-      ),
-
-      const SizedBox(height: 12),
-
-      _ObjectiveCard(
-        number: '02',
-        title: 'MOBILE & WEB',
-        description:
-            'Provide mobile and web applications to support '
-            'attendance management.',
-      ),
-
-      const SizedBox(height: 12),
-
-      _ObjectiveCard(
-        number: '03',
-        title: 'EASY MONITORING',
-        description:
-            'Create a system that can support attendance '
-            'monitoring during the PKL period.',
-      ),
-    ],
-  );
-}
 
   // =====================================================
   // TECH STACK
@@ -590,23 +534,17 @@ Widget _buildObjectives() {
       runSpacing: 10,
       children: techStack.map((tech) {
         return Container(
-          padding: const EdgeInsets.symmetric(
-            horizontal: 13,
-            vertical: 9,
-          ),
+          padding: const EdgeInsets.symmetric(horizontal: 13, vertical: 9),
           decoration: BoxDecoration(
             color: AppColors.paper,
-            border: Border.all(
-              color: AppColors.ink,
-              width: 3,
-            ),
+            border: Border.all(color: AppColors.ink, width: 3),
           ),
           child: Text(
             tech.toUpperCase(),
             style: const TextStyle(
               fontSize: 9,
               fontWeight: FontWeight.w900,
-              color: AppColors.ink,
+              color: AppColors.outline,
             ),
           ),
         );
@@ -618,174 +556,171 @@ Widget _buildObjectives() {
   // HIGHLIGHTS
   // =====================================================
 
-Widget _buildHighlights() {
-  if (projectNumber == 'MISSION #01') {
+  Widget _buildHighlights() {
+    if (projectNumber == 'MISSION #01') {
+      return Column(
+        children: [
+          _HighlightCard(
+            icon: Icons.queue_rounded,
+            title: 'QUEUE SYSTEM',
+            description:
+                'A web-based system focused on managing '
+                'customer queues for a lathe workshop.',
+            color: AppColors.yellow,
+          ),
+
+          const SizedBox(height: 12),
+
+          _HighlightCard(
+            icon: Icons.language_rounded,
+            title: 'WEB APPLICATION',
+            description:
+                'Built as a web application using JavaScript '
+                'and PHP.',
+            color: AppColors.panelBlue,
+          ),
+
+          const SizedBox(height: 12),
+
+          _HighlightCard(
+            icon: Icons.storage_rounded,
+            title: 'MYSQL DATABASE',
+            description:
+                'Uses MySQL to store and manage application '
+                'data.',
+            color: AppColors.red,
+            lightText: true,
+          ),
+        ],
+      );
+    }
+
+    if (projectNumber == 'MISSION #02') {
+      return Column(
+        children: [
+          _HighlightCard(
+            icon: Icons.phone_android_rounded,
+            title: 'MOBILE APPLICATION',
+            description:
+                'A mobile application designed for a '
+                'clothing rental business.',
+            color: AppColors.yellow,
+          ),
+
+          const SizedBox(height: 12),
+
+          _HighlightCard(
+            icon: Icons.checkroom_rounded,
+            title: 'CLOTHING RENTAL',
+            description:
+                'Focused on supporting the process of '
+                'renting clothing through a mobile app.',
+            color: AppColors.panelBlue,
+          ),
+
+          const SizedBox(height: 12),
+
+          _HighlightCard(
+            icon: Icons.storage_rounded,
+            title: 'DATABASE',
+            description:
+                'Uses PHP and MySQL to support application '
+                'data management.',
+            color: AppColors.red,
+            lightText: true,
+          ),
+        ],
+      );
+    }
+
+    if (projectNumber == 'MISSION #03') {
+      return Column(
+        children: [
+          _HighlightCard(
+            icon: Icons.memory_rounded,
+            title: 'ESP32 & IOT',
+            description:
+                'Explored ESP32 and IoT components as part '
+                'of the Smart City project.',
+            color: AppColors.yellow,
+          ),
+
+          const SizedBox(height: 12),
+
+          _HighlightCard(
+            icon: Icons.water_drop_rounded,
+            title: 'COOLING MIST',
+            description:
+                'Implemented a Smart City Cooling Mist concept '
+                'as part of the project.',
+            color: AppColors.panelBlue,
+          ),
+
+          const SizedBox(height: 12),
+
+          _HighlightCard(
+            icon: Icons.hub_rounded,
+            title: 'IOT TOOLS',
+            description:
+                'Experimented with Three.js and Node-RED '
+                'during the project development.',
+            color: AppColors.red,
+            lightText: true,
+          ),
+        ],
+      );
+    }
+
     return Column(
       children: [
         _HighlightCard(
-          icon: Icons.queue_rounded,
-          title: 'QUEUE SYSTEM',
+          icon: Icons.fact_check_rounded,
+          title: 'PKL ATTENDANCE',
           description:
-              'A web-based system focused on managing '
-              'customer queues for a lathe workshop.',
+              'A planned attendance system for SMK students '
+              'during their PKL internship.',
           color: AppColors.yellow,
         ),
 
         const SizedBox(height: 12),
 
-        _HighlightCard(
-          icon: Icons.language_rounded,
-          title: 'WEB APPLICATION',
-          description:
-              'Built as a web application using JavaScript '
-              'and PHP.',
-          color: AppColors.panelBlue,
-        ),
-
-        const SizedBox(height: 12),
-
-        _HighlightCard(
-          icon: Icons.storage_rounded,
-          title: 'MYSQL DATABASE',
-          description:
-              'Uses MySQL to store and manage application '
-              'data.',
-          color: AppColors.red,
-          lightText: true,
-        ),
-      ],
-    );
-  }
-
-  if (projectNumber == 'MISSION #02') {
-    return Column(
-      children: [
         _HighlightCard(
           icon: Icons.phone_android_rounded,
-          title: 'MOBILE APPLICATION',
+          title: 'MOBILE APP',
           description:
-              'A mobile application designed for a '
-              'clothing rental business.',
-          color: AppColors.yellow,
-        ),
-
-        const SizedBox(height: 12),
-
-        _HighlightCard(
-          icon: Icons.checkroom_rounded,
-          title: 'CLOTHING RENTAL',
-          description:
-              'Focused on supporting the process of '
-              'renting clothing through a mobile app.',
+              'The planned system will include a mobile '
+              'application for students.',
           color: AppColors.panelBlue,
         ),
 
         const SizedBox(height: 12),
 
         _HighlightCard(
-          icon: Icons.storage_rounded,
-          title: 'DATABASE',
+          icon: Icons.web_rounded,
+          title: 'WEB SYSTEM',
           description:
-              'Uses PHP and MySQL to support application '
-              'data management.',
+              'A web application will support attendance '
+              'management and monitoring.',
           color: AppColors.red,
           lightText: true,
         ),
       ],
     );
   }
-
-  if (projectNumber == 'MISSION #03') {
-    return Column(
-      children: [
-        _HighlightCard(
-          icon: Icons.memory_rounded,
-          title: 'ESP32 & IOT',
-          description:
-              'Explored ESP32 and IoT components as part '
-              'of the Smart City project.',
-          color: AppColors.yellow,
-        ),
-
-        const SizedBox(height: 12),
-
-        _HighlightCard(
-          icon: Icons.water_drop_rounded,
-          title: 'COOLING MIST',
-          description:
-              'Implemented a Smart City Cooling Mist concept '
-              'as part of the project.',
-          color: AppColors.panelBlue,
-        ),
-
-        const SizedBox(height: 12),
-
-        _HighlightCard(
-          icon: Icons.hub_rounded,
-          title: 'IOT TOOLS',
-          description:
-              'Experimented with Three.js and Node-RED '
-              'during the project development.',
-          color: AppColors.red,
-          lightText: true,
-        ),
-      ],
-    );
-  }
-
-  return Column(
-    children: [
-      _HighlightCard(
-        icon: Icons.fact_check_rounded,
-        title: 'PKL ATTENDANCE',
-        description:
-            'A planned attendance system for SMK students '
-            'during their PKL internship.',
-        color: AppColors.yellow,
-      ),
-
-      const SizedBox(height: 12),
-
-      _HighlightCard(
-        icon: Icons.phone_android_rounded,
-        title: 'MOBILE APP',
-        description:
-            'The planned system will include a mobile '
-            'application for students.',
-        color: AppColors.panelBlue,
-      ),
-
-      const SizedBox(height: 12),
-
-      _HighlightCard(
-        icon: Icons.web_rounded,
-        title: 'WEB SYSTEM',
-        description:
-            'A web application will support attendance '
-            'management and monitoring.',
-        color: AppColors.red,
-        lightText: true,
-      ),
-    ],
-  );
-}
 
   // =====================================================
   // STATUS
   // =====================================================
 
-  Widget _buildMissionStatus() {
+  Widget _buildMissionStatus(bool isDark) {
     return Transform.rotate(
       angle: 0.015,
       child: Container(
         width: double.infinity,
         padding: const EdgeInsets.all(17),
         decoration: BoxDecoration(
-          color: AppColors.ink,
-          border: Border.all(
-            color: AppColors.ink,
-            width: 3,
-          ),
+          color: isDark ? AppColors.darkSurface : AppColors.outline,
+          border: Border.all(color: AppColors.darkOutline, width: 3),
         ),
         child: Row(
           children: [
@@ -812,11 +747,7 @@ Widget _buildHighlights() {
               ),
             ),
 
-            const Icon(
-              Icons.check_circle,
-              color: AppColors.yellow,
-              size: 22,
-            ),
+            const Icon(Icons.check_circle, color: AppColors.yellow, size: 22),
           ],
         ),
       ),
@@ -828,15 +759,13 @@ Widget _buildHighlights() {
   // =====================================================
 
   Widget _buildGithubButton(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     return GestureDetector(
       onTap: () async {
         if (githubUrl == null || githubUrl!.isEmpty) {
           ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(
-              content: Text(
-                'GITHUB LINK BELUM TERSEDIA',
-              ),
-            ),
+            const SnackBar(content: Text('GITHUB LINK BELUM TERSEDIA')),
           );
           return;
         }
@@ -851,20 +780,14 @@ Widget _buildHighlights() {
 
           if (!launched && context.mounted) {
             ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(
-                content: Text(
-                  'GITHUB TIDAK DAPAT DIBUKA',
-                ),
-              ),
+              const SnackBar(content: Text('GITHUB TIDAK DAPAT DIBUKA')),
             );
           }
         } catch (_) {
           if (context.mounted) {
             ScaffoldMessenger.of(context).showSnackBar(
               const SnackBar(
-                content: Text(
-                  'TERJADI KESALAHAN SAAT MEMBUKA GITHUB',
-                ),
+                content: Text('TERJADI KESALAHAN SAAT MEMBUKA GITHUB'),
               ),
             );
           }
@@ -872,38 +795,24 @@ Widget _buildHighlights() {
       },
       child: Container(
         width: double.infinity,
-        padding: const EdgeInsets.symmetric(
-          vertical: 16,
-          horizontal: 18,
-        ),
+        padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 18),
         decoration: BoxDecoration(
-          color: AppColors.red,
-          border: Border.all(
-            color: AppColors.ink,
-            width: 4,
-          ),
+          color: isDark ? AppColors.darkRed : AppColors.red,
+          border: Border.all(color: AppColors.darkOutline, width: 4),
           boxShadow: const [
-            BoxShadow(
-              color: AppColors.ink,
-              offset: Offset(6, 6),
-            ),
+            BoxShadow(color: AppColors.outline, offset: Offset(6, 6)),
           ],
         ),
         child: Row(
-          mainAxisAlignment:
-              MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Icon(
-              Icons.code,
-              color: AppColors.paper,
-              size: 23,
-            ),
+            const Icon(Icons.code, color: AppColors.paper, size: 23),
 
             const SizedBox(width: 10),
 
             Text(
               'OPEN GITHUB',
-              style: GoogleFonts.bangers(
+              style: TextStyle(
                 fontSize: 24,
                 color: AppColors.paper,
                 letterSpacing: 0.8,
@@ -912,11 +821,7 @@ Widget _buildHighlights() {
 
             const SizedBox(width: 10),
 
-            const Icon(
-              Icons.arrow_forward,
-              color: AppColors.paper,
-              size: 23,
-            ),
+            const Icon(Icons.arrow_forward, color: AppColors.paper, size: 23),
           ],
         ),
       ),
@@ -927,21 +832,20 @@ Widget _buildHighlights() {
   // FOOTER
   // =====================================================
 
-  Widget _buildFooter() {
+  Widget _buildFooter(bool isDark) {
     return Center(
       child: Text(
         'IKA.EXE • HERO ARCHIVES • ISSUE #03',
         textAlign: TextAlign.center,
-        style: GoogleFonts.bangers(
+        style: TextStyle(
           fontSize: 15,
-          color: AppColors.ink,
+          color: isDark ? AppColors.paper : AppColors.outline,
           letterSpacing: 0.8,
         ),
       ),
     );
   }
 }
-
 
 // =====================================================
 // OBJECTIVE CARD
@@ -960,29 +864,24 @@ class _ObjectiveCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.all(14),
       decoration: BoxDecoration(
-        color: AppColors.paper,
-        border: Border.all(
-          color: AppColors.ink,
-          width: 3,
-        ),
+        color: isDark ? AppColors.darkSurface : AppColors.paper,
+        border: Border.all(color: AppColors.darkOutline, width: 3),
       ),
       child: Row(
-        crossAxisAlignment:
-            CrossAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Container(
             width: 42,
             height: 42,
             decoration: BoxDecoration(
               color: AppColors.yellow,
-              border: Border.all(
-                color: AppColors.ink,
-                width: 2,
-              ),
+              border: Border.all(color: AppColors.outline, width: 2),
             ),
             child: Center(
               child: Text(
@@ -999,14 +898,13 @@ class _ObjectiveCard extends StatelessWidget {
 
           Expanded(
             child: Column(
-              crossAxisAlignment:
-                  CrossAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
                   title,
-                  style: GoogleFonts.bangers(
+                  style: TextStyle(
                     fontSize: 20,
-                    color: AppColors.red,
+                    color: isDark ? const Color(0xFFFF6973) : AppColors.red,
                   ),
                 ),
 
@@ -1014,10 +912,11 @@ class _ObjectiveCard extends StatelessWidget {
 
                 Text(
                   description,
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontSize: 10,
                     height: 1.4,
                     fontWeight: FontWeight.w600,
+                    color: isDark ? AppColors.paper : AppColors.outline,
                   ),
                 ),
               ],
@@ -1028,7 +927,6 @@ class _ObjectiveCard extends StatelessWidget {
     );
   }
 }
-
 
 // =====================================================
 // HIGHLIGHT CARD
@@ -1051,60 +949,46 @@ class _HighlightCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final textColor =
-        lightText ? AppColors.paper : AppColors.ink;
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final panelColor = isDark
+        ? lightText
+              ? AppColors.darkRed
+              : color == AppColors.panelBlue
+              ? AppColors.darkBlue
+              : color
+        : color;
+    final textColor = AppColors.onColor(panelColor);
 
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.all(15),
       decoration: BoxDecoration(
-        color: color,
-        border: Border.all(
-          color: AppColors.ink,
-          width: 3,
-        ),
+        color: panelColor,
+        border: Border.all(color: AppColors.outline, width: 3),
         boxShadow: const [
-          BoxShadow(
-            color: AppColors.ink,
-            offset: Offset(4, 4),
-          ),
+          BoxShadow(color: AppColors.outline, offset: Offset(4, 4)),
         ],
       ),
       child: Row(
-        crossAxisAlignment:
-            CrossAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Container(
             width: 45,
             height: 45,
             decoration: BoxDecoration(
               color: AppColors.paper,
-              border: Border.all(
-                color: AppColors.ink,
-                width: 2,
-              ),
+              border: Border.all(color: AppColors.ink, width: 2),
             ),
-            child: Icon(
-              icon,
-              color: AppColors.ink,
-              size: 23,
-            ),
+            child: Icon(icon, color: AppColors.ink, size: 23),
           ),
 
           const SizedBox(width: 12),
 
           Expanded(
             child: Column(
-              crossAxisAlignment:
-                  CrossAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  title,
-                  style: GoogleFonts.bangers(
-                    fontSize: 21,
-                    color: textColor,
-                  ),
-                ),
+                Text(title, style: TextStyle(fontSize: 21, color: textColor)),
 
                 const SizedBox(height: 3),
 
@@ -1126,7 +1010,6 @@ class _HighlightCard extends StatelessWidget {
   }
 }
 
-
 // =====================================================
 // BACKGROUND
 // =====================================================
@@ -1147,8 +1030,7 @@ class _DetailBackground extends StatelessWidget {
               height: 160,
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
-                color:
-                    AppColors.yellow.withValues(alpha: 0.12),
+                color: AppColors.yellow.withValues(alpha: 0.12),
               ),
             ),
           ),
@@ -1161,8 +1043,7 @@ class _DetailBackground extends StatelessWidget {
               height: 160,
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
-                color:
-                    AppColors.red.withValues(alpha: 0.08),
+                color: AppColors.red.withValues(alpha: 0.08),
               ),
             ),
           ),
